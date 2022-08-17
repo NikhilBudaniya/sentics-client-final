@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { set, remove } from '../state/reducers/authReducer';
+import Heatmap from './home_component/Heatmap';
 
 // Home component for the live view
 function Home() {
@@ -21,7 +22,8 @@ function Home() {
 
     return (
         <div className="text-3xl font-bold text-center">
-            Tailwind is Ready
+            this is home
+            <Heatmap />
         </div>
     )
 }
