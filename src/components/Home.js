@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { set, remove } from '../state/reducers/authReducer';
+import Header from './home_component/Header';
 import Heatmap from './home_component/Heatmap';
+import LeftNav from './home_component/LeftNav';
+import TopNav from './home_component/TopNav';
 
 // Home component for the live view
 function Home() {
@@ -21,9 +24,19 @@ function Home() {
 
 
     return (
-        <div className="text-3xl font-bold text-center">
-            this is home
-            <Heatmap />
+        <div className="h-full w-full">
+            <Header />
+            <div className="flex flex-column p-2 h-full">
+                <div className="bg-red-200">
+                    <LeftNav />
+                </div>
+                <div className="bg-blue-200 w-full h-full">
+                    <div className="bg-yellow-200">
+                        <TopNav />
+                    </div>
+                    <Heatmap />
+                </div>
+            </div>
         </div>
     )
 }

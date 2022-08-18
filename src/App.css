@@ -1,10 +1,14 @@
 .heatmapcss{
-  background: url('./components/static/bg.jpg') no-repeat right top;
+  background: url('./components/assets/bg.png') no-repeat right top;
   background-size: contain;
-  /* background-color: red; */
-  height: 20rem;
-  width: 29rem;
+  background-color: red;
+  /* height: 155px;
+  width: 464px; */
+  /* Ratio of w/h is 3:1 */
+  width: 60vw;
+  height: 20vw;
 }
+
 
 /* some classes to rotate the heatmap canvas */
 .right{
