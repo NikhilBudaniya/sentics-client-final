@@ -1,5 +1,5 @@
 .heatmapcss{
-  background: url('./components/assets/bg.png') no-repeat right top;
+  background: url('./components/assets/bg_rotated.png') no-repeat right top;
   background-size: contain;
   background-color: red;
   /* height: 155px;

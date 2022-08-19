@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import h337 from "heatmap.js";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { BiRotateRight, BiRotateLeft } from 'react-icons/bi';
-import useWindowDimensions from '../common/useWindowDimensions';
 
 function Heatmap() {
-    // const { height, width } = useWindowDimensions();
     const width = window.innerWidth;
     const [rotate, setRotate] = useState(0);
 
@@ -29,18 +27,33 @@ function Heatmap() {
         data: [
             dataPoint,
             {
-                x: 507,
-                y: 500,
-                value: 20
+                x: 20,
+                y: 150,
+                value: 90
             },
             {
-                x: 500,
-                y: 538,
+                x: 130,
+                y: 140,
                 value: 60
             },
             {
-                x: 467,
-                y: 555,
+                x: 200,
+                y: 200,
+                value: 80
+            },
+            {
+                x: 230,
+                y: 110,
+                value: 90
+            },
+            {
+                x: 430,
+                y: 240,
+                value: 60
+            },
+            {
+                x: 300,
+                y: 290,
                 value: 80
             }
         ]
@@ -66,8 +79,8 @@ function Heatmap() {
         // let h = 320;
         // let w = 384;
 
-        let h1 = 100; //h = y-axis
-        let w1 = 100; //w = x-axis
+        // let h1 = 100; //h = y-axis
+        // let w1 = 100; //w = x-axis
 
         let data = {
             x: Math.random() * w, // x coordinate of the datapoint, a number
@@ -113,7 +126,7 @@ function Heatmap() {
                         >
                             {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                                 <React.Fragment>
-                                    <div className="backStage">
+                                    <div className="backStage bg-gray-300">
                                         <TransformComponent >
                                             <div className={`heatmap heatmapcss ${rotate === 90 ? 'right' : rotate === 180 ? 'upsideDown' : rotate === 270 ? 'left' : ''}`}>
 
