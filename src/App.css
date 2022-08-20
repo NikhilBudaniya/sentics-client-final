@@ -1,14 +1,17 @@
+.heatmapButton{
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+}
+
 .heatmapcss{
   background: url('./components/assets/bg_rotated.png') no-repeat right top;
   background-size: contain;
-  background-color: red;
+  /* background-color: red; */
   /* height: 155px;
   width: 464px; */
   /* Ratio of w/h is 3:1 */
   width: 60vw;
   height: 20vw;
 }
-
 
 /* some classes to rotate the heatmap canvas */
 .right{

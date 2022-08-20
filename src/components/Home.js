@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { set, remove } from '../state/reducers/authReducer';
+import CenterSection from './home_component/CenterSection';
 import Header from './home_component/Header';
 import Heatmap from './home_component/Heatmap';
 import LeftNav from './home_component/LeftNav';
@@ -30,11 +31,8 @@ function Home() {
                 <div className="bg-red-200">
                     <LeftNav />
                 </div>
-                <div className="bg-blue-200 w-full h-full">
-                    <div className="bg-yellow-200">
-                        <TopNav />
-                    </div>
-                    <Heatmap />
+                <div className="w-full h-full">
+                    <CenterSection />
                 </div>
             </div>
         </div>

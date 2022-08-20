@@ -6,4 +6,4 @@ function LeftNav() {
   )
 }
 
-export default LeftNav
+export default LeftNav;
