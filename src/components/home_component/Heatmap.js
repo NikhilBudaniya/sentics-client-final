@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import h337 from "heatmap.js";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { BiRotateRight, BiRotateLeft } from 'react-icons/bi';
+import { BiRotateRight, BiRotateLeft, BiMinus } from 'react-icons/bi';
+import { BsPlusLg } from 'react-icons/bs';
 
 function Heatmap() {
     const width = window.innerWidth;
@@ -25,7 +26,6 @@ function Heatmap() {
         max: 100,
         min: 0,
         data: [
-            dataPoint,
             {
                 x: 20,
                 y: 150,
@@ -70,8 +70,8 @@ function Heatmap() {
     }, [rotate]);
 
     const handleAddData = () => {
-        let h = 20*width/100;
-        let w = 60*width/100;
+        let h = 20 * width / 100;
+        let w = 60 * width / 100;
 
         // let h = 307;
         // let w = 921;
@@ -115,10 +115,10 @@ function Heatmap() {
 
     return (
         <>
-            <div className="w-full h-full bg-blue-400 p-5 flex flex-col items-center">
+            <div className="w-full h-full p-5 flex flex-col items-center border-2 rounded-xl">
 
-                <div className="w-full bg-red-100 flex justify-center items-center">
-                    <div className="flex flex-col justify-center items-center">
+                <div className="w-full flex justify-center items-center">
+                    <div className="flex flex-col justify-center items-center w-full">
 
                         <TransformWrapper
                             minScale={0.2}
@@ -126,27 +126,27 @@ function Heatmap() {
                         >
                             {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                                 <React.Fragment>
-                                    <div className="backStage bg-gray-300">
+                                    <div className="backStage">
                                         <TransformComponent >
                                             <div className={`heatmap heatmapcss ${rotate === 90 ? 'right' : rotate === 180 ? 'upsideDown' : rotate === 270 ? 'left' : ''}`}>
 
                                             </div>
                                         </TransformComponent>
                                     </div>
-                                    <div className="flex justify-evenly my-5 w-full">
-                                        <button onClick={() => zoomIn()} type="button" className="flex justify-center w-10 py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                                            +
+                                    <div className="flex justify-start mt-5 w-full text-sm">
+                                        <button onClick={() => zoomIn()} type="button" className="text-[#10449A] mx-1 flex justify-center w-10 py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
+                                            <BsPlusLg size="20px" />
                                         </button>
-                                        <button onClick={() => zoomOut()} type="button" className="flex justify-center w-10 py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                                            -
+                                        <button onClick={() => zoomOut()} type="button" className="text-[#10449A] mx-1 flex justify-center w-10 py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
+                                            <BiMinus size="20px" />
                                         </button>
-                                        <button onClick={() => {resetTransform(); setRotate(0);}} type="button" className="flex justify-center w-20 py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                                            reset
+                                        <button onClick={() => { resetTransform(); setRotate(0); }} type="button" className="text-[#10449A] mx-1 flex justify-center w-14 py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
+                                            Reset
                                         </button>
-                                        <button onClick={() => handleRotate("left")} type="button" className="w-20 py-2 px-4 flex justify-center bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                                        <button onClick={() => handleRotate("left")} type="button" className="text-[#10449A] mx-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
                                             <BiRotateLeft size="20px" />
                                         </button>
-                                        <button onClick={() => handleRotate("right")} type="button" className="w-20 py-2 px-4 flex justify-center bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                                        <button onClick={() => handleRotate("right")} type="button" className="text-[#10449A] mx-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
                                             <BiRotateRight size="20px" />
                                         </button>
                                     </div>
@@ -155,7 +155,7 @@ function Heatmap() {
                         </TransformWrapper>
                     </div>
                 </div>
-                <button className="border-2 border-lime-600 bg-lime-400 p-2 rounded-xl my-5" onClick={handleAddData}>Add Data</button>
+                {/* <button className="border-2 border-lime-600 bg-lime-400 p-2 rounded-xl my-5" onClick={handleAddData}>Add Data</button> */}
 
             </div>
         </>
