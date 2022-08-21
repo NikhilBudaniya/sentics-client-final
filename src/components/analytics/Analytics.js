@@ -1,10 +1,10 @@
 import React from 'react'
 
 // History view component
-function History() {
+function Analytics() {
   return (
     <div>History</div>
   )
 }
 
-export default History
+export default Analytics
