@@ -19,16 +19,16 @@ function Dashboard() {
     const auth = useSelector((store) => store.auth.value);
 
     useEffect(() => {
-        console.log(auth);
+        // console.log(auth);
     }, [auth]);
 
 
     return (
         <div className="h-full w-full">
-            <div class="grid grid-flow-rowgrid-cols-12 gap-0">
-                <div class="row-span-1 col-span-12 h-full w-full"><Header /></div>
-                <div class="row-span-1 col-span-2 h-full w-full max-w-xs"><LeftNav /></div>
-                <div class="row-span-1 col-span-10 h-full w-full"><LiveData /></div>
+            <div className="grid grid-flow-rowgrid-cols-12 gap-0">
+                <div className="row-span-1 col-span-12 h-full w-full"><Header /></div>
+                <div className="row-span-1 col-span-2 h-full w-full max-w-xs"><LeftNav /></div>
+                <div className="row-span-1 col-span-10 h-full w-full"><LiveData /></div>
             </div>
         </div>
     )
