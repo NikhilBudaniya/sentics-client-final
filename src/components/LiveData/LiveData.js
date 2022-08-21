@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { set, remove } from '../../state/reducers/authReducer'; 
 import Heatmap from '../utilities/Heatmap';
-import TopNav from '../utilities/DataCards';
+import DataCards from '../utilities/DataCards';
 
 // Home component for the live view
 function LiveData() {
@@ -25,7 +25,7 @@ function LiveData() {
         <div className="h-full w-full">
             <div className="">
                 <div className="bg-yellow-200">
-                    <TopNav />
+                    <DataCards />
                 </div>
                 <div className="p-5">
                     <Heatmap />
