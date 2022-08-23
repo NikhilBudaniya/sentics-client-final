@@ -115,10 +115,10 @@ function Heatmap() {
 
     return (
         <>
-            <div className="w-full h-full p-5 flex flex-col items-center border-2 rounded-xl">
+            <div className="w-full h-full p-5 flex flex-col items-center border-2">
 
-                <div className="w-full flex justify-center items-center">
-                    <div className="flex flex-col justify-center items-center w-full">
+                {/* <div className="w-full flex justify-center items-center "> */}
+                    <div className="flex flex-col justify-center items-center h-full w-full">
 
                         <TransformWrapper
                             minScale={0.2}
@@ -126,7 +126,7 @@ function Heatmap() {
                         >
                             {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                                 <React.Fragment>
-                                    <div className="backStage">
+                                    <div className="backStage flex justify-center items-center bg-[#F4F5F4] rounded-xl h-full w-full">
                                         <TransformComponent >
                                             <div className={`heatmap heatmapcss ${rotate === 90 ? 'right' : rotate === 180 ? 'upsideDown' : rotate === 270 ? 'left' : ''}`}>
 
@@ -154,7 +154,7 @@ function Heatmap() {
                             )}
                         </TransformWrapper>
                     </div>
-                </div>
+                {/* </div> */}
                 {/* <button className="border-2 border-lime-600 bg-lime-400 p-2 rounded-xl my-5" onClick={handleAddData}>Add Data</button> */}
 
             </div>

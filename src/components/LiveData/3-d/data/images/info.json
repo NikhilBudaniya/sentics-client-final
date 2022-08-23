@@ -1,0 +1,10 @@
+{
+    "dummy": {
+        "filename": "dummy.PNG",
+        "dimensions": {
+            "x": 40,
+            "y": 30
+        },
+        "rotation": 0
+    }
+}

@@ -1,0 +1,103 @@
+body {
+    position: fixed;
+    margin: 0;
+  }
+  
+  .wrapper {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr;
+    /* grid-template-rows: 200px max-content; */
+    grid-template-rows: 100px auto;
+    height: 100vh;
+  }
+  
+  .toppanel {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    background: #161616;
+    color: white;
+  }
+  
+  .sidepanel {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 5;
+    background: #000000;
+  }
+  
+  .viewer {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 5;
+    background: grey;
+    color: white;
+  }
+  
+  canvas {
+    margin: 0;
+  }
+  
+  .button_side {
+    background-color: #0f4f8b;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    width: 90%;
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.2s;
+  }
+  
+  .button_side:hover {
+    background-color: #b6b6b6;
+    color: white;
+  }
+
+  .top_logo_div {
+    float: left;
+    width: 100px;
+    height: 100%;
+  }
+
+  .top_logo {
+    padding: 10px;
+  }
+
+  .top_status {
+    float: right;
+    /* padding-left:5%; */
+    /* padding-right:5%; */
+    width: 140px;
+    height: 80%;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
+    color: rgb(255, 255, 255);
+    background-color: #0f4f8b;
+    
+  }
+
+  .top_status_name {
+    text-indent: 10px;
+    font-size: 16px;
+    padding: 0;
+    line-height: 0.1;
+  }
+  .top_status_value {
+    font-size: 40px;
+    margin-right: 10px;
+    line-height: 0.1;
+    text-align: right;
+  }

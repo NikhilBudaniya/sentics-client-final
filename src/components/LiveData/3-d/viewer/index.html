@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ProSuite</title>
+    <link rel="icon" type="image/svg+xml" href="./public/data/icon.svg" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <script src="index.js" type="module" defer></script>
+    <div class="wrapper">
+        <div vertical layout class="toppanel">
+            <div class="top_logo_div">
+                <img src="../data/icon.svg" alt="Probility" class="top_logo">
+            </div>
+            <div class="top_logo_div">
+                <h1 style="font-size: 40px;">ProSuite</h1>
+            </div>
+            <div class="top_status">
+                <p class="top_status_name">Vehicles Today</h2>
+                <br>
+                <p class="top_status_value" id="top_status_vehicles_today">0</h2>
+            </div>
+            <div class="top_status">
+                <p class="top_status_name">People Today</h2>
+                <br>
+                <p class="top_status_value" id="top_status_people_today">0</h2>
+            </div>
+            <div class="top_status">
+                <p class="top_status_name">Vehicles</h2>
+                <br>
+                <p class="top_status_value" id="top_status_vehicles">0</h2>
+            </div>
+            <div class="top_status">
+                <p class="top_status_name">People</h2>
+                <br>
+                <p class="top_status_value" id="top_status_people">0</h2>
+            </div>
+        </div>
+        <div class="sidepanel">
+            SidePanel
+            <!-- <button class="button_side" id="btn_loadData">Load Data</button> -->
+            <button class="button_side" id="btn_toggleVehicles">Toggle Vehicles</button>
+            <button class="button_side" id="btn_resetView">Reset View</button>
+            <button class="button_side" id="btn_toggleGrid">Toggle Grid</button>
+            <button class="button_side" id="btn_hideDoubles">Refresh Objects</button>
+        </div>
+        <div class="viewer" id="viewer">
+            <canvas class="canvas" id="canvas">
+            </canvas>
+        </div>
+    </div>
+</body>
+
+</html>
