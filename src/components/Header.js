@@ -8,7 +8,11 @@ function Header() {
       <div>
         <img src={logo} alt="logo" />
       </div>
-      <div>
+      <div className="header-info">
+        <div className="flex items-center space-between">
+          <p>System status :</p>
+          <p style={{ backgroundColor: "#2CB816" }}></p>
+        </div>
         <button>Sign In</button>
       </div>
     </div>
