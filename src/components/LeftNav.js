@@ -5,7 +5,7 @@ import ToggleSwith from './utilities/utilComponents/ToggleSwith';
 
 function LeftNav() {
   return (
-    <div className="shadow-xl navHeight relative overflow-hidden">
+    <div className="shadow-xl navHeight relative ">
       <div className=" border-0 border-red-500 py-5">
         <ul>
           <li className='text-xl border-0 pl-5 py-3 border-red-500 font-semibold bg-slate-200'>
