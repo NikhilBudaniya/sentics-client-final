@@ -126,7 +126,7 @@ function Heatmap() {
                         >
                             {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                                 <React.Fragment>
-                                    <div className="backStage flex justify-center items-center bg-[#F4F5F4] rounded-xl h-full w-full">
+                                    <div className="backStage flex justify-center items-center rounded-xl h-full w-full">
                                         <TransformComponent >
                                             <div className={`heatmap heatmapcss ${rotate === 90 ? 'right' : rotate === 180 ? 'upsideDown' : rotate === 270 ? 'left' : ''}`}>
 
