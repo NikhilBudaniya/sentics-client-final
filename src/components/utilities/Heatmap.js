@@ -126,7 +126,7 @@ function Heatmap() {
 
     return (
         <>
-            <div className="w-full h-full p-5 flex flex-col items-center border-2">
+            <div className="w-full h-full flex flex-col items-center border-2">
 
                 {/* <div className="w-full flex justify-center items-center "> */}
                 <div className="flex flex-col justify-center items-center h-full w-full">

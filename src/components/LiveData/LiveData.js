@@ -24,7 +24,7 @@ function LiveData() {
 
     return (
         <div className="h-full w-full flex flex-col">
-            <DataCards className="" />
+            {/* <DataCards className="" /> */}
             <Heatmap className="" />
         </div>
     )
