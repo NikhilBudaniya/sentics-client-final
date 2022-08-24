@@ -34,8 +34,8 @@ function Dashboard() {
         <div className="h-full w-full">
             <div className="h-full w-full"><Header /></div>
             <div className="flex">
-                <div className="min-w-[50px] max-w-[350px]"><LeftNav /></div>
-                <div className="grow"><LiveData /></div>
+                <div className="min-w-[50px] xl:min-w-[250px] max-w-[350px]"><LeftNav /></div>
+                <div className="w-full"><LiveData /></div>
             </div>
         </div>
     )

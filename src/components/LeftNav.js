@@ -6,14 +6,16 @@ import ToggleSwith from './utilities/utilComponents/ToggleSwith';
 
 function LeftNav() {
 
-  const [menu, setMenu] = useState(false)
+  const [menu, setMenu] = useState(true)
+
+  
 
   const handlemenu = () => {
     setMenu(!menu);
   }
 
   return (
-    <div className={`shadow-xl navHeight overflow-hidden bg-white sm:w-[250px] absolute z-50 xl:relative ${menu ? 'left-[0px]' : 'xl:left-[0px] left-[-200px]'} ease-in-out duration-300`}>
+    <div className={`shadow-xl navHeight overflow-hidden bg-white sm:w-[250px] xl:w-full absolute z-50 xl:relative ${menu ? 'left-[0px]' : 'xl:left-[0px] left-[-200px]'} ease-in-out duration-300`}>
       <div className=" border-0 border-red-500">
         <ul>
           <li className='text-xl border-0 pl-5 py-3 border-red-500 font-semibold bg-slate-200'>

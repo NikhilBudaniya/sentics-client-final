@@ -5,12 +5,20 @@
 .heatmapcss{
   background: url('./components/assets/images/bg_rotated.png') no-repeat right top;
   background-size: contain;
+  /* border: 1px solid red; */
   /* background-color: red; */
   /* height: 155px;
   width: 464px; */
   /* Ratio of w/h is 3:1 */
-  width: 78vw;
-  height: 26vw;
+  /* width: 78vw;
+  height: 26vw; */
+  /* transform: translate(10,10); */
+}
+
+/* custom css to align the buttons of heatmap on it */
+.customBtns{
+  margin-top: 23vw;
+  /* left: 0; */
 }
 
 /* some classes to rotate the heatmap canvas */
@@ -22,4 +30,19 @@
 }
 .upsideDown{
   transform: rotate(180deg);
+}
+.flipY{
+  transform: rotateX(-180deg);
+}
+.flipX{
+  transform: rotateY(-180deg);
+}
+.flipYright{
+  transform: rotate(90deg) rotateX(-180deg);
+}
+.flipYleft{
+  transform: rotate(-90deg) rotateX(-180deg);
+}
+.flipYupsideDown{
+  transform: rotate(180deg) rotateX(-180deg);
 }
