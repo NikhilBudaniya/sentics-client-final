@@ -154,7 +154,7 @@ function Heatmap() {
                                 <React.Fragment>
                                     <div className="backStage flex justify-center items-center border-0 bg-[#F4F5F4] overflow-hidden rounded-xl h-full w-full">
                                         <TransformComponent > 
-                                            <div  ref={map} id="heatmap" className={`w-[1146px] border-2 h-[618px] heatmapcss ${rotate === 90 ? 'right' : rotate === 180 ? 'upsideDown' : rotate === 270 ? 'left' : ''}`}>
+                                            <div  ref={map} id="heatmap" className={`w-[1240px] border-2 h-[469px] heatmapcss ${rotate === 90 ? 'right' : rotate === 180 ? 'upsideDown' : rotate === 270 ? 'left' : ''}`}>
 
                                             </div>
                                         </TransformComponent>
