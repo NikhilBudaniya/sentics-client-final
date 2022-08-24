@@ -4,15 +4,43 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap');
 
-*{
+* {
     font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
+.scrollbar::-webkit-scrollbar {
+    width: 10px;
+    height: 20px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #ffffff;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background: #b8d5f4;
+    border-radius: 100vh;
+    border: 2px solid #edf0f7;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #6297e5;
+}
+
+body {
     height: 100%;
     width: 100%;
 }
 
-.navHeight{
+.navHeight {
     height: calc(100vh - 70px) !important;
+}
+
+.container-large {
+    margin: auto;
+    max-width: 1500px;
 }
