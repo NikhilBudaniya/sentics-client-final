@@ -32,9 +32,9 @@ function Dashboard() {
         //     </div>
         // </div>
         <div className="h-full w-full">
-                <div className="h-full w-full"><Header /></div>
+            <div className="h-full w-full"><Header /></div>
             <div className="flex">
-                <div className="w-full"><LeftNav /></div>
+                <div className="min-w-[50px] max-w-[350px]"><LeftNav /></div>
                 <div className="grow"><LiveData /></div>
             </div>
         </div>
