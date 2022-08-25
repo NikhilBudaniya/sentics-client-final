@@ -15,6 +15,27 @@
   /* transform: translate(10,10); */
 }
 
+
+@media only screen and (max-width: 1279px) {
+  .heatmapcss { background: url('./components/assets/images/bg_rotated.png') no-repeat right top;
+    background-size: contain;
+  /* background-color: red; */
+    width: 90vw;
+    height: 30vw;
+    /* transform: translate(10,10); */
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .heatmapcss { background: url('./components/assets/images/bg_rotated.png') no-repeat right top;
+    background-size: contain;
+    /* background-color: red; */
+    width: 80vw;
+    height: 26.6vw;
+    /* transform: translate(10,10); */
+  }
+}
+
 /* custom css to align the buttons of heatmap on it */
 .customBtns{
   margin-top: 23vw;
