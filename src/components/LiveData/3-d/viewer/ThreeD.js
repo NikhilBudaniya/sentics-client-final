@@ -9,7 +9,7 @@ import { BsPlusLg, BsSkype } from 'react-icons/bs';
 import model from './OHLF_V1.gltf';
 import path_image from '../data/images/layout_16_02.jpg';
 import sky_img from '../data/images/bgImg.jpg';
-import { Sky } from 'three-sky';
+// import { Sky } from 'three-sky';
 
 // import model from "../data/models/OHLF_V1.gltf";
 
@@ -47,9 +47,9 @@ function ThreeD() {
         // var sky = new THREE.Mesh(skyGeo, skyMaterial);
         // sky.material.side = THREE.BackSide;
         // scene.add(sky);
-        const sky = new Sky();
-        sky.scale.setScalar(450000);
-        scene.add(sky);
+        // const sky = new Sky();
+        // sky.scale.setScalar(450000);
+        // scene.add(sky);
 
         // BACKGROUND PLANE / PNG
         const geometry = new THREE.PlaneGeometry(26.22, 83.50);
