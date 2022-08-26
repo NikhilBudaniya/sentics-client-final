@@ -1,17 +1,16 @@
 .data-cards {
   display: flex;
-  align-items: flex-start;
   justify-content: space-evenly;
-  flex-wrap: wrap;
 }
 
 .card {
-  width: 352px;
-  height: 144px;
+  min-width: 250px;
+  width: 250px;
+  height: 140px;
   background: #eff6ff;
   box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
-  margin: 1.5rem 1rem;
+  margin: 1rem;
 }
 
 .card h1 {
@@ -19,7 +18,7 @@
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 16px;
   color: #10449a;
 }
 

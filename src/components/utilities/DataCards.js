@@ -7,7 +7,7 @@ function DataCards() {
       <Card title="Safety Score" overall_score="90%" monthly_score="90%" daily_score="90%" />
       <Card title="Productivity Score" overall_score="90%" monthly_score="90%" daily_score="90%" />
       <Card title="Forklift Speed Violations" overall_score="90%" monthly_score="90%" daily_score="90%" />
-      <Card title="Waling Area Violations" overall_score="90%" monthly_score="90%" daily_score="90%" />
+      <Card title="Walking Area Violations" overall_score="90%" monthly_score="90%" daily_score="90%" />
     </div>
   )
 }
