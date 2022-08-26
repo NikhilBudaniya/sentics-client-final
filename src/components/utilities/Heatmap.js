@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import h337 from "heatmap.js";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { BiRotateRight, BiRotateLeft, BiMinus } from 'react-icons/bi';
@@ -8,8 +8,11 @@ import { TbFlipHorizontal } from 'react-icons/tb';
 function Heatmap() {
     const width = window.innerWidth;
     const [rotate, setRotate] = useState(0);
-    const [flip, setFlip] = useState({x: false, y: false});
-
+    const [flip, setFlip] = useState({ x: false, y: false });
+    const heatmapContainer = useRef();
+    const map = useRef();
+    const [HeatmapHeight, setHeatmapHeight] = useState();
+    const [HeatmapWidth, setHeatmapWidth] = useState();
     var config = {
         container: document.querySelector('.heatmap'),
         radius: 10,
@@ -64,8 +67,19 @@ function Heatmap() {
     var heatmapInstance;
 
     useEffect(() => {
+        // console.log(heatmapContainer.current.clientWidth);
+        setHeatmapHeight((heatmapContainer.current.clientHeight + 'px')); //setting map's height to its parent component
+        setHeatmapWidth((heatmapContainer.current.clientWidth + 'px')); //setting map's width to its parent component
+        // heatmapInstance = h337.create({
+        //     container: document.querySelector('#heatmap')
+        // });
+        // map.current.height = HeatmapHeight+'px';
+        // map.current.width = HeatmapWidth+'px';
+    }, [])
+
+    useEffect(() => {
         heatmapInstance = h337.create({
-            container: document.querySelector('.heatmap')
+            container: document.querySelector('#heatmap')
         });
 
         heatmapInstance.setData(data);
@@ -116,20 +130,20 @@ function Heatmap() {
     }
 
     const handleflip = () => {
-        if(flip.x){
-            setFlip({...flip, x: false})
+        if (flip.x) {
+            setFlip({ ...flip, x: false })
         }
-        else{
-            setFlip({...flip, x: true});
+        else {
+            setFlip({ ...flip, x: true });
         }
     }
 
     return (
         <>
-            <div className="w-full h-full p-5 flex flex-col items-center border-2">
+            <div className=" flex flex-col items-center border-0">
 
                 {/* <div className="w-full flex justify-center items-center "> */}
-                <div className="flex flex-col justify-center items-center h-full w-full">
+                <div ref={heatmapContainer} className="relative border-0">
 
                     <TransformWrapper
                         minScale={0.2}
@@ -137,34 +151,34 @@ function Heatmap() {
                     >
                         {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                             <React.Fragment>
-                                <div className="backStage flex flex-col justify-center items-center rounded-xl h-full w-full">
+                                <div className="backStage flex justify-center items-start border-0 bg-[#F4F5F4] overflow-hidden rounded-xl h-full w-full">
                                     <TransformComponent >
-                                        <div className={`heatmap heatmapcss ${flip.x ? (
+                                        <div ref={map} id="heatmap" className={` border-0 heatmapcss ${flip.x ? (
                                             rotate === 90 ? 'flipYright' : rotate === 180 ? 'flipYupsideDown' : rotate === 270 ? 'flipYleft' : 'flipY'
                                         ) : ""} ${rotate === 90 ? 'right' : rotate === 180 ? 'upsideDown' : rotate === 270 ? 'left' : ''}`}>
 
                                         </div>
                                     </TransformComponent>
-                                    <div className="flex customBtns absolute right-10 justify-start mt-5 w-fit text-sm">
-                                        <button onClick={() => zoomIn()} type="button" className="border-2 border-grey-100 text-[#10449A] mx-1 flex justify-center w-12 py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
-                                            <BsPlusLg size="20px" />
-                                        </button>
-                                        <button onClick={() => zoomOut()} type="button" className="border-2 border-grey-100 text-[#10449A] mx-1 flex justify-center w-12 py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
-                                            <BiMinus size="20px" />
-                                        </button>
-                                        <button onClick={() => { resetTransform(); setRotate(0); setFlip({x: false, y: false})}} type="button" className="border-2 border-grey-100 text-[#10449A] mx-1 flex justify-center w-14 py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
-                                            Reset
-                                        </button>
-                                        <button onClick={() => handleRotate("left")} type="button" className="border-2 border-grey-100 text-[#10449A] mx-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
-                                            <BiRotateLeft size="20px" />
-                                        </button>
-                                        <button onClick={() => handleRotate("right")} type="button" className="text-[#10449A] mx-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
-                                            <BiRotateRight size="20px" />
-                                        </button>
-                                        <button onClick={() => handleflip()} type="button" className="text-[#10449A] mx-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
-                                            <TbFlipHorizontal size="20px" />
-                                        </button>
-                                    </div>
+                                </div>
+                                <div className="flex absolute bottom-4 left-4 justify-start mt-5 w-full text-sm">
+                                    <button onClick={() => zoomIn()} type="button" className="text-[#10449A] bg-white mx-1 flex justify-center w-10 py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
+                                        <BsPlusLg size="20px" />
+                                    </button>
+                                    <button onClick={() => zoomOut()} type="button" className="text-[#10449A] bg-white mx-1 flex justify-center w-10 py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
+                                        <BiMinus size="20px" />
+                                    </button>
+                                    <button onClick={() => { resetTransform(); setRotate(0); setFlip({x: false, y: false})}} type="button"  className="text-[#10449A] mx-1 flex justify-center w-14 py-2 px-4 bg-white hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
+                                        Reset
+                                    </button>
+                                    <button onClick={() => handleRotate("left")} type="button" className="text-[#10449A] bg-white mx-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
+                                        <BiRotateLeft size="20px" />
+                                    </button>
+                                    <button onClick={() => handleRotate("right")} type="button" className="text-[#10449A] bg-white mx-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
+                                        <BiRotateRight size="20px" />
+                                    </button>
+                                    <button onClick={() => handleflip()} type="button" className="text-[#10449A] bg-white mx-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl">
+                                        <TbFlipHorizontal size="20px" />
+                                    </button>
                                 </div>
                             </React.Fragment>
                         )}
