@@ -5,9 +5,10 @@ import Home from './LiveData/LiveData';
 import Header from './Header';
 import LeftNav from './LeftNav';
 import LiveData from './LiveData/LiveData';
+import { Outlet } from 'react-router-dom';
 
 // Home component for the live view
-function Dashboard() {
+function Dashboard(props) {
     // sample redux action dispatch
     // dispatch ==> used to dispatch a action
     const dispatch = useDispatch();
@@ -35,7 +36,9 @@ function Dashboard() {
             <div className="h-full w-full"><Header /></div>
             <div className="flex">
                 <div className="min-w-[5vw] xl:min-w-[250px] max-w-[20vw]"><LeftNav /></div>
-                <div className="w-full"><LiveData /></div>
+                <div className="w-full">
+                    <Outlet/>
+                </div>
             </div>
         </div>
     )

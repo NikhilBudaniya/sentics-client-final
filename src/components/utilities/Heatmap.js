@@ -131,7 +131,7 @@ function Heatmap() {
         <>
             <div className=" flex flex-col items-center border-0 h-full">
 
-                <div ref={heatmapContainer} className="relative border-0 h-full">
+                <div ref={heatmapContainer} className="relative border-0 h-full items-center">
 
                     <TransformWrapper
                         minScale={0.2}

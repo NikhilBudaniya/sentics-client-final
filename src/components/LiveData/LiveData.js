@@ -6,7 +6,7 @@ import DataCards from '../utilities/DataCards';
 import ThreeD from './3-d/viewer/ThreeD';
 
 // Home component for the live view
-function LiveData() {
+function LiveData(props) {
     // sample redux action dispatch
     // dispatch ==> used to dispatch a action
     const dispatch = useDispatch();
