@@ -6,13 +6,17 @@ import { BsPlusLg } from 'react-icons/bs';
 import { TbFlipHorizontal } from 'react-icons/tb';
 
 function Heatmap() {
+    // get the width and height of window to make heatmap responsive
     const width = window.innerWidth;
+    const height = window.innerHeight;
+    // states to handle roatation and flipping functionalities
     const [rotate, setRotate] = useState(0);
+    // we can implement flip along y-axis also (not implemented for now)
     const [flip, setFlip] = useState({ x: false, y: false });
+
+    // HEATMAP initialization and configurations
     const heatmapContainer = useRef();
     const map = useRef();
-    const [HeatmapHeight, setHeatmapHeight] = useState();
-    const [HeatmapWidth, setHeatmapWidth] = useState();
     var config = {
         container: document.querySelector('.heatmap'),
         radius: 10,
@@ -67,33 +71,18 @@ function Heatmap() {
     var heatmapInstance;
 
     useEffect(() => {
-        // console.log(heatmapContainer.current.clientWidth);
-        setHeatmapHeight((heatmapContainer.current.clientHeight + 'px')); //setting map's height to its parent component
-        setHeatmapWidth((heatmapContainer.current.clientWidth + 'px')); //setting map's width to its parent component
-        // heatmapInstance = h337.create({
-        //     container: document.querySelector('#heatmap')
-        // });
-        // map.current.height = HeatmapHeight+'px';
-        // map.current.width = HeatmapWidth+'px';
-    }, [])
-
-    useEffect(() => {
         heatmapInstance = h337.create({
             container: document.querySelector('#heatmap')
         });
 
         heatmapInstance.setData(data);
-    }, [rotate]);
+    }, [rotate, flip]);
 
+    // function to add sample data on the heatmap
     const handleAddData = () => {
-        let h = 20 * width / 100;
-        let w = 60 * width / 100;
-
-        // let h = 307;
-        // let w = 921;
-
-        // let h = 320;
-        // let w = 384;
+        let hper = 62, wper = width <=1279 ? 90 : 80;
+        let h = hper * height / 100;
+        let w = wper * width / 100;
 
         // let h1 = 100; //h = y-axis
         // let w1 = 100; //w = x-axis
@@ -140,20 +129,20 @@ function Heatmap() {
 
     return (
         <>
-            <div className=" flex flex-col items-center border-0">
+            <div className=" flex flex-col items-center border-0 h-full">
 
-                {/* <div className="w-full flex justify-center items-center "> */}
-                <div ref={heatmapContainer} className="relative border-0">
+                <div ref={heatmapContainer} className="relative border-0 h-full items-center">
 
                     <TransformWrapper
                         minScale={0.2}
                         limitToBounds={false}
                     >
                         {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+                            // bg-[#F4F5F4]
                             <React.Fragment>
-                                <div className="backStage flex justify-center items-start border-0 bg-[#F4F5F4] overflow-hidden rounded-xl h-full w-full">
+                                <div className="backStage flex justify-center items-start border-2 overflow-hidden rounded-xl h-full w-full">
                                     <TransformComponent >
-                                        <div ref={map} id="heatmap" className={` border-0 heatmapcss ${flip.x ? (
+                                        <div ref={map} id="heatmap" className={`border-0 heatmapcss ${flip.x ? (
                                             rotate === 90 ? 'flipYright' : rotate === 180 ? 'flipYupsideDown' : rotate === 270 ? 'flipYleft' : 'flipY'
                                         ) : ""} ${rotate === 90 ? 'right' : rotate === 180 ? 'upsideDown' : rotate === 270 ? 'left' : ''}`}>
 
@@ -161,22 +150,22 @@ function Heatmap() {
                                     </TransformComponent>
                                 </div>
                                 <div className="flex absolute bottom-4 left-4 justify-start mt-5 w-full text-sm">
-                                    <button onClick={() => zoomIn()} type="button" className="text-[#10449A] bg-white mx-1 flex justify-center w-10 py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
+                                    <button onClick={() => zoomIn()} type="button" className="text-[#10449A] mx-1 flex justify-center w-10 py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
                                         <BsPlusLg size="20px" />
                                     </button>
-                                    <button onClick={() => zoomOut()} type="button" className="text-[#10449A] bg-white mx-1 flex justify-center w-10 py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
+                                    <button onClick={() => zoomOut()} type="button" className="text-[#10449A] mx-1 flex justify-center w-10 py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
                                         <BiMinus size="20px" />
                                     </button>
-                                    <button onClick={() => { resetTransform(); setRotate(0); setFlip({x: false, y: false})}} type="button"  className="text-[#10449A] mx-1 flex justify-center w-14 py-2 px-4 bg-white hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
+                                    <button onClick={() => { resetTransform(); setRotate(0); setFlip({x: false, y: false})}} type="button"  className="text-[#10449A] mx-1 flex justify-center w-14 py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
                                         Reset
                                     </button>
-                                    <button onClick={() => handleRotate("left")} type="button" className="text-[#10449A] bg-white mx-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
+                                    <button onClick={() => handleRotate("left")} type="button" className="text-[#10449A] mx-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
                                         <BiRotateLeft size="20px" />
                                     </button>
-                                    <button onClick={() => handleRotate("right")} type="button" className="text-[#10449A] bg-white mx-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
+                                    <button onClick={() => handleRotate("right")} type="button" className="text-[#10449A] mx-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
                                         <BiRotateRight size="20px" />
                                     </button>
-                                    <button onClick={() => handleflip()} type="button" className="text-[#10449A] bg-white mx-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl">
+                                    <button onClick={() => handleflip()} type="button" className="text-[#10449A] mx-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl">
                                         <TbFlipHorizontal size="20px" />
                                     </button>
                                 </div>
@@ -184,7 +173,6 @@ function Heatmap() {
                         )}
                     </TransformWrapper>
                 </div>
-                {/* </div> */}
                 {/* <button className="border-2 border-lime-600 bg-lime-400 p-2 rounded-xl my-5" onClick={handleAddData}>Add Data</button> */}
 
             </div>

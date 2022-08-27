@@ -3,12 +3,11 @@ import { MdHomeFilled } from 'react-icons/md';
 import { HiMenuAlt2, HiMenuAlt3 } from 'react-icons/hi';
 import NotifiDrawer from './utilities/NotifiDrawer';
 import ToggleSwith from './utilities/utilComponents/ToggleSwith';
+import { Link, NavLink } from 'react-router-dom';
 
 function LeftNav() {
 
-  const [menu, setMenu] = useState(true)
-
-  
+  const [menu, setMenu] = useState(true);
 
   const handlemenu = () => {
     setMenu(!menu);
@@ -24,18 +23,36 @@ function LeftNav() {
                 <span className='text-3xl col text-white bg-black p-1 rounded-full mr-3'><MdHomeFilled /></span>
                 DashBoard
               </div>
-              <div className='p-2 text-[2rem] xl:hidden' onClick={handlemenu}>{!menu?<HiMenuAlt2 />:<HiMenuAlt3/>}</div>
+              <div className='p-2 text-[2rem] xl:hidden' onClick={handlemenu}>{!menu ? <HiMenuAlt2 /> : <HiMenuAlt3 />}</div>
             </div>
             <div>
               <ul className='text-base font-semibold ml-14 '>
-                <li className='my-2 font-bold text-blue-600'>Live </li>
-                <li className='my-2'>Analytics</li>
+                <NavLink
+                  to="/"
+                  style={({ isActive }) => {
+                    return {
+                      color: isActive ? "blue" : "",
+                      fontWeight: isActive ? "bold" : "",
+                    };
+                  }}>
+                  <li className='my-2'>Live </li>
+                </NavLink>
+                <NavLink
+                  to="/analytics"
+                  style={({ isActive }) => {
+                    return {
+                      color: isActive ? "blue" : "",
+                      fontWeight: isActive ? "bold" : "",
+                    };
+                  }}>
+                  <li className='my-2'>Analytics</li>
+                </NavLink>
               </ul>
             </div>
           </li>
           <li className='pl-5 my-5 border-0 font-semibold flex items-center'>
             <div>
-              show Humans : &ensp;
+              Show Humans : &ensp;
             </div>
             <ToggleSwith />
           </li>
@@ -49,7 +66,7 @@ function LeftNav() {
         </ul>
       </div>
       <div className="absolute w-full bottom-0">
-        {menu?<NotifiDrawer />:<></>}
+        {menu ? <NotifiDrawer /> : <></>}
       </div>
     </div>
   )

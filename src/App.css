@@ -6,27 +6,14 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
 }
 
-.heatmapcss{
-  background: url('./components/assets/images/bg_rotated.png') no-repeat right top;
-  background-size: contain;
-  /* border: 1px solid red; */
-  /* background-color: red; */
-  /* height: 155px;
-  width: 464px; */
-  /* Ratio of w/h is 3:1 */
-  /* width: 78vw;
-  height: 26vw; */
-  /* transform: translate(10,10); */
-}
-
-
+/* RATIO OF W/H should be maintained 3:1 for perfect fitting of bg image */
 @media only screen and (max-width: 1279px) {
   .heatmapcss { background: url('./components/assets/images/bg_rotated.png') no-repeat right top;
     background-size: contain;
+    background-position: center;
   /* background-color: red; */
     width: 90vw;
-    height: 30vw;
-    /* transform: translate(10,10); */
+    height: 62vh;
   }
 }
 
@@ -35,8 +22,7 @@
     background-size: contain;
     /* background-color: red; */
     width: 80vw;
-    height: 26.6vw;
-    /* transform: translate(10,10); */
+    height: 62vh;
   }
 }
 
