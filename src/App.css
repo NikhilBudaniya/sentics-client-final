@@ -6,6 +6,18 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
 }
 
+@media only screen and (max-width: 426px) {
+  .heatmapButtonBox{
+    top: 0;
+  }
+}
+
+@media only screen and (min-width:427px) {
+  .heatmapButtonBox{
+    bottom: 16px;
+  }
+}
+
 /* RATIO OF W/H should be maintained 3:1 for perfect fitting of bg image */
 @media only screen and (max-width: 1279px) {
   .heatmapcss { background: url('./components/assets/images/bg_rotated.png') no-repeat right top;

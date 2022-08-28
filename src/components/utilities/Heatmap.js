@@ -149,7 +149,7 @@ function Heatmap() {
                                         </div>
                                     </TransformComponent>
                                 </div>
-                                <div className="flex flex-col w-fit sm:w-full sm:flex-row  absolute bottom-4 left-4 justify-start mt-5  text-sm">
+                                <div className="heatmapButtonBox flex flex-col w-fit sm:w-full sm:flex-row absolute left-4 justify-start mt-5  text-sm">
                                     <button onClick={() => zoomIn()} type="button" className="text-[#10449A] m-1 flex justify-center w-10 py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 w-full transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
                                         <BsPlusLg size="20px" />
                                     </button>
