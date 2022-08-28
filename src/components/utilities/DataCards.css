@@ -1,6 +1,9 @@
 .data-cards {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  /* flex-wrap: wrap; */
+  overflow-x: scroll;
+  padding: 8px;
 }
 
 .card {

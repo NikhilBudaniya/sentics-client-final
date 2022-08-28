@@ -16,7 +16,7 @@ function Header() {
           <p>System status :</p>
           <p style={{ backgroundColor: systemStatus ? "#2CB816" : "#FF0000" }}></p>
         </div>
-        <button>Sign In</button>
+        <button className='text-sm'>Sign In</button>
       </div>
     </div>
   )
