@@ -3,7 +3,7 @@ import "./DataCards.css";
 
 function DataCards() {
   return (
-    <div className="data-cards overflow-x-scroll">
+    <div className="data-cards">
       <Card title="Safety Score" overall_score="90%" monthly_score="90%" daily_score="90%" />
       <Card title="Productivity Score" overall_score="90%" monthly_score="90%" daily_score="90%" />
       <Card title="Forklift Speed Violations" overall_score="90%" monthly_score="90%" daily_score="90%" />

@@ -2,12 +2,14 @@
   .data-cards { 
     display: flex;
     width: 95vw;
+    overflow-x: scroll;
   }
 }
 
 @media only screen and (min-width: 1280px) {
   .data-cards { 
     display: flex;
+    overflow: hidden;
   }
 }
 
