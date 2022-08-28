@@ -35,7 +35,7 @@ function Dashboard(props) {
         <div className="h-full w-full">
             <div className="h-full w-full"><Header /></div>
             <div className="flex">
-                <div className="min-w-[5vw] xl:min-w-[250px] max-w-[20vw]"><LeftNav /></div>
+                <div className="xl:min-w-[250px] max-w-[20vw]"><LeftNav /></div>
                 <div className="w-full">
                     <Outlet/>
                 </div>
