@@ -19,6 +19,9 @@ function Dashboard(props) {
     // useSelector() is used to access any state from the store
     const auth = useSelector((store) => store.auth.value);
 
+    const Tabwidth = window.innerWidth - 50;
+    const Deskwidth = window.innerWidth - 250;
+    
     useEffect(() => {
         // console.log(auth);
     }, [auth]);
@@ -34,9 +37,9 @@ function Dashboard(props) {
         // </div>
         <div className="h-full w-full">
             <div className="h-full w-full"><Header /></div>
-            <div className="flex">
-                <div className="min-w-[5vw] xl:min-w-[250px] max-w-[20vw]"><LeftNav /></div>
-                <div className="w-full">
+            <div className="flex navHeight sm:relative overflow-hidden max-w-[100vw]">
+                <div className=" sm:min-w-[50px] xl:min-w-[250px] max-w-[20vw]"><LeftNav /></div>
+                <div className={`W-[${Tabwidth}] xl:w-[${Deskwidth}] overflow-hidden`}>
                     <Outlet/>
                 </div>
             </div>
