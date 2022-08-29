@@ -7,6 +7,11 @@ function Header() {
 
   return (
     <div className="flex w-full items-center h-[50px] justify-end sm:justify-between px-1 sm:px-4 md:px-6 shadow-md">
+      <div className="sm:hidden">
+        <div className="flex items-center p-2 bg-blue-50 rounded-full space-between mx-5 border border-blue-100">
+          <p className='w-[12px] h-[12px] rounded-full' style={{ backgroundColor: systemStatus ? "#2CB816" : "#FF0000" }}></p>
+        </div>
+      </div>
       <div className='w-[120px]'>
         <img src={logo} alt="logo" />
       </div>
