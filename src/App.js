@@ -4,12 +4,16 @@ import {
   Route,
 } from "react-router-dom";
 import Dashboard from './components/Dashboard';
+import Analytics from './components/analytics/Analytics';
+import LiveData from './components/LiveData/LiveData';
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Dashboard />} />
-      {/* <Route path="/analytics" element={<Dashboard />} /> */}
+      <Route path="/" element={<Dashboard />}>
+        <Route path="" element={<LiveData />} />
+        <Route path="/analytics" element={<Analytics />} />
+      </Route>
     </Routes>
   );
 }

@@ -6,7 +6,7 @@ import DataCards from '../utilities/DataCards';
 import ThreeD from './3-d/viewer/ThreeD';
 
 // Home component for the live view
-function LiveData() {
+function LiveData(props) {
     // sample redux action dispatch
     // dispatch ==> used to dispatch a action
     const dispatch = useDispatch();
@@ -25,8 +25,8 @@ function LiveData() {
     return (
         <div className=" flex flex-col navHeight overflow-hidden">
             {/* <DataCards /> */}
-            <div><DataCards /></div>
-            <div className="h-[75%]"><Heatmap /></div>
+            <div className="h-[30%]"><DataCards /></div>
+            <div className="h-[70%]"><Heatmap /></div>
             {/* <div className="h-[75%]"><ThreeD /></div> */}
             {/* <Heatmap /> */}
         </div>
