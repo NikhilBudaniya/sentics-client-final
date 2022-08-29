@@ -23,9 +23,9 @@ function LiveData(props) {
 
 
     return (
-        <div className=" flex flex-col navHeight">
+        <div className={`navHeight overflow-hidden`}>
             {/* <DataCards /> */}
-            <div className="h-[30%]"><DataCards /></div>
+            <div className="h-[30%] max-w-[100%] "><DataCards /></div>
             <div className="h-[70%]"><Heatmap /></div>
             {/* <div className="h-[75%]"><ThreeD /></div> */}
             {/* <Heatmap /> */}
