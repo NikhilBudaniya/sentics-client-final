@@ -75,6 +75,11 @@ function Heatmap() {
             container: document.querySelector('#heatmap')
         });
 
+        // FIXME: New data points cleared after 2nd canvas (may be an error or maybe not, can be verified in live data)
+        if(document.querySelector("#heatmap").childElementCount > 2)
+            document.querySelector("#heatmap").removeChild(document.querySelector("#heatmap").firstElementChild);
+        console.log("new: ", document.querySelector("#heatmap").childElementCount);
+
         heatmapInstance.setData(data);
     }, [rotate, flip]);
 
