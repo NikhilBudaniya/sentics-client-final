@@ -37,7 +37,7 @@ body {
 }
 
 .navHeight {
-    height: calc(100vh - 70px) !important;
+    height: calc(100vh - 50px) !important;
     /* border: 1px solid red !important; */
 }
 
