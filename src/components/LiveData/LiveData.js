@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { set, remove } from '../../state/reducers/authReducer';
+import { set } from '../../state/reducers/authReducer';
 import Heatmap from '../utilities/Heatmap';
-import DataCards from '../utilities/DataCards';
-import ThreeD from './3-d/viewer/ThreeD';
+import LiveCards from '../utilities/LiveCards';
 
 // Home component for the live view
-function LiveData() {
+function LiveData(props) {
     // sample redux action dispatch
     // dispatch ==> used to dispatch a action
     const dispatch = useDispatch();
@@ -23,10 +22,9 @@ function LiveData() {
 
 
     return (
-        <div className=" flex flex-col navHeight">
-            {/* <DataCards /> */}
-            <div className="h-[25%]"><DataCards /></div>
-            <div className="h-[75%]"><Heatmap /></div>
+        <div className={`navHeight overflow-hidden`}>
+            <div className="h-[15%] max-w-[100%] min-h-[100px]"><LiveCards /></div>
+            <div className="h-[85%]"><Heatmap /></div>
             {/* <div className="h-[75%]"><ThreeD /></div> */}
             {/* <Heatmap /> */}
         </div>

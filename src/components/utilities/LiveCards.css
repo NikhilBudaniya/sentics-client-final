@@ -1,0 +1,32 @@
+.fade-in {
+  animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.live-cards::-webkit-scrollbar {
+  height: 4px;
+}
+
+/* Track */
+.live-cards::-webkit-scrollbar-track {
+  background: white;
+}
+
+/* Handle */
+.live-cards::-webkit-scrollbar-thumb {
+  background: blue;
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+.live-cards::-webkit-scrollbar-thumb:hover {
+  background: rgb(133, 133, 255);
+}
