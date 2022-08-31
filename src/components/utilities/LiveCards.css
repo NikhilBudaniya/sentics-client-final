@@ -1,13 +1,14 @@
-.fade-in {
-  animation: fadeIn 1s;
+.scroll-up {
+  position: relative;
+  animation: scroll-up 0.1s;
 }
 
-@keyframes fadeIn {
+@keyframes scroll-up {
   0% {
-    opacity: 0;
+    top: 48px;
   }
   100% {
-    opacity: 1;
+    top: 0px;
   }
 }
 

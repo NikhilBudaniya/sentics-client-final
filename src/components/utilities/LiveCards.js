@@ -36,22 +36,22 @@ function Card({ title, overall_score, monthly_score, weekly_score, daily_score }
   return (
     <div className="flex justify-between w-1/4 min-w-[270px] px-5 py-3 shadow-lg bg-blue-100 rounded-xl mr-5">
       <div className='font-semibold text-lg mb-3'>{title}</div>
-      <div ref={mount} className="min-w-[60px] ml-8">
-        <div className="fade-in">
+      <div ref={mount} className="min-w-[70px] ml-8 overflow-hidden">
+        <div className="scroll-up">
           <h2>Overall</h2>
-          <p className="font-bold">{overall_score}</p>
+          <p className="font-bold mt-1.5">{overall_score}</p>
         </div>
-        <div className="hidden fade-in">
-          <h2>Month</h2>
-          <p className="font-bold">{monthly_score}</p>
+        <div className="hidden scroll-up">
+          <h2>Monthly</h2>
+          <p className="font-bold mt-1.5">{monthly_score}</p>
         </div>
-        <div className="hidden fade-in">
-          <h2>Week</h2>
-          <p className="font-bold">{weekly_score}</p>
+        <div className="hidden scroll-up">
+          <h2>Weekly</h2>
+          <p className="font-bold mt-1.5">{weekly_score}</p>
         </div>
-        <div className="hidden fade-in">
+        <div className="hidden scroll-up">
           <h2>Daily</h2>
-          <p className="font-bold">{daily_score}</p>
+          <p className="font-bold mt-1.5">{daily_score}</p>
         </div>
       </div>
     </div>
