@@ -12,7 +12,6 @@ function LiveCards() {
   )
 }
 
-
 function Card({ title, overall_score, monthly_score, weekly_score, daily_score }) {
   const mount = useRef(undefined);
   useEffect(() => {
