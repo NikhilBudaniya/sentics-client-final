@@ -37,7 +37,7 @@ function LiveData(props) {
                 table: "",
             }
         }).then((res) => {
-            console.log("response: ", res);
+            console.log("response: ", res.data);
         }).catch((err) => {
             console.log("error: ", err);
         })
