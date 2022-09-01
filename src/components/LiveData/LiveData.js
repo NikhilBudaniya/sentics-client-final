@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { set } from '../../state/reducers/authReducer';
 import Heatmap from '../utilities/Heatmap';
-import DataCards from '../utilities/DataCards';
 import ThreeD from './3-d/viewer/ThreeD';
 import axios from 'axios';
 import { InfluxDB, Point } from '@influxdata/influxdb-client';
