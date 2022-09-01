@@ -181,7 +181,7 @@ function Heatmap(props) {
                         )}
                     </TransformWrapper>
                 </div>
-                {/* <button className="border-2 border-lime-600 bg-lime-400 p-2 rounded-xl my-5 relative bottom-10" onClick={fetchLiveData}>Add Data</button> */}
+                <button className="border-2 border-lime-600 bg-lime-400 p-2 rounded-xl my-5 relative bottom-10" onClick={fetchLiveData}>Add Data</button>
 
             </div>
         </>

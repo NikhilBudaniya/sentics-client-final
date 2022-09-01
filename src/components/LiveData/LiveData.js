@@ -47,8 +47,8 @@ function LiveData(props) {
     return (
         <div className={`navHeight overflow-hidden`}>
             <div className="h-[15%] max-w-[100%] min-h-[100px]"><LiveCards /></div>
-            {/* <div className="h-[85%]"><Heatmap fetchLiveData={fetchLiveData}/></div> */}
-            <div className="h-[75%]"><ThreeD /></div>
+            <div className="h-[85%]"><Heatmap fetchLiveData={fetchLiveData}/></div>
+            {/* <div className="h-[75%]"><ThreeD /></div> */}
             {/* <Heatmap /> */}
         </div>
     )

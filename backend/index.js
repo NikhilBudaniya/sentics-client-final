@@ -13,7 +13,7 @@ app.use(cors());
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
-})
+}) 
 
 // mqtt connection
 const options = {
@@ -28,15 +28,15 @@ let mqtt_buffer_vehicle = "";
 client.on('connect', function () {
     console.log("connected to mqtt");
     // TODO: configure the configs here
-    client.subscribe(mysqlconfig.mqtt_topics.position.human, function (err) {
+    client.subscribe('position/human', function (err) {
         if (err) {
             console.log(err);
         }
     })
-    client.subscribe(mysqlconfig.mqtt_topics.position.vehicle, function (err) {
+    client.subscribe('position/vehicle', function (err) {
         if (err) {
             console.log(err);
-            onsole.log('Check the topic');
+            console.log('Check the topic');
         }
     })
 })
@@ -44,10 +44,10 @@ client.on('connect', function () {
 client.on('message', function (topic, payload, packet) {
     // payload is buffer
     // TODO: configure the configs here
-    if (topic == mysqlconfig.mqtt_topics.position.human) {
+    if (topic == 'position/human') {
         mqtt_buffer_human = payload.toString()
     }
-    if (topic == mysqlconfig.mqtt_topics.position.vehicle) {
+    if (topic == 'position/vehicle') {
         mqtt_buffer_vehicle = payload.toString()
     }
 })
