@@ -2,13 +2,18 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+
 // import {GUI} from './jsm/libs/lil-gui.module.min.js';
 import { FlyControls } from 'three/examples/jsm/controls/FlyControls';
 import { BiRotateRight, BiRotateLeft, BiMinus } from 'react-icons/bi';
 import { BsPlusLg, BsSkype } from 'react-icons/bs';
 import model from './OHLF_V1.gltf';
+import forklift from '../data/models/forklift.glb';
+import human from '../data/models/human_v2.glb';
 import path_image from '../data/images/layout_16_02.jpg';
-import sky_img from '../data/images/bgImg.jpg';
+import scene_bg from '../data/images/bgImg1.jpg';
 // import { Sky } from 'three-sky';
 
 // import model from "../data/models/OHLF_V1.gltf";
@@ -22,6 +27,10 @@ function ThreeD() {
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(50, 2, 0.1, 1000);
         var renderer = new THREE.WebGLRenderer();
+
+        // changing scene bg
+        const globalLoader = new THREE.TextureLoader();
+        scene.background = globalLoader.load(scene_bg);
 
         // CAMERA POSITIONS/CONFIG
         // camera.position.x = 0;
@@ -55,7 +64,8 @@ function ThreeD() {
         const geometry = new THREE.PlaneGeometry(26.22, 83.50);
         const texture = new THREE.TextureLoader().load(path_image);
         texture.repeat.set(1, 1);
-        const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+        const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide, color: '#fff' });
+        // material.alphaMap
         const plane = new THREE.Mesh(geometry, material);
         plane.rotation.x -= Math.PI / 2;
         plane.rotation.z += 2 * (Math.PI / 2);
@@ -107,6 +117,46 @@ function ThreeD() {
         }, undefined, function (error) {
             console.error(error);
         });
+
+
+        const v_geometry = new THREE.BoxGeometry(1, 2.0, 2);
+        const v_material = new THREE.MeshBasicMaterial({ color: 0x726E74 });
+
+        // load a froklift
+        loader.load(forklift, function (object) {
+            let element = object.scene;
+            element.scale.set(0.0090, 0.0090, 0.0090);
+            // object.layer
+            // console.log(element);
+            element.visible = false
+            scene.add(element);
+        },
+            function (xhr) {
+                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+            },
+            function (error) {
+                console.log('An error happened', error);
+                // return new THREE.Mesh(v_geometry, v_material);
+            }
+        );
+
+        // load a human
+        loader.load(human, function (object) {
+            let element = object.scene;
+            element.scale.set(0.0090, 0.0090, 0.0090);
+            element.translateX(10);
+            // object.layer
+            // console.log(element);
+            scene.add(element);
+        },
+            function (xhr) {
+                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+            },
+            function (error) {
+                console.log('An error happened', error);
+                // return new THREE.Mesh(v_geometry, v_material);
+            }
+        );
 
         // scene.add(cube);
 

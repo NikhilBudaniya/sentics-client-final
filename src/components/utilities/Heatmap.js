@@ -5,7 +5,10 @@ import { BiRotateRight, BiRotateLeft, BiMinus } from 'react-icons/bi';
 import { BsPlusLg } from 'react-icons/bs';
 import { TbFlipHorizontal } from 'react-icons/tb';
 
-function Heatmap() {
+function Heatmap(props) {
+    // fetchlivedata function passed as prop from LiveData component
+    let { fetchLiveData } = props;
+
     // get the width and height of window to make heatmap responsive
     const width = window.innerWidth;
     const height = window.innerHeight;
@@ -76,7 +79,7 @@ function Heatmap() {
         });
 
         // FIXME: New data points cleared after 2nd canvas (may be an error or maybe not, can be verified in live data)
-        if(document.querySelector("#heatmap").childElementCount > 2)
+        if (document.querySelector("#heatmap").childElementCount > 2)
             document.querySelector("#heatmap").removeChild(document.querySelector("#heatmap").firstElementChild);
         console.log("new: ", document.querySelector("#heatmap").childElementCount);
 
@@ -85,7 +88,7 @@ function Heatmap() {
 
     // function to add sample data on the heatmap
     const handleAddData = () => {
-        let hper = 62, wper = width <=1279 ? 90 : 80;
+        let hper = 62, wper = width <= 1279 ? 90 : 80;
         let h = hper * height / 100;
         let w = wper * width / 100;
 
@@ -161,7 +164,7 @@ function Heatmap() {
                                     <button onClick={() => zoomOut()} type="button" className="text-[#10449A] m-1 flex justify-center w-10 py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
                                         <BiMinus size="20px" />
                                     </button>
-                                    <button onClick={() => { resetTransform(); setRotate(0); setFlip({x: false, y: false})}} type="button"  className="text-[#10449A] m-1 flex justify-center py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200  transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
+                                    <button onClick={() => { resetTransform(); setRotate(0); setFlip({ x: false, y: false }) }} type="button" className="text-[#10449A] m-1 flex justify-center py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200  transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
                                         Reset
                                     </button>
                                     <button onClick={() => handleRotate("left")} type="button" className="text-[#10449A] m-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200  transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
@@ -178,7 +181,7 @@ function Heatmap() {
                         )}
                     </TransformWrapper>
                 </div>
-                {/* <button className="border-2 border-lime-600 bg-lime-400 p-2 rounded-xl my-5" onClick={handleAddData}>Add Data</button> */}
+                {/* <button className="border-2 border-lime-600 bg-lime-400 p-2 rounded-xl my-5 relative bottom-10" onClick={fetchLiveData}>Add Data</button> */}
 
             </div>
         </>

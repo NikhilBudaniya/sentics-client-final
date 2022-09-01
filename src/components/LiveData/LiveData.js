@@ -9,7 +9,7 @@ import LiveCards from '../utilities/LiveCards';
 
 // Home component for the live view
 function LiveData(props) {
-    // sample redux action dispatch
+    // SAMPLE REDUX ACTION DISPATCH 
     // dispatch ==> used to dispatch a action
     const dispatch = useDispatch();
     dispatch(set({
@@ -22,15 +22,20 @@ function LiveData(props) {
     useEffect(() => {
         console.log(auth);
     }, [auth]);
+    // ABOVE CODE IS ONLY USAGE DEMONSTRATION OF REDUX-TOOLKIT
 
     const [liveData, setLiveData] = useState();
-    const url = process.env.INFLUX_URL || ''
-    const token = process.env.INFLUX_TOKEN
-    const org = process.env.INFLUX_ORG || ''
+
     const fetchLiveData = () => {
+        let host = process.env.REACT_APP_NODE_BACKEND_URL || 'http://localhost:5000';
+        // refer to backend/index.js for details about the endpoint
         axios({
-            url: `${process.env.REACT_APP_BACKEND_URL}/api/live`,
-            method: 'get',
+            url: `${host}/api/live`,
+            method: 'post',
+            data: {
+                source: "mqtt",
+                table: "",
+            }
         }).then((res) => {
             console.log("response: ", res);
         }).catch((err) => {
@@ -42,8 +47,8 @@ function LiveData(props) {
     return (
         <div className={`navHeight overflow-hidden`}>
             <div className="h-[15%] max-w-[100%] min-h-[100px]"><LiveCards /></div>
-            <div className="h-[85%]"><Heatmap /></div>
-            {/* <div className="h-[75%]"><ThreeD /></div> */}
+            {/* <div className="h-[85%]"><Heatmap fetchLiveData={fetchLiveData}/></div> */}
+            <div className="h-[75%]"><ThreeD /></div>
             {/* <Heatmap /> */}
         </div>
     )
