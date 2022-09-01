@@ -1,0 +1,33 @@
+.scroll-up {
+  position: relative;
+  animation: scroll-up 0.1s;
+}
+
+@keyframes scroll-up {
+  0% {
+    top: 48px;
+  }
+  100% {
+    top: 0px;
+  }
+}
+
+.live-cards::-webkit-scrollbar {
+  height: 4px;
+}
+
+/* Track */
+.live-cards::-webkit-scrollbar-track {
+  background: white;
+}
+
+/* Handle */
+.live-cards::-webkit-scrollbar-thumb {
+  background: blue;
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+.live-cards::-webkit-scrollbar-thumb:hover {
+  background: rgb(133, 133, 255);
+}
