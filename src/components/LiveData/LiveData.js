@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { set, remove } from '../../state/reducers/authReducer';
+import { set } from '../../state/reducers/authReducer';
 import Heatmap from '../utilities/Heatmap';
 import DataCards from '../utilities/DataCards';
 import ThreeD from './3-d/viewer/ThreeD';
 import axios from 'axios';
 import { InfluxDB, Point } from '@influxdata/influxdb-client';
+import LiveCards from '../utilities/LiveCards';
 
 // Home component for the live view
 function LiveData(props) {
@@ -41,9 +42,8 @@ function LiveData(props) {
 
     return (
         <div className={`navHeight overflow-hidden`}>
-            {/* <DataCards /> */}
-            <div className="h-[30%] max-w-[100%] min-h-[150px]"><DataCards /></div>
-            <div className="h-[70%]"><Heatmap /></div>
+            <div className="h-[15%] max-w-[100%] min-h-[100px]"><LiveCards /></div>
+            <div className="h-[85%]"><Heatmap /></div>
             {/* <div className="h-[75%]"><ThreeD /></div> */}
             {/* <Heatmap /> */}
         </div>

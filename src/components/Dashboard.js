@@ -39,7 +39,7 @@ function Dashboard(props) {
             <div className="h-full w-full"><Header /></div>
             <div className="flex navHeight sm:relative overflow-hidden max-w-[100vw]">
                 <div className=" sm:min-w-[50px] xl:min-w-[250px] max-w-[20vw]"><LeftNav /></div>
-                <div className={`W-[${Tabwidth}] xl:w-[${Deskwidth}] overflow-hidden`}>
+                <div className={`w-[${Tabwidth}] xl:w-[${Deskwidth}] overflow-hidden m-auto`}>
                     <Outlet/>
                 </div>
             </div>
