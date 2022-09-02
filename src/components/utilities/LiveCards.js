@@ -15,7 +15,7 @@ function LiveCards() {
 function Card({ title, overall_score, monthly_score, weekly_score, daily_score }) {
   const mount = useRef(undefined);
   useEffect(() => {
-    const length = mount.current.children.length;/*
+    const length = mount.current.children.length;
     const timer = setInterval(() => {
       let j = 0;
       for (let i = 0; i < length; i++) {
@@ -29,14 +29,14 @@ function Card({ title, overall_score, monthly_score, weekly_score, daily_score }
 
     return function () {
       clearInterval(timer);
-    }*/
+    }
   }, []);
 
   return (
     <div className="flex justify-between min-w-[270px] w-full px-5 py-3 shadow-lg bg-blue-100 rounded-xl mr-5">
       <div className='font-semibold text-lg mb-3 mr-5'>{title}</div>
       <div ref={mount}>
-        <div className="hidden scroll-up min-w-max">
+        <div className="scroll-up min-w-max">
           <h2>Overall</h2>
           <p className="font-bold mt-1.5">{overall_score}</p>
         </div>
@@ -44,7 +44,7 @@ function Card({ title, overall_score, monthly_score, weekly_score, daily_score }
           <h2>This month</h2>
           <p className="font-bold mt-1.5">{monthly_score}</p>
         </div>
-        <div className="scroll-up min-w-max">
+        <div className="scroll-up hidden min-w-max">
           <h2>This week</h2>
           <p className="font-bold mt-1.5">{weekly_score}</p>
         </div>
