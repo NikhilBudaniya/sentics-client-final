@@ -35,7 +35,7 @@ function Card({ title, overall_score, monthly_score, weekly_score, daily_score }
   return (
     <div className="flex justify-between min-w-[290px] w-full px-5 py-3 shadow-lg bg-blue-100 rounded-xl mr-5">
       <div className='font-semibold text-lg mb-3 mr-5'>{title}</div>
-      <div ref={mount} className="min-w-[90px]">
+      <div ref={mount} className="min-w-[90px] overflow-hidden">
         <div className="scroll-up min-w-max">
           <h2>Overall</h2>
           <p className="font-bold mt-1.5">{overall_score}</p>
