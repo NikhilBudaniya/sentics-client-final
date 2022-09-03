@@ -19,7 +19,8 @@ function addHeatMap(ctn) {
     });
 }
 
-function Heatmap() {
+function Heatmap(props) {
+    let {liveData, setLiveData, fetchLiveData} = props;
     const mount = useRef(null);
     const [imgSrc, setImgSrc] = useState("");
     let centerViewFunction = undefined;
@@ -55,6 +56,36 @@ function Heatmap() {
         let initRotateX = parseFloat(mount.current.style.rotate);
         initRotateX += deg;
         mount.current.style.rotate = initRotateX + "deg";
+    }
+
+
+    const tempHandle = () => {
+        console.log("live data: ", liveData)
+        let hper = 75, wper = width <= 1279 ? 90 : 80;
+
+        let h = hper * height / 100;
+        let w = wper * width / 100;
+
+        console.log("x: ", w, " y: ", h);
+
+        let prevData = [];
+        if (liveData[0]) {
+            let val = JSON.parse(liveData[0].value);
+            for (let item in val) {
+                let d = { x: (val[item].x * 12), y: (val[item].y * 3), value: 100 };
+                prevData.push(d);
+            }
+        }
+        if (liveData[1]) {
+            let val = JSON.parse(liveData[1].value);
+            for (let item in val) {
+                let d = { x: (val[item].x * 12), y: (val[item].y * 3), value: 100 };
+                prevData.push(d);
+            }
+        }
+        datapoints.current = prevData;
+        handleAddData(datapoints.current);
+        console.log("datapoints: ", datapoints.current);
     }
 
     return (
@@ -101,6 +132,7 @@ function Heatmap() {
                                         <TbFlipHorizontal size="20px" />
                                     </button>
                                 </div>
+                                <button>Add data</button>
                             </React.Fragment>
                         )
                     }}
