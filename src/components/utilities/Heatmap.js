@@ -20,7 +20,7 @@ function addHeatMap(ctn) {
 }
 
 function Heatmap(props) {
-    let {liveData, setLiveData, fetchLiveData} = props;
+    let { liveData, setLiveData, fetchLiveData } = props;
     const mount = useRef(null);
     const [imgSrc, setImgSrc] = useState("");
     let centerViewFunction = undefined;
@@ -58,6 +58,29 @@ function Heatmap(props) {
         mount.current.style.rotate = initRotateX + "deg";
     }
 
+    // function to add sample data on the heatmap
+    const handleAddData = (data) => {
+        // let h1 = 100; //h = y-axis
+        // let w1 = 100; //w = x-axis
+
+        // let data = {
+        // x: Math.random() * w, // x coordinate of the datapoint, a number
+        // y: Math.random() * h, // y coordinate of the datapoint, a number
+        // value: Math.random() * 100 // the value at datapoint(x, y)
+        // x: w,
+        // y: h,
+        // value: 100
+        // };
+
+        console.log(data);
+        heatmap.addData(data);
+    }
+
+    const datapoints = useRef([{
+        x: 0,
+        y: 0,
+        value: 100,
+    }])
 
     const tempHandle = () => {
         console.log("live data: ", liveData)
