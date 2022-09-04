@@ -4,8 +4,6 @@ import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { set } from '../../state/reducers/authReducer';
 import Heatmap from '../utilities/Heatmap';
 import ThreeD from './3-d/viewer/ThreeD';
-import axios from 'axios';
-import { InfluxDB, Point } from '@influxdata/influxdb-client';
 import LiveCards from '../utilities/LiveCards';
 
 // Home component for the live view
@@ -24,25 +22,6 @@ function LiveData(props) {
         console.log(auth);
     }, [auth]);
     // ABOVE CODE IS ONLY USAGE DEMONSTRATION OF REDUX-TOOLKIT
-
-    const [liveData, setLiveData] = useState();
-
-    const fetchLiveData = () => {
-        let host = process.env.REACT_APP_NODE_BACKEND_URL || 'http://localhost:5000';
-        // refer to backend/index.js for details about the endpoint
-        axios({
-            url: `${host}/api/live`,
-            method: 'post',
-            data: {
-                source: "mqtt",
-                table: "",
-            }
-        }).then((res) => {
-            console.log("response: ", res.data);
-        }).catch((err) => {
-            console.log("error: ", err);
-        })
-    }
 
 
     const [liveData, setLiveData] = useState([
