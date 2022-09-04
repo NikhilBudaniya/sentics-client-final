@@ -70,3 +70,8 @@
 .flipYupsideDown{
   transform: rotate(180deg) rotateX(-180deg);
 }
+
+.react-transform-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+}

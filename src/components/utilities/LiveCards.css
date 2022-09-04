@@ -23,7 +23,7 @@
 
 /* Handle */
 .live-cards::-webkit-scrollbar-thumb {
-  background: blue;
+  background: #2563eb;
   border-radius: 2px;
 }
 

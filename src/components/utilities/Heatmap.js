@@ -4,156 +4,149 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { BiRotateRight, BiRotateLeft, BiMinus } from 'react-icons/bi';
 import { BsPlusLg } from 'react-icons/bs';
 import { TbFlipHorizontal } from 'react-icons/tb';
+import mapImage from "../assets/images/bg_rotated.png";
+import { useInterval } from 'usehooks-ts';
+
+let heatmap;
+let pointData = [{ x: 0, y: 0, value: 0 }];
+function addHeatMap(ctn) {
+    heatmap = h337.create({
+        container: ctn
+    });
+
+    heatmap.setData({
+        max: 5,
+        data: pointData
+    });
+}
+// width, height of canvas is stored when image is loaded
+let iw, ih;
 
 function Heatmap(props) {
-    // fetchlivedata function passed as prop from LiveData component
     let { fetchLiveData } = props;
-
+    const heatmapData = useRef({
+        history: [],
+        live: []
+    });
     // get the width and height of window to make heatmap responsive
     const width = window.innerWidth;
     const height = window.innerHeight;
-    // states to handle roatation and flipping functionalities
-    const [rotate, setRotate] = useState(0);
-    // we can implement flip along y-axis also (not implemented for now)
-    const [flip, setFlip] = useState({ x: false, y: false });
 
-    // HEATMAP initialization and configurations
-    const heatmapContainer = useRef();
-    const map = useRef();
-    var config = {
-        container: document.querySelector('.heatmap'),
-        radius: 10,
-        maxOpacity: .5,
-        minOpacity: 0,
-        blur: .75
-    };
-
-    var dataPoint = {
-        x: 5, // x coordinate of the datapoint, a number
-        y: 5, // y coordinate of the datapoint, a number
-        value: 0 // the value at datapoint(x, y)
-    };
-
-    var data = {
-        max: 100,
-        min: 0,
-        data: [
-            {
-                x: 20,
-                y: 150,
-                value: 90
-            },
-            {
-                x: 130,
-                y: 140,
-                value: 60
-            },
-            {
-                x: 200,
-                y: 200,
-                value: 80
-            },
-            {
-                x: 230,
-                y: 110,
-                value: 90
-            },
-            {
-                x: 430,
-                y: 240,
-                value: 60
-            },
-            {
-                x: 300,
-                y: 290,
-                value: 80
-            }
-        ]
-    };
-
-    var heatmapInstance;
+    const mount = useRef(null);
+    const [imgSrc, setImgSrc] = useState("");
+    let centerViewFunction = undefined;
 
     useEffect(() => {
-        heatmapInstance = h337.create({
-            container: document.querySelector('#heatmap')
-        });
+        mount.current.style.rotate = "0deg";
+        if (mount.current.children[1])
+            mount.current.children[1].remove();
+        setImgSrc(mapImage);
+    }, []);
 
-        // FIXME: New data points cleared after 2nd canvas (may be an error or maybe not, can be verified in live data)
-        if (document.querySelector("#heatmap").childElementCount > 2)
-            document.querySelector("#heatmap").removeChild(document.querySelector("#heatmap").firstElementChild);
-        console.log("new: ", document.querySelector("#heatmap").childElementCount);
+    function imageLoaded(e) {
+        if (mount.current.children[1])
+            mount.current.children[1].remove();
+        const imgWidth = e.target.naturalWidth;
+        const imgHeight = e.target.naturalHeight;
+        const parentWidth = mount.current.parentNode.parentNode.clientWidth;
+        const parentHeight = mount.current.parentNode.parentNode.clientHeight;
+        e.target.style.width = imgWidth + "px";
+        mount.current.style.width = imgWidth + "px";
+        iw = imgWidth;
+        e.target.style.height = imgHeight + "px";
+        mount.current.style.height = imgHeight + "px";
+        ih = imgHeight;
+        addHeatMap(mount.current);
+        let scaleX = imgWidth / parentWidth;
+        scaleX = 1 / scaleX;
+        let scaleY = imgHeight / parentHeight;
+        scaleY = 1 / scaleY;
+        centerViewFunction(Math.min(scaleX, scaleY));
+        heatmap.addData([{ x: 2000, y: 2000, value: 5 }]);
+    }
 
-        heatmapInstance.setData(data);
-    }, [rotate, flip]);
+    function rotate(deg) {
+        let initRotateX = parseFloat(mount.current.style.rotate);
+        initRotateX += deg;
+        mount.current.style.rotate = initRotateX + "deg";
+    }
 
     // function to add sample data on the heatmap
-    const handleAddData = () => {
-        let hper = 62, wper = width <= 1279 ? 90 : 80;
-        let h = hper * height / 100;
-        let w = wper * width / 100;
-
+    const handleAddData = (data) => {
         // let h1 = 100; //h = y-axis
         // let w1 = 100; //w = x-axis
 
-        let data = {
-            x: Math.random() * w, // x coordinate of the datapoint, a number
-            y: Math.random() * h, // y coordinate of the datapoint, a number
-            // value: Math.random() * 100 // the value at datapoint(x, y)
-            // x: w,
-            // y: h,
-            value: 100
-        };
-        console.log(data);
-        heatmapInstance.addData(data);
+        // let data = {
+        // x: Math.random() * w, // x coordinate of the datapoint, a number
+        // y: Math.random() * h, // y coordinate of the datapoint, a number
+        // value: Math.random() * 100 // the value at datapoint(x, y)
+        // x: w,
+        // y: h,
+        // value: 100
+        // };
+        heatmap.addData(data);
     }
 
-    const handleRotate = (type) => {
-        if (type === "right") {
-            if (rotate === 0 || rotate === 90 || rotate === 180)
-                setRotate((prev) => { return (prev + 90) });
-            else
-                setRotate(0);
+    const datapoints = useRef([{
+        x: 0,
+        y: 0,
+        value: 0,
+    }])
+
+    useInterval(async () => {
+        let dataResponse = await fetchLiveData();
+        console.log("data Response: ", dataResponse);
+        heatmapData.current = {
+            ...heatmapData.current,
+            live: dataResponse,
         }
-        else {
-            if (rotate === 0 || rotate === 90 || rotate === 180 || rotate === 270) {
-                if (rotate === 0)
-                    setRotate(270);
-                else
-                    setRotate((prev) => { return (prev - 90) });
+        tempHandle(heatmapData.current.live, heatmapData.current.history);
+    }, 1000);
+
+    const tempHandle = (liveData, history) => {
+        let hper = 75, wper = width <= 1279 ? 90 : 80;
+
+        let h = hper * height / 100;
+        let w = wper * width / 100;
+
+        let prevData = [];
+        if (liveData[0]) {
+            let val = JSON.parse(liveData[0].value);
+            for (let item in val) {
+                let d = { x: (val[item].x / 100 * iw), y: (val[item].y / 100 * ih), value: 100 };
+                prevData.push(d);
             }
-            else
-                setRotate(0);
         }
-    }
-
-    const handleflip = () => {
-        if (flip.x) {
-            setFlip({ ...flip, x: false })
+        if (liveData[1]) {
+            let val = JSON.parse(liveData[1].value);
+            for (let item in val) {
+                let d = { x: (val[item].x / 100 * iw), y: (val[item].y / 100 * ih), value: 100 };
+                prevData.push(d);
+            }
         }
-        else {
-            setFlip({ ...flip, x: true });
-        }
+        // datapoints.current = prevData;
+        heatmap.addData(prevData);
+        // handleAddData(datapoints.current);
+        console.log("datapoints: ", prevData);
     }
 
     return (
-        <>
-            <div className=" flex flex-col w-[100%] px-5 pb-5 border-0 h-full">
+        <div className=" flex flex-col w-[100%] px-5 pb-5 border-0 h-full">
 
-                <div ref={heatmapContainer} className="relative border-0 h-full items-center">
-
-                    <TransformWrapper
-                        minScale={0.2}
-                        limitToBounds={false}
-                    >
-                        {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+            <div className="relative border-0 h-full items-center">
+                <TransformWrapper
+                    minScale={0.1}
+                    limitToBounds={false}
+                >
+                    {({ zoomIn, zoomOut, resetTransform, centerView, ...rest }) => {
+                        centerViewFunction = centerView;
+                        return (
                             // bg-[#F4F5F4]
                             <React.Fragment>
                                 <div className="backStage flex justify-center items-start border-2 overflow-hidden rounded-xl h-full w-full">
                                     <TransformComponent >
-                                        <div ref={map} id="heatmap" className={`border-0 heatmapcss ${flip.x ? (
-                                            rotate === 90 ? 'flipYright' : rotate === 180 ? 'flipYupsideDown' : rotate === 270 ? 'flipYleft' : 'flipY'
-                                        ) : ""} ${rotate === 90 ? 'right' : rotate === 180 ? 'upsideDown' : rotate === 270 ? 'left' : ''}`}>
-
+                                        <div ref={mount} className="">
+                                            <img src={imgSrc} alt="" onLoad={imageLoaded} />
                                         </div>
                                     </TransformComponent>
                                 </div>
@@ -164,27 +157,31 @@ function Heatmap(props) {
                                     <button onClick={() => zoomOut()} type="button" className="text-[#10449A] m-1 flex justify-center w-10 py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200 transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
                                         <BiMinus size="20px" />
                                     </button>
-                                    <button onClick={() => { resetTransform(); setRotate(0); setFlip({ x: false, y: false }) }} type="button" className="text-[#10449A] m-1 flex justify-center py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200  transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
+                                    <button onClick={() => {
+                                        mount.current.children[0].dispatchEvent(new Event("load"));
+                                        mount.current.style.rotate = "0deg";
+                                        mount.current.style.scale = '';
+                                    }} type="button" className="text-[#10449A] m-1 flex justify-center py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200  transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
                                         Reset
                                     </button>
-                                    <button onClick={() => handleRotate("left")} type="button" className="text-[#10449A] m-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200  transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
+                                    <button onClick={() => rotate(-90)} type="button" className="text-[#10449A] m-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200  transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
                                         <BiRotateLeft size="20px" />
                                     </button>
-                                    <button onClick={() => handleRotate("right")} type="button" className="text-[#10449A] m-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200  transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
+                                    <button onClick={() => rotate(90)} type="button" className="text-[#10449A] m-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200  transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
                                         <BiRotateRight size="20px" />
                                     </button>
-                                    <button onClick={() => handleflip()} type="button" className="text-[#10449A] m-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200  transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl">
+                                    <button onClick={() => {
+                                        mount.current.style.scale = !mount.current.style.scale ? "-1 1" : "";
+                                    }} type="button" className="text-[#10449A] m-1 w-14 py-2 px-4 flex justify-center hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200  transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl">
                                         <TbFlipHorizontal size="20px" />
                                     </button>
                                 </div>
                             </React.Fragment>
-                        )}
-                    </TransformWrapper>
-                </div>
-                <button className="border-2 border-lime-600 bg-lime-400 p-2 rounded-xl my-5 relative bottom-10" onClick={fetchLiveData}>Add Data</button>
-
+                        )
+                    }}
+                </TransformWrapper>
             </div>
-        </>
+        </div>
     )
 }
 
