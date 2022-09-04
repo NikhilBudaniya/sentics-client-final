@@ -13,7 +13,7 @@ app.use(cors());
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
-}) 
+})
 
 // mqtt connection
 const options = {
@@ -53,6 +53,7 @@ client.on('message', function (topic, payload, packet) {
 app.post('/api/live', (req, res) => {
     const source = req.body.source;
     const table = req.body.table;
+    const resource = req.body.resource;
 
     if (table === "map") {
         const map = req.body.map;
@@ -65,14 +66,14 @@ app.post('/api/live', (req, res) => {
     if (source === 'mqtt') {
         let data = {};
 
-        if (mqtt_buffer_human !== "") {
+        if (mqtt_buffer_human !== "" && resource !== "vehicle") {
             data = [{
                 "type": "human",
                 "value": mqtt_buffer_human
             }]
             mqtt_buffer_human = "";
         }
-        if (mqtt_buffer_vehicle !== "") {
+        if (mqtt_buffer_vehicle !== "" && resource !== "human") {
             data = [{
                 "type": "vehicle",
                 "value": mqtt_buffer_vehicle
@@ -80,9 +81,9 @@ app.post('/api/live', (req, res) => {
             mqtt_buffer_vehicle = "";
         }
 
-        return res.json({data});
+        return res.json({ data });
     }
-    res.status(400).json({error: "invalid request parameters"});
+    res.status(400).json({ error: "invalid request parameters" });
 })
 
 app.listen(port, () => {

@@ -36,7 +36,8 @@ function LiveData(props) {
     ]);
 
 
-    const fetchLiveData = () => {
+    const fetchLiveData = (resource = "") => {
+        // pass resource = "vehicle" or "human" for specific data
         let host = process.env.REACT_APP_NODE_BACKEND_URL || 'http://localhost:5000';
         return new Promise((resolve, reject) => {
             // refer to backend/index.js for details about the endpoint
@@ -46,6 +47,7 @@ function LiveData(props) {
                 data: {
                     source: "mqtt",
                     table: "",
+                    resource,
                 }
             }).then((res) => {
                 console.log("outer res: ", res.data);
