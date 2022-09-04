@@ -4,10 +4,11 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { BiRotateRight, BiRotateLeft, BiMinus } from 'react-icons/bi';
 import { BsPlusLg } from 'react-icons/bs';
 import { TbFlipHorizontal } from 'react-icons/tb';
-import mapImage from "../assets/images/OHLF-Zeichung.png";
+import mapImage from "../assets/images/bg_rotated.png";
+import { useInterval } from 'usehooks-ts';
 
 let heatmap;
-let pointData = [{ x: 1150, y: 1000, value: 50 }, { x: 1500, y: 400, value: 5 }, { x: 1400, y: 700, value: 5 }];
+let pointData = [{ x: 0, y: 0, value: 0 }];
 function addHeatMap(ctn) {
     heatmap = h337.create({
         container: ctn
@@ -18,9 +19,19 @@ function addHeatMap(ctn) {
         data: pointData
     });
 }
+// width, height of canvas is stored when image is loaded
+let iw, ih;
 
 function Heatmap(props) {
-    let { liveData, setLiveData, fetchLiveData } = props;
+    let { fetchLiveData } = props;
+    const heatmapData = useRef({
+        history: [],
+        live: []
+    });
+    // get the width and height of window to make heatmap responsive
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
     const mount = useRef(null);
     const [imgSrc, setImgSrc] = useState("");
     let centerViewFunction = undefined;
@@ -41,8 +52,10 @@ function Heatmap(props) {
         const parentHeight = mount.current.parentNode.parentNode.clientHeight;
         e.target.style.width = imgWidth + "px";
         mount.current.style.width = imgWidth + "px";
+        iw = imgWidth;
         e.target.style.height = imgHeight + "px";
         mount.current.style.height = imgHeight + "px";
+        ih = imgHeight;
         addHeatMap(mount.current);
         let scaleX = imgWidth / parentWidth;
         scaleX = 1 / scaleX;
@@ -71,51 +84,58 @@ function Heatmap(props) {
         // y: h,
         // value: 100
         // };
-
-        console.log(data);
         heatmap.addData(data);
     }
 
     const datapoints = useRef([{
         x: 0,
         y: 0,
-        value: 100,
+        value: 0,
     }])
 
-    const tempHandle = () => {
-        console.log("live data: ", liveData)
+    useInterval(async () => {
+        let dataResponse = await fetchLiveData();
+        console.log("data Response: ", dataResponse);
+        heatmapData.current = {
+            ...heatmapData.current,
+            live: dataResponse,
+        }
+        tempHandle(heatmapData.current.live, heatmapData.current.history);
+    }, 1000);
+
+    const tempHandle = (liveData, history) => {
         let hper = 75, wper = width <= 1279 ? 90 : 80;
 
         let h = hper * height / 100;
         let w = wper * width / 100;
 
-        console.log("x: ", w, " y: ", h);
-
         let prevData = [];
         if (liveData[0]) {
             let val = JSON.parse(liveData[0].value);
             for (let item in val) {
-                let d = { x: (val[item].x * 12), y: (val[item].y * 3), value: 100 };
+                let d = { x: (val[item].x / 100 * iw), y: (val[item].y / 100 * ih), value: 100 };
                 prevData.push(d);
             }
         }
         if (liveData[1]) {
             let val = JSON.parse(liveData[1].value);
             for (let item in val) {
-                let d = { x: (val[item].x * 12), y: (val[item].y * 3), value: 100 };
+                let d = { x: (val[item].x / 100 * iw), y: (val[item].y / 100 * ih), value: 100 };
                 prevData.push(d);
             }
         }
-        datapoints.current = prevData;
-        handleAddData(datapoints.current);
-        console.log("datapoints: ", datapoints.current);
+        // datapoints.current = prevData;
+        heatmap.addData(prevData);
+        // handleAddData(datapoints.current);
+        console.log("datapoints: ", prevData);
     }
 
     return (
         <div className=" flex flex-col w-[100%] px-5 pb-5 border-0 h-full">
+
             <div className="relative border-0 h-full items-center">
                 <TransformWrapper
-                    minScale={0.2}
+                    minScale={0.1}
                     limitToBounds={false}
                 >
                     {({ zoomIn, zoomOut, resetTransform, centerView, ...rest }) => {
@@ -125,7 +145,7 @@ function Heatmap(props) {
                             <React.Fragment>
                                 <div className="backStage flex justify-center items-start border-2 overflow-hidden rounded-xl h-full w-full">
                                     <TransformComponent >
-                                        <div ref={mount}>
+                                        <div ref={mount} className="">
                                             <img src={imgSrc} alt="" onLoad={imageLoaded} />
                                         </div>
                                     </TransformComponent>
@@ -140,6 +160,7 @@ function Heatmap(props) {
                                     <button onClick={() => {
                                         mount.current.children[0].dispatchEvent(new Event("load"));
                                         mount.current.style.rotate = "0deg";
+                                        mount.current.style.scale = '';
                                     }} type="button" className="text-[#10449A] m-1 flex justify-center py-2 px-4 hover:bg-slate-300 focus:ring-slate-400 focus:ring-offset-slate-200  transition ease-in duration-200 text-center font-semibold heatmapButton focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-xl ">
                                         Reset
                                     </button>
@@ -155,7 +176,6 @@ function Heatmap(props) {
                                         <TbFlipHorizontal size="20px" />
                                     </button>
                                 </div>
-                                <button>Add data</button>
                             </React.Fragment>
                         )
                     }}

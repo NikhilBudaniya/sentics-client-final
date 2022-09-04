@@ -34,19 +34,25 @@ function LiveData(props) {
     ]);
 
 
-    const fetchLiveData = async () => {
+    const fetchLiveData = () => {
         let host = process.env.REACT_APP_NODE_BACKEND_URL || 'http://localhost:5000';
-        // refer to backend/index.js for details about the endpoint
-        let res = await axios({
-            url: `${host}/api/live`,
-            method: 'post',
-            data: {
-                source: "mqtt",
-                table: "",
-            }
-        });
-        console.log("outer res: ", res);
-        return res;
+        return new Promise((resolve, reject) => {
+            // refer to backend/index.js for details about the endpoint
+            axios({
+                url: `${host}/api/live`,
+                method: 'post',
+                data: {
+                    source: "mqtt",
+                    table: "",
+                }
+            }).then((res) => {
+                console.log("outer res: ", res.data);
+                resolve(res.data);
+            }).catch((err) => {
+                console.log("promise error: ", err);
+                reject(err);
+            })
+        })
     }
 
     // useInterval(() => {
