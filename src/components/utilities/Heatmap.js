@@ -124,17 +124,19 @@ function Heatmap(props) {
         // if (historyData.length > 3)
         //     historyData.shift();
 
+        // FIXME: live datapoints co-ordinates not matching
         if (liveData[0]) {
             let val = JSON.parse(liveData[0].value);
             for (let item in val) {
-                let d = { x: (val[item].x / 100 * iw), y: (val[item].y / 100 * ih), value: 100, radius: 90 };
+                // FIXME: subtracted 100 in y co-ordinate to shift the axis origin (confirm that before production)
+                let d = { x: (val[item].y / (process.env.REACT_APP_BUILD_WIDTH || 82) * iw), y: ((val[item].x + 1.42) / (process.env.REACT_APP_BUILD_HEIGHT || 26) * ih), value: 100, radius: 90 };
                 currentData.push(d);
             }
         }
         if (liveData[1]) {
             let val = JSON.parse(liveData[1].value);
             for (let item in val) {
-                let d = { x: (val[item].x / 100 * iw), y: (val[item].y / 100 * ih), value: 100, radius: 90 };
+                let d = { x: (val[item].y / ((process.env.REACT_APP_BUILD_WIDTH || 82)) * iw), y: ((val[item].x + 1.42) / (process.env.REACT_APP_BUILD_HEIGHT || 26) * ih), value: 100, radius: 90 };
                 currentData.push(d);
             }
         }
