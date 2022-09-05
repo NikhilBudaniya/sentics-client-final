@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { set } from '../../state/reducers/authReducer';
 import Heatmap from '../utilities/Heatmap';
+import axios from 'axios';
 import LiveCards from '../utilities/LiveCards';
 
 // Home component for the live view
