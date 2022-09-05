@@ -98,41 +98,57 @@ function Heatmap(props) {
 
     useInterval(async () => {
         let dataResponse = await fetchLiveData();
-        console.log("data Response: ", dataResponse);
+        console.log("data Response: ", dataResponse.data);
         heatmapData.current = {
             ...heatmapData.current,
-            live: dataResponse,
+            live: dataResponse.data,
         }
         tempHandle(heatmapData.current.live, heatmapData.current.history);
     }, 1000);
 
     const tempHandle = (liveData, history) => {
-        let hper = 75, wper = width <= 1279 ? 90 : 80;
+        let currentData = [];
+        // storing previous data points to make a trail effect
+        // let historyData = [];
+        // history.map((dataPoint) => {
+        //     let temp = {
+        //         x: dataPoint.x,
+        //         y: dataPoint.y,
+        //         value: 100,
+        //         radius: (dataPoint.radius - 20) >= 0 ? (dataPoint.radius - 20) : 0,
+        //     }
+        //     historyData.push(temp);
+        // });
+        // console.log(typeof history)
+        // limiting the historyData points to 3
+        // if (historyData.length > 3)
+        //     historyData.shift();
 
-        let h = hper * height / 100;
-        let w = wper * width / 100;
-
-        let prevData = [];
         if (liveData[0]) {
             let val = JSON.parse(liveData[0].value);
             for (let item in val) {
-                let d = { x: (val[item].x / 100 * iw), y: (val[item].y / 100 * ih), value: 50 };
-                prevData.push(d);
+                let d = { x: (val[item].x / 100 * iw), y: (val[item].y / 100 * ih), value: 100, radius: 90 };
+                currentData.push(d);
             }
         }
         if (liveData[1]) {
             let val = JSON.parse(liveData[1].value);
             for (let item in val) {
-                let d = { x: (val[item].x / 100 * iw), y: (val[item].y / 100 * ih), value: 50 };
-                prevData.push(d);
+                let d = { x: (val[item].x / 100 * iw), y: (val[item].y / 100 * ih), value: 100, radius: 90 };
+                currentData.push(d);
             }
         }
+        // heatmapData.current = {
+        //     ...heatmapData.current,
+        //     history: [...historyData, ...currentData],
+        // }
         // removing old data points
-        heatmap.setData({data: []});
+        heatmap.setData({ data: [] });
         // adding new data points
-        heatmap.addData(prevData);
+        heatmap.addData(currentData);
         // handleAddData(datapoints.current);
-        console.log("datapoints: ", prevData);
+        console.log("datapoints: ", currentData);
+        // console.log("history data: ", heatmapData.current);
     }
 
     const btn1 = () => {
@@ -143,7 +159,7 @@ function Heatmap(props) {
         {
             type: 'vehicle',
             value: '{"0":{"x": 7.131, "y": 9.075, "heading": -0.443}}'
-        },], []);
+        },], heatmapData.current.history);
     }
 
     const btn2 = () => {
@@ -155,7 +171,7 @@ function Heatmap(props) {
             type: 'vehicle',
             value: '{"0":{"x": 50, "y": 50, "heading": -0.443}}'
         },
-        ], []);
+        ], heatmapData.current.history);
     }
 
     return (
