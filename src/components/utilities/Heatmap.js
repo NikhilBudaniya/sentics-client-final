@@ -7,12 +7,15 @@ import { TbFlipHorizontal } from 'react-icons/tb';
 import mapImage from "../assets/images/bg_rotated.png";
 import { useInterval } from 'usehooks-ts';
 
+
 let heatmap;
 let pointData = [{ x: 0, y: 0, value: 0 }];
 function addHeatMap(ctn) {
-    heatmap = h337.create({
-        container: ctn
-    });
+    let config = {
+        container: ctn,
+        radius: 50,
+    }
+    heatmap = h337.create(config);
 
     heatmap.setData({
         max: 5,
@@ -113,25 +116,52 @@ function Heatmap(props) {
         if (liveData[0]) {
             let val = JSON.parse(liveData[0].value);
             for (let item in val) {
-                let d = { x: (val[item].x / 100 * iw), y: (val[item].y / 100 * ih), value: 100 };
+                let d = { x: (val[item].x / 100 * iw), y: (val[item].y / 100 * ih), value: 50 };
                 prevData.push(d);
             }
         }
         if (liveData[1]) {
             let val = JSON.parse(liveData[1].value);
             for (let item in val) {
-                let d = { x: (val[item].x / 100 * iw), y: (val[item].y / 100 * ih), value: 100 };
+                let d = { x: (val[item].x / 100 * iw), y: (val[item].y / 100 * ih), value: 50 };
                 prevData.push(d);
             }
         }
-        // datapoints.current = prevData;
+        // removing old data points
+        heatmap.setData({data: []});
+        // adding new data points
         heatmap.addData(prevData);
         // handleAddData(datapoints.current);
         console.log("datapoints: ", prevData);
     }
 
+    const btn1 = () => {
+        tempHandle([{
+            type: 'human',
+            value: '{"0":{"x": 8.714, "y": 12.637, "heading": 0.0},"2":{"x": 21.848, "y": 25.879, "heading": 0.184}}'
+        },
+        {
+            type: 'vehicle',
+            value: '{"0":{"x": 7.131, "y": 9.075, "heading": -0.443}}'
+        },], []);
+    }
+
+    const btn2 = () => {
+        tempHandle([{
+            type: 'human',
+            value: '{"0":{"x": 59, "y": 20, "heading": 0.0},"2":{"x": 21.848, "y": 45, "heading": 0.184}}'
+        },
+        {
+            type: 'vehicle',
+            value: '{"0":{"x": 50, "y": 50, "heading": -0.443}}'
+        },
+        ], []);
+    }
+
     return (
         <div className=" flex flex-col w-[100%] px-5 pb-5 border-0 h-full">
+            {/* <button className="bg-red-200 my-1" onClick={btn1}>Btn 1</button>
+            <button className="bg-red-200 my-1" onClick={btn2}>Btn 2</button> */}
 
             <div className="relative border-0 h-full items-center">
                 <TransformWrapper
