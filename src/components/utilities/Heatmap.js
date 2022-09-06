@@ -171,7 +171,7 @@ function Heatmap(props) {
     }
 
     return (
-        <div className=" flex flex-col w-[100%] px-5 pb-5 border-0 h-full">
+        <div className="flex flex-col w-[100%] px-5 pb-5 border-0 h-full">
             {/* <button className="bg-red-200 my-1" onClick={btn1}>Btn 1</button>
             <button className="bg-red-200 my-1" onClick={btn2}>Btn 2</button> */}
 
@@ -183,7 +183,6 @@ function Heatmap(props) {
                     {({ zoomIn, zoomOut, resetTransform, centerView, ...rest }) => {
                         centerViewFunction = centerView;
                         return (
-                            // bg-[#F4F5F4]
                             <React.Fragment>
                                 <div className="backStage flex justify-center items-start border-2 overflow-hidden rounded-xl h-full w-full">
                                     <TransformComponent >
