@@ -4,6 +4,7 @@ import { HiMenuAlt2, HiMenuAlt3 } from 'react-icons/hi';
 import NotifiDrawer from './utilities/NotifiDrawer';
 import ToggleSwith from './utilities/utilComponents/ToggleSwith';
 import { Link, NavLink } from 'react-router-dom';
+import ResourceBtns from './LeftNav/ResourceBtns';
 
 function LeftNav() {
 
@@ -50,18 +51,7 @@ function LeftNav() {
               </ul>
             </div>
           </li>
-          <li className='pl-5 my-5 border-0 font-semibold flex items-center'>
-            <div>
-              Show Humans : &ensp;
-            </div>
-            <ToggleSwith />
-          </li>
-          <li className='pl-5 my-5 border-0 font-semibold flex items-center'>
-            <div>
-              Show Vehicals : &ensp;
-            </div>
-            <ToggleSwith />
-          </li>
+          <ResourceBtns />
           <li className='pl-5 my-5 font-semibold'></li>
         </ul>
       </div>

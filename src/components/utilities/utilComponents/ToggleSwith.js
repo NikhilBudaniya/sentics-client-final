@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
-function ToggleSwith() {
+function ToggleSwith(props) {
+  let {id} = props;
   const [state, setstate] = useState(true);
 
   const handleToggleSwitch = () => {
