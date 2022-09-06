@@ -171,7 +171,7 @@ function Heatmap(props) {
     }
 
     return (
-        <div className="flex flex-col w-[100%] px-5 pb-5 border-0 h-full">
+        <div className=" flex flex-col w-[100%] px-5 pb-5 border-0 h-full">
             {/* <button className="bg-red-200 my-1" onClick={btn1}>Btn 1</button>
             <button className="bg-red-200 my-1" onClick={btn2}>Btn 2</button> */}
 
