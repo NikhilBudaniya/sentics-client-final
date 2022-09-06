@@ -81,16 +81,44 @@ app.post('/api/live', (req, res) => {
             mqtt_buffer_vehicle = "";
         }
 
-        return res.json({ data: [
-        {
-            type: 'human',
-            value: '{"0":{"x": 0, "y": 0, "heading": 0.0},"2":{"x": 21.848, "y": 25.879, "heading": 0.184}}'
-        },
-        {
-            type: 'vehicle',
-            value: '{"0":{"x": 7.131, "y": 9.075, "heading": -0.443}}'
-        },
-    ] });
+        // testing purpose
+
+        // if (resource === "human") {
+        //     return res.json({
+        //         data: [
+        //             {
+        //                 type: 'human',
+        //                 value: '{"0":{"x": 0, "y": 0, "heading": 0.0},"2":{"x": 21.848, "y": 25.879, "heading": 0.184}}'
+        //             },
+        //         ]
+        //     });
+        // }
+        // else if (resource === "vehicle") {
+        //     return res.json({
+        //         data: [
+        //             {
+        //                 type: 'vehicle',
+        //                 value: '{"0":{"x": 15.131, "y": 50.075, "heading": -0.443}}'
+        //             },
+        //         ]
+        //     });
+        // }
+        // else {
+        //     return res.json({
+        //         data: [
+        //             {
+        //                 type: 'human',
+        //                 value: '{"0":{"x": 0, "y": 0, "heading": 0.0},"2":{"x": 21.848, "y": 25.879, "heading": 0.184}}'
+        //             },
+        //             {
+        //                 type: 'vehicle',
+        //                 value: '{"0":{"x": 15.131, "y": 50.075, "heading": -0.443}}'
+        //             },
+        //         ]
+        //     });
+        // }
+
+        return res.json({data})
     }
     res.status(400).json({ error: "invalid request parameters" });
 })

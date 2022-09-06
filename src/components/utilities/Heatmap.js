@@ -6,6 +6,7 @@ import { BsPlusLg } from 'react-icons/bs';
 import { TbFlipHorizontal } from 'react-icons/tb';
 import mapImage from "../assets/images/bg_rotated.png";
 import { useInterval } from 'usehooks-ts';
+import { useSelector } from 'react-redux';
 
 
 let heatmap;
@@ -14,11 +15,15 @@ function addHeatMap(ctn) {
     let config = {
         container: ctn,
         radius: 50,
+        blur: 0.95,
+        minOpacity: 0.0,
+        maxOpacity: 0.8,
     }
     heatmap = h337.create(config);
 
     heatmap.setData({
-        max: 5,
+        max: 100,
+        min: 0,
         data: pointData
     });
 }
@@ -27,6 +32,7 @@ let iw, ih;
 
 function Heatmap(props) {
     let { fetchLiveData } = props;
+    let heatmapResource = useSelector((store) => store.heatmapResource.value);
     const heatmapData = useRef({
         history: [],
         live: []
@@ -65,7 +71,6 @@ function Heatmap(props) {
         let scaleY = imgHeight / parentHeight;
         scaleY = 1 / scaleY;
         centerViewFunction(Math.min(scaleX, scaleY));
-        heatmap.addData([{ x: 2000, y: 2000, value: 5 }]);
     }
 
     function rotate(deg) {
@@ -74,40 +79,24 @@ function Heatmap(props) {
         mount.current.style.rotate = initRotateX + "deg";
     }
 
-    // function to add sample data on the heatmap
-    const handleAddData = (data) => {
-        // let h1 = 100; //h = y-axis
-        // let w1 = 100; //w = x-axis
-
-        // let data = {
-        // x: Math.random() * w, // x coordinate of the datapoint, a number
-        // y: Math.random() * h, // y coordinate of the datapoint, a number
-        // value: Math.random() * 100 // the value at datapoint(x, y)
-        // x: w,
-        // y: h,
-        // value: 100
-        // };
-        heatmap.addData(data);
-    }
-
-    const datapoints = useRef([{
-        x: 0,
-        y: 0,
-        value: 0,
-    }])
-
     useInterval(async () => {
-        let dataResponse = await fetchLiveData();
-        console.log("data Response: ", dataResponse.data);
+        let dataResponse = await fetchLiveData(heatmapResource);
         heatmapData.current = {
             ...heatmapData.current,
             live: dataResponse.data,
         }
         tempHandle(heatmapData.current.live, heatmapData.current.history);
-    }, 1000);
+        // time here is set to 0.5 seconds due to lagging of heatmap, although for realtime set it to 0.1 sec
+    }, 500);
 
     const tempHandle = (liveData, history) => {
-        let currentData = [];
+        // heatmap isn't rendering only a single value, so adding 1 dummy value isn't that bad
+        let currentData = [{
+            x: 0,
+            y: 0,
+            value: 0,
+            radius: 90
+        }];
         // storing previous data points to make a trail effect
         // let historyData = [];
         // history.map((dataPoint) => {
@@ -124,11 +113,9 @@ function Heatmap(props) {
         // if (historyData.length > 3)
         //     historyData.shift();
 
-        // FIXME: live datapoints co-ordinates not matching
         if (liveData[0]) {
             let val = JSON.parse(liveData[0].value);
             for (let item in val) {
-                // FIXME: subtracted 100 in y co-ordinate to shift the axis origin (confirm that before production)
                 let d = { x: (val[item].y / (process.env.REACT_APP_BUILD_WIDTH || 82) * iw), y: ((val[item].x + 1.42) / (process.env.REACT_APP_BUILD_HEIGHT || 26) * ih), value: 100, radius: 90 };
                 currentData.push(d);
             }
@@ -144,34 +131,41 @@ function Heatmap(props) {
         //     ...heatmapData.current,
         //     history: [...historyData, ...currentData],
         // }
-        // removing old data points
-        heatmap.setData({ data: [] });
+        // removing old data points and adding new ones
+        heatmap.setData({
+            max: 100,
+            min: 1,
+            data: currentData
+        });
         // adding new data points
-        heatmap.addData(currentData);
+        // heatmap.addData(currentData);
         // handleAddData(datapoints.current);
-        console.log("datapoints: ", currentData);
-        // console.log("history data: ", heatmapData.current);
     }
 
     const btn1 = () => {
+        // tempHandle([{
+        //     type: 'human',
+        //     value: '{"0":{"x": 8.714, "y": 12.637, "heading": 0.0},"2":{"x": 21.848, "y": 25.879, "heading": 0.184}}'
+        // },
+        // {
+        //     type: 'vehicle',
+        //     value: '{"0":{"x": 7.131, "y": 9.075, "heading": -0.443}}'
+        // },], heatmapData.current.history);
+
         tempHandle([{
             type: 'human',
-            value: '{"0":{"x": 8.714, "y": 12.637, "heading": 0.0},"2":{"x": 21.848, "y": 25.879, "heading": 0.184}}'
-        },
-        {
-            type: 'vehicle',
-            value: '{"0":{"x": 7.131, "y": 9.075, "heading": -0.443}}'
-        },], heatmapData.current.history);
+            value: `{"0":{"x": ${Math.random() * 26}, "y": ${Math.random() * 82}, "heading": 0.0}}`
+        }], heatmapData.current.history);
     }
 
     const btn2 = () => {
         tempHandle([{
             type: 'human',
-            value: '{"0":{"x": 59, "y": 20, "heading": 0.0},"2":{"x": 21.848, "y": 45, "heading": 0.184}}'
+            value: '{"0":{"x": 10, "y": 20, "heading": 0.0},"2":{"x": 21.848, "y": 45, "heading": 0.184}}'
         },
         {
             type: 'vehicle',
-            value: '{"0":{"x": 50, "y": 50, "heading": -0.443}}'
+            value: '{"0":{"x": 20, "y": 50, "heading": -0.443}}'
         },
         ], heatmapData.current.history);
     }

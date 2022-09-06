@@ -23,7 +23,7 @@ function LiveData(props) {
     }, [auth]);
     // ABOVE CODE IS ONLY USAGE DEMONSTRATION OF REDUX-TOOLKIT
 
-
+    // use this live data instances for testing
     const [liveData, setLiveData] = useState([
         {
             type: 'human',
@@ -50,7 +50,6 @@ function LiveData(props) {
                     resource,
                 }
             }).then((res) => {
-                console.log("outer res: ", res.data);
                 resolve(res.data);
             }).catch((err) => {
                 console.log("promise error: ", err);
