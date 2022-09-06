@@ -183,7 +183,6 @@ function Heatmap(props) {
                     {({ zoomIn, zoomOut, resetTransform, centerView, ...rest }) => {
                         centerViewFunction = centerView;
                         return (
-                            // bg-[#F4F5F4]
                             <React.Fragment>
                                 <div className="backStage flex justify-center items-start border-2 overflow-hidden rounded-xl h-full w-full">
                                     <TransformComponent >

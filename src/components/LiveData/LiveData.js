@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { set } from '../../state/reducers/authReducer';
 import Heatmap from '../utilities/Heatmap';
@@ -58,16 +58,70 @@ function LiveData(props) {
         })
     }
 
-    // useInterval(() => {
-    //     fetchLiveData();
-    // }, 1000);
+    const mapRef = useRef(null);
+    const [mapType, setMapType] = useState('2D');
+    // opening the map change dropdown
+    const handleDropDown = () => {
+        if (mapRef.current.style.display === "none")
+            mapRef.current.style.display = "block";
+        else
+            mapRef.current.style.display = "none";
+    }
+
+    // changing map
+    const handleMapChange = (type) => {
+        setMapType(type);
+    }
 
 
     return (
         <div className={`navHeight overflow-hidden`}>
             <div className="h-[15%] max-w-[100%] min-h-[100px]"><LiveCards /></div>
-            <div className="h-[85%]"><Heatmap fetchLiveData={fetchLiveData} liveData={liveData} setLiveData={setLiveData}/></div>
-            {/* <div className="h-[75%]"><ThreeD /></div> */}
+            <div className="h-[85%]">
+                {mapType === "2D" ?
+                    <Heatmap fetchLiveData={fetchLiveData} liveData={liveData} setLiveData={setLiveData} />
+                    : (
+                        <>
+                            <div className="h-full flex justify-center items-center">
+                                <p className="font-bold text-2xl">Coming Soon</p>
+                            </div>
+                            {/* <ThreeD /> */}
+                        </>
+                    )}
+                <div onClick={handleDropDown} className="absolute top-[155px] sm:top-[105px] right-[25px]">
+
+                    <div className="relative inline-block text-left">
+                        <div>
+                            <button type="button" className="bg-[#EBEBEB]/50 flex items-center justify-center w-full rounded-md  px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-50 hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-200" id="options-menu">
+                                <p className="font-bold">
+                                    {mapType}
+                                </p>
+                            </button>
+                        </div>
+                        <div ref={mapRef} style={{ display: 'none' }} className="origin-top-right absolute right-0 mt-2 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
+                            <div className="py-1 " role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                <p className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600" role="menuitem">
+                                    <span onClick={() => handleMapChange("2D")} className="cursor-pointer flex flex-col">
+                                        <span className="text-sm">
+                                            2D
+                                        </span>
+                                    </span>
+                                </p>
+                                <p className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600" role="menuitem">
+                                    <span onClick={() => handleMapChange("3D")} className="cursor-pointer flex flex-col">
+                                        <span className="text-sm">
+                                            3D
+                                        </span>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            {/* <div className="h-[75%]"></div> */}
             {/* <Heatmap /> */}
         </div>
     )

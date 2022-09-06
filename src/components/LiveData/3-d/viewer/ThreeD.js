@@ -169,18 +169,14 @@ function ThreeD() {
         }
 
         animate();
-        return () => mountRef.current.removeChild(renderer.domElement);
+        return () => mountRef?.current?.removeChild(renderer.domElement);
 
     }, [])
 
 
     return (
         <div>
-            <div ref={mountRef} className="threedModel w-[500px] h-[500px]">
-
-                {/* <canvas ref={mountRef} width="500px" height="500px" className="" id="threedcanvas">
-
-                </canvas> */}
+            <div ref={mountRef} className="threedModel w-[100%] h-full px-5 pb-5">
 
             </div>
         </div>
