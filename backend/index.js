@@ -9,7 +9,11 @@ const mqtt_port = process.env.MQTT_PORT || 1883;
 const mqtt_ip = process.env.MQTT_IP || '192.168.1.10';
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    'allowedHeaders': ['Content-Type'],
+    'origin': '*',
+    'preflightContinue': true
+}));
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
@@ -67,8 +71,8 @@ app.post('/api/live', (req, res) => {
     if (source === 'mqtt') {
         let data = [];
 
-        if(resource === "")
-            return res.json({data});
+        if (resource === "")
+            return res.json({ data });
 
         if (mqtt_buffer_human !== "" && resource !== "vehicle") {
             data = [...data, {
@@ -122,7 +126,7 @@ app.post('/api/live', (req, res) => {
         //     });
         // }
 
-        return res.json({data})
+        return res.json({ data })
     }
     res.status(400).json({ error: "invalid request parameters" });
 })
