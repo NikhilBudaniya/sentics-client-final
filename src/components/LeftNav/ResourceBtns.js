@@ -6,10 +6,12 @@ import ToggleSwith from '../utilities/utilComponents/ToggleSwith'
 
 function ResourceBtns() {
     let dispatch = useDispatch();
+    const [checkHuman, setCheckHuman] = useState(true);
+    const [checkVehicle, setCheckVehicle] = useState(true);
 
     const checked = useRef({
-        human: false,
-        vehicle: false,
+        human: true,
+        vehicle: true,
     });
     const currentResource = useRef("both");
 
@@ -28,8 +30,10 @@ function ResourceBtns() {
             }
 
         // setting resource type
-        if ((checked.current.human && checked.current.vehicle) || (!checked.current.human && !checked.current.vehicle))
+        if (!checked.current.human && !checked.current.vehicle)
             dispatch(setHeatmapResource({ value: "" }));
+        else if(checked.current.human && checked.current.vehicle)
+            dispatch(setHeatmapResource({value: 'both'}));
         else if (checked.current.human && !checked.current.vehicle)
             dispatch(setHeatmapResource({ value: "human" }));
         else if (checked.current.vehicle && !checked.current.human)
@@ -43,7 +47,10 @@ function ResourceBtns() {
                     Show Humans : &ensp;
                 </div>
                 <div className="relative inline-block w-10 mr-2 align-middle select-none">
-                    <input type="checkbox" onChange={() => handleClick("human")} name="toggle" id="Blue" className="checked:bg-blue-500 outline-none focus:outline-none right-4 checked:right-0 duration-200 ease-in-out border-2 absolute block w-6 h-6 rounded-full bg-white appearance-none cursor-pointer" />
+                    <input type="checkbox" checked={checkHuman} onChange={() => {
+                        handleClick("human");
+                        setCheckHuman((prevState) => !prevState);
+                        }} name="toggle" id="Blue" className="checked:bg-blue-500 outline-none focus:outline-none right-4 checked:right-0 duration-200 ease-in-out border-2 absolute block w-6 h-6 rounded-full bg-white appearance-none cursor-pointer" />
                     <label htmlFor="Blue" className="block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer">
                     </label>
                 </div>
@@ -53,7 +60,10 @@ function ResourceBtns() {
                     Show Vehicles : &ensp;
                 </div>
                 <div className="relative inline-block w-10 mr-2 align-middle select-none">
-                    <input type="checkbox" onChange={() => handleClick("vehicle")} name="toggle" id="Blue" className="checked:bg-blue-500 outline-none focus:outline-none right-4 checked:right-0 duration-200 ease-in-out border-2 absolute block w-6 h-6 rounded-full bg-white appearance-none cursor-pointer" />
+                    <input type="checkbox" checked={checkVehicle} onChange={() => {
+                        handleClick("vehicle");
+                        setCheckVehicle((prevState) => !prevState);
+                        }} name="toggle" id="Blue" className="checked:bg-blue-500 outline-none focus:outline-none right-4 checked:right-0 duration-200 ease-in-out border-2 absolute block w-6 h-6 rounded-full bg-white appearance-none cursor-pointer" />
                     <label htmlFor="Blue" className="block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer">
                     </label>
                 </div>

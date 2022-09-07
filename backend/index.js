@@ -9,7 +9,11 @@ const mqtt_port = process.env.MQTT_PORT || 1883;
 const mqtt_ip = process.env.MQTT_IP || '192.168.1.10';
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    'allowedHeaders': ['Content-Type'],
+    'origin': '*',
+    'preflightContinue': true
+}));
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
@@ -22,8 +26,8 @@ const options = {
     connectTimeout: 4000,
 }
 const client = mqtt.connect(`mqtt://${mqtt_ip}:${mqtt_port}`, options);
-let mqtt_buffer_human = "";
-let mqtt_buffer_vehicle = "";
+let mqtt_buffer_human = '';
+let mqtt_buffer_vehicle = '';
 
 client.on('connect', function () {
     console.log("connected to mqtt");
@@ -55,6 +59,7 @@ app.post('/api/live', (req, res) => {
     const table = req.body.table;
     const resource = req.body.resource;
 
+    // this statement is added to send the building map via backend (not currently being used)
     if (table === "map") {
         const map = req.body.map;
         map_data = require(`./public/data/maps/${map}.json`)
@@ -64,24 +69,27 @@ app.post('/api/live', (req, res) => {
         });
     }
     if (source === 'mqtt') {
-        let data = {};
+        let data = [];
+
+        if (resource === "")
+            return res.json({ data });
 
         if (mqtt_buffer_human !== "" && resource !== "vehicle") {
-            data = [{
+            data = [...data, {
                 "type": "human",
                 "value": mqtt_buffer_human
             }]
             mqtt_buffer_human = "";
         }
         if (mqtt_buffer_vehicle !== "" && resource !== "human") {
-            data = [{
+            data = [...data, {
                 "type": "vehicle",
                 "value": mqtt_buffer_vehicle
             }]
             mqtt_buffer_vehicle = "";
         }
 
-        // testing purpose
+        // for testing purpose
 
         // if (resource === "human") {
         //     return res.json({
@@ -118,7 +126,7 @@ app.post('/api/live', (req, res) => {
         //     });
         // }
 
-        return res.json({data})
+        return res.json({ data })
     }
     res.status(400).json({ error: "invalid request parameters" });
 })
