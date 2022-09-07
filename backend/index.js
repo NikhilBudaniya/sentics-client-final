@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
+const address = '134.169.114.202' || '192.168.56.1';
 const cors = require('cors')
 require("dotenv").config();
 // for mqtt 
@@ -131,6 +132,11 @@ app.post('/api/live', (req, res) => {
     res.status(400).json({ error: "invalid request parameters" });
 })
 
-app.listen(port, () => {
+
+app.listen(port,'134.169.114.202', () => {
     console.log(`Nodejs backend listening on Port: ${port}`);
+}).on("error", (err) => {
+    app.listen(port,'192.168.56.1', () => {
+        console.log(`Nodejs backend listening on Port: ${port}`);
+    })
 })
