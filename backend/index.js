@@ -136,7 +136,7 @@ app.post('/api/live', (req, res) => {
 app.listen(port,'134.169.114.202', () => {
     console.log(`Nodejs backend listening on Port: ${port}`);
 }).on("error", (err) => {
-    app.listen(port,'192.168.56.1', () => {
+    app.listen(port, () => {
         console.log(`Nodejs backend listening on Port: ${port}`);
     })
 })

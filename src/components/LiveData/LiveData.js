@@ -38,7 +38,7 @@ function LiveData(props) {
 
     const fetchLiveData = (resource = "") => {
         // pass resource = "vehicle" or "human" for specific data
-        let host = process.env.REACT_APP_NODE_BACKEND_URL || '134.169.114.202:5000';
+        let host = process.env.REACT_APP_NODE_BACKEND_URL || 'http://134.169.114.202:5000';
         return new Promise((resolve, reject) => {
             // refer to backend/index.js for details about the endpoint
             axios({
