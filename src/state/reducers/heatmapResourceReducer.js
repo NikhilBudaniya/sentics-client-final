@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // initial state is must to initialize for any state
 const initialState = {
-    value: ""
+    value: "both"
 };
 
 export const heatmapResourceSlice = createSlice({

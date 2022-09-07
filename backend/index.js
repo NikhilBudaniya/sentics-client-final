@@ -22,8 +22,8 @@ const options = {
     connectTimeout: 4000,
 }
 const client = mqtt.connect(`mqtt://${mqtt_ip}:${mqtt_port}`, options);
-let mqtt_buffer_human = "";
-let mqtt_buffer_vehicle = "";
+let mqtt_buffer_human = '';
+let mqtt_buffer_vehicle = '';
 
 client.on('connect', function () {
     console.log("connected to mqtt");
@@ -55,6 +55,7 @@ app.post('/api/live', (req, res) => {
     const table = req.body.table;
     const resource = req.body.resource;
 
+    // this statement is added to send the building map via backend (not currently being used)
     if (table === "map") {
         const map = req.body.map;
         map_data = require(`./public/data/maps/${map}.json`)
@@ -64,24 +65,27 @@ app.post('/api/live', (req, res) => {
         });
     }
     if (source === 'mqtt') {
-        let data = {};
+        let data = [];
+
+        if(resource === "")
+            return res.json({data});
 
         if (mqtt_buffer_human !== "" && resource !== "vehicle") {
-            data = [{
+            data = [...data, {
                 "type": "human",
                 "value": mqtt_buffer_human
             }]
             mqtt_buffer_human = "";
         }
         if (mqtt_buffer_vehicle !== "" && resource !== "human") {
-            data = [{
+            data = [...data, {
                 "type": "vehicle",
                 "value": mqtt_buffer_vehicle
             }]
             mqtt_buffer_vehicle = "";
         }
 
-        // testing purpose
+        // for testing purpose
 
         // if (resource === "human") {
         //     return res.json({
