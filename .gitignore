@@ -8,7 +8,7 @@ node_modules
 
 
 .env
-/backend/fast_api/
+/backend/fast_api/fast_api_env
 
 # testing
 /coverage
