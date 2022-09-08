@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { set, remove } from '../state/reducers/authReducer';
 import Home from './LiveData/LiveData';
@@ -19,9 +19,19 @@ function Dashboard(props) {
     // useSelector() is used to access any state from the store
     const auth = useSelector((store) => store.auth.value);
 
-    const Tabwidth = window.innerWidth - 50;
-    const Deskwidth = window.innerWidth - 250;
-    
+    // const Tabwidth =`${window.innerWidth - 50}px`;
+    // const Deskwidth = `${window.innerWidth - 250}px`;
+    const [MainContainerWidth, setMainContainerWidth] = useState();
+    const windowWidth = window.innerWidth;
+    useEffect(() => {
+        console.log(windowWidth);
+        if (windowWidth > 1280) {
+            setMainContainerWidth(windowWidth - 250);
+        } else {
+            setMainContainerWidth(windowWidth - 50);
+        }
+    })
+
     useEffect(() => {
         // console.log(auth);
     }, [auth]);
@@ -37,10 +47,10 @@ function Dashboard(props) {
         // </div>
         <div className="h-full w-full">
             <div className="h-full w-full"><Header /></div>
-            <div className="flex navHeight sm:relative overflow-hidden max-w-[100vw]">
-                <div className=" sm:min-w-[50px] xl:min-w-[250px] max-w-[20vw]"><LeftNav /></div>
-                <div className={`w-[${Tabwidth}] xl:w-[${Deskwidth}] overflow-hidden m-auto`}>
-                    <Outlet/>
+            <div className="flex navHeight overflow-hidden max-w-[100vw]">
+                <div className="sm:min-w-[50px] xl:min-w-[250px] max-w-[20vw]"><LeftNav /></div>
+                <div style={{ width: `${MainContainerWidth}px`, }} className={`overflow-hidden`}>
+                    <Outlet />
                 </div>
             </div>
         </div>
