@@ -9,7 +9,6 @@ import { SpaghettiMap } from './SpaghettiMap';
 
 export const ParamsDispatch = React.createContext(null);
 
-// History view component
 function Analytics() {
 
   const init = () => {
