@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
-import { ParamsDispatch } from "./Analytics";
+import { ParamsDispatch } from "./Summary";
 
 export function KdeParamsForm({ className }) {
   const { params, dispatch } = useContext(ParamsDispatch);
@@ -28,7 +28,7 @@ export function KdeParamsForm({ className }) {
           <Row>
             <Col xs={9}>
               <Form.Group className="mt-2">
-                <Form.Label>Farbschema</Form.Label>
+                <Form.Label>Colour scheme</Form.Label>
                 <Form.Select
                   value={params.kde.colorScheme}
                   onChange={(e) =>
@@ -49,7 +49,7 @@ export function KdeParamsForm({ className }) {
             </Col>
             <Col xs={3}>
               <Form.Group className="mt-2">
-                <Form.Label>umkehren</Form.Label>
+                <Form.Label>reverse</Form.Label>
                 <Form.Check
                   type="checkbox"
                   checked={params.kde.colorSchemeReversed}
@@ -70,7 +70,7 @@ export function KdeParamsForm({ className }) {
       <Row>
         <Col xs={12} lg={4}>
           <Form.Group className="mt-2">
-            <Form.Label>Intensität</Form.Label>
+            <Form.Label>Intensity</Form.Label>
             <Row className="align-items-center">
               <Col xs="8">
                 <Form.Range
@@ -110,7 +110,7 @@ export function KdeParamsForm({ className }) {
       <Row>
         <Col xs={12} lg={4}>
           <Form.Group className="mt-2">
-            <Form.Label>Transparenz</Form.Label>
+            <Form.Label>Transparency</Form.Label>
             <Row className="align-items-center">
               <Col xs="8">
                 <Form.Range

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import { ParamsDispatch } from "./Analytics";
+import { ParamsDispatch } from "./Summary";
 
 export function RangeButtons({ className }) {
   const { params, dispatch } = useContext(ParamsDispatch);
@@ -16,15 +16,15 @@ export function RangeButtons({ className }) {
 
     return [
       {
-        label: "Woche",
+        label: "Week",
         value: oneWeekAgo,
       },
       {
-        label: "Tag",
+        label: "Day",
         value: oneDayAgo,
       },
       {
-        label: "Stunde",
+        label: "Hour",
         value: oneHourAgo,
       },
     ];
@@ -42,7 +42,7 @@ export function RangeButtons({ className }) {
         dispatch({
           type: "SET_RANGE",
           payload: {
-            label: "Vor langer Zeit",
+            label: "A long time ago",
             value: params.from,
           },
         });
@@ -53,7 +53,7 @@ export function RangeButtons({ className }) {
   return (
     <ButtonGroup className={className}>
       {ranges.map((r) => (
-        <Button
+        <Button className="text-black"
           variant="secondary"
           active={Math.abs(params.range.value - r.value) < 1000}
           onClick={() => {

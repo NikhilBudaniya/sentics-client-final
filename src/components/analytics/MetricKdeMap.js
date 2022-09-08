@@ -6,7 +6,7 @@ import { Panzoom } from "../common/Panzoom";
 import styled from "styled-components";
 import Card from "react-bootstrap/Card";
 import { isEqual } from "lodash";
-import { ParamsDispatch } from "./Analytics";
+import { ParamsDispatch } from "./Summary";
 
 const MapWrapper = styled.img`
   width: 100%;
@@ -68,7 +68,7 @@ export function MetricKdeMap() {
       <Card.Body>
         <Card.Title>{params.metric.label} Heatmap</Card.Title>
         <Card.Subtitle>
-          Darstellung der {params.metric.label}-Verteilung mittels Kernel
+        Presentation of the {params.metric.label}-Distribution by means of Kernel
           Density Estimation
         </Card.Subtitle>
         <KdeParamsForm className="mt-3" />
@@ -82,16 +82,16 @@ export function MetricKdeMap() {
               params.aggregation.value !== "none"
             }
           >
-            Laden
+            Show
           </Button>
           {intervalTooShort && (
             <span className="text-danger">
-              Zeitintervall sollte mindestens 30 Minuten sein
+              Time interval should be at least 30 minutes
             </span>
           )}
           {params.aggregation.value !== "none" && (
             <span className="text-danger">
-              Nur für unaggregierte Daten verfügbar
+              Only available for unaggregated data
             </span>
           )}
           {loading && <Spinner animation="border" size="sm"></Spinner>}

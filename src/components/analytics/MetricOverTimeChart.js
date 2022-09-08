@@ -6,7 +6,7 @@ import { RangeButtons } from "./RangeButtons";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { ParamsDispatch } from "./Analytics";
+import { ParamsDispatch } from "./Summary";
 import { useQuery } from "@tanstack/react-query";
 
 function getReducer(type) {
@@ -32,11 +32,11 @@ function getReducer(type) {
 
 function formatDuration(ms) {
   const time = {
-    Tagen: Math.floor(ms / 86400000),
-    Stunden: Math.floor(ms / 3600000) % 24,
-    Minuten: Math.floor(ms / 60000) % 60,
-    Sekunden: Math.floor(ms / 1000) % 60,
-    Millisekunden: Math.floor(ms) % 1000,
+    Dawn: Math.floor(ms / 86400000),
+    Hours: Math.floor(ms / 3600000) % 24,
+    Minutes: Math.floor(ms / 60000) % 60,
+    Seconds: Math.floor(ms / 1000) % 60,
+    Milliseconds: Math.floor(ms) % 1000,
   };
   return Object.entries(time)
     .filter((val) => val[1] !== 0)
@@ -107,9 +107,9 @@ export function MetricOverTimeChart() {
   const handleLegendClick = (event) => {
     setTimeout(() => {
       const excludeHumans =
-        event.data.find((d) => d.name === "Menschen")?.visible === "legendonly";
+        event.data.find((d) => d.name === "People")?.visible === "legendonly";
       const excludeVehicles =
-        event.data.find((d) => d.name === "Fahrzeuge")?.visible ===
+        event.data.find((d) => d.name === "Vehicles")?.visible ===
         "legendonly";
       dispatch({
         type: "SET_EXCLUDES",
@@ -160,12 +160,12 @@ export function MetricOverTimeChart() {
 
     const traces = cloneDeep(data);
 
-    const humanTrace = traces.find((d) => d.name === "Menschen");
+    const humanTrace = traces.find((d) => d.name === "People");
     if (humanTrace !== undefined) {
       humanTrace.visible = params.excludeHumans ? "legendonly" : true;
     }
 
-    const vehicleTrace = traces.find((d) => d.name === "Fahrzeuge");
+    const vehicleTrace = traces.find((d) => d.name === "Vehicles");
     if (vehicleTrace !== undefined) {
       vehicleTrace.visible = params.excludeVehicles ? "legendonly" : true;
     }
@@ -253,11 +253,11 @@ export function MetricOverTimeChart() {
       <Col lg={8}>
         <Card>
           <Card.Body>
-            <Card.Title>{params.metric.label} nach Zeit</Card.Title>
+            <Card.Title>{params.metric.label} after Time</Card.Title>
             {params.aggregation.value !== "none" && (
               <Card.Subtitle>
-                Zusammengefasst als {params.aggregation.label} nach Intervallen
-                von {bucketName}
+                Summarized {params.aggregation.label} after Intervals
+                from {bucketName}
               </Card.Subtitle>
             )}
             <div className="mt-2 d-flex align-items-center">
@@ -294,7 +294,7 @@ export function MetricOverTimeChart() {
               <Card.Title>
                 {params.metric.label}{" "}
                 {params.aggregation.value === "none"
-                  ? "Durchschnitt"
+                  ? "Average"
                   : params.aggregation.label}
               </Card.Title>
               <Plot

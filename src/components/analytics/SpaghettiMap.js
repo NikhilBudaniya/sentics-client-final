@@ -5,7 +5,7 @@ import { Panzoom } from "../common/Panzoom";
 import styled from "styled-components";
 import Card from "react-bootstrap/Card";
 import { isEqual } from "lodash";
-import { ParamsDispatch } from "./Analytics";
+import { ParamsDispatch } from "./Summary";
 import { SpaghettiParamsForm } from "./SpaghettiParamsForm";
 
 const MapWrapper = styled.img`
@@ -61,7 +61,7 @@ export function SpaghettiMap() {
     <Card>
       <Card.Body>
         <Card.Title>Spaghetti-Diagramm</Card.Title>
-        <Card.Subtitle>Visualisierung der Laufwege</Card.Subtitle>
+        <Card.Subtitle>Visualization of the walkways</Card.Subtitle>
         <SpaghettiParamsForm className="mt-3" />
         <div className="mt-3 d-flex align-items-center gap-2">
           <Button
@@ -70,11 +70,11 @@ export function SpaghettiMap() {
             active={!isEqual(appliedConfig, config)}
             disabled={isEqual(appliedConfig, config)}
           >
-            Laden
+            Show
           </Button>
           {intervalTooLong && (
             <span className="text-danger">
-              Zeitintervall sollte maximal 30 Minuten sein
+              Time interval should be a maximum of 30 minutes
             </span>
           )}
           {loading && <Spinner animation="border" size="sm"></Spinner>}

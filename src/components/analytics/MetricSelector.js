@@ -6,7 +6,7 @@ import { AreaSelector } from "@bmunozg/react-image-area";
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import { BoxArrowUpRight, Trash } from "react-bootstrap-icons";
-import { ParamsDispatch } from "./Analytics";
+import { ParamsDispatch } from "./Summary";
 import InputGroup from "react-bootstrap/InputGroup";
 
 const Wrapper = styled.div`
@@ -34,18 +34,18 @@ export default function MetricSelector() {
     },
     {
       value: "activity",
-      label: "Aktivität in km/h",
+      label: "Activity in km/h",
       supportsSum: false,
       aggregations: ["avg", "max", "none"],
     },
     {
       value: "distance",
-      label: "Distanz in m",
+      label: "Distance in m",
       aggregations: ["sum", "none"],
     },
     {
       value: "count",
-      label: "Objektanzahl",
+      label: "Number of objects",
       aggregations: ["min", "max"],
     },
   ];
@@ -53,15 +53,15 @@ export default function MetricSelector() {
   const aggregations = [
     {
       value: "none",
-      label: "Keine",
+      label: "None",
     },
     {
       value: "avg",
-      label: "Durchschnitt",
+      label: "Average",
     },
     {
       value: "sum",
-      label: "Summe",
+      label: "Sum",
     },
     {
       value: "min",
@@ -124,7 +124,7 @@ export default function MetricSelector() {
         <Form className="mt-3">
           <div className="mt-3 d-flex flex-wrap gap-4">
             <Form.Group>
-              <Form.Label>Metrik</Form.Label>
+              <Form.Label>Metric</Form.Label>
               <Form.Select
                 value={params.metric.value}
                 onChange={(e) =>
@@ -158,7 +158,7 @@ export default function MetricSelector() {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>Beginn</Form.Label>
+              <Form.Label>Beginning</Form.Label>
               <Form.Control
                 type="datetime-local"
                 value={fromFormatted}
@@ -174,7 +174,7 @@ export default function MetricSelector() {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>Ende</Form.Label>
+              <Form.Label>End</Form.Label>
               <Form.Control
                 type="datetime-local"
                 value={toFormatted}
@@ -190,12 +190,12 @@ export default function MetricSelector() {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>Klasse</Form.Label>
+              <Form.Label>Class</Form.Label>
               <Form.Check
                 type="checkbox"
                 checked={!params.excludeHumans || !supportsCategoryFilters}
                 disabled={!supportsCategoryFilters}
-                label="Menschen"
+                label="People"
                 onChange={(e) =>
                   e.target.checkValidity() &&
                   dispatch({
@@ -208,7 +208,7 @@ export default function MetricSelector() {
                 type="checkbox"
                 checked={!params.excludeVehicles || !supportsCategoryFilters}
                 disabled={!supportsCategoryFilters}
-                label="Fahrzeuge"
+                label="Vehicles"
                 onChange={(e) =>
                   e.target.checkValidity() &&
                   dispatch({
@@ -241,16 +241,16 @@ export default function MetricSelector() {
 
               <Modal size="lg" show={showRoiModal} onHide={handleCloseRoiModal}>
                 <Modal.Header closeButton>
-                  <Modal.Title>Region of Interest auswählen</Modal.Title>
+                  <Modal.Title>Choose Region of Interest</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <p>ROI durch Klicken und Ziehen markieren.</p>
+                  <p>Mark ROI by clicking and dragging.</p>
                   <Button
                     variant="secondary"
                     onClick={() => setAreas((a) => a.slice(0, -1))}
                     className="d-flex align-items-center gap-2"
                   >
-                    <Trash /> Letzte Markierung löschen
+                    <Trash /> Delete last mark
                   </Button>
 
                   <div className="mt-4">
@@ -265,20 +265,20 @@ export default function MetricSelector() {
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="primary" onClick={handleCloseRoiModal}>
-                    Übernehmen
+                  Take over
                   </Button>
                   <Button
                     variant="secondary"
                     onClick={() => setShowRoiModal(false)}
                   >
-                    Abbrechen
+                    Abort
                   </Button>
                 </Modal.Footer>
               </Modal>
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>Schwellwert</Form.Label>
+              <Form.Label>Threshold</Form.Label>
               <InputGroup>
                 <InputGroup.Text>&ge;</InputGroup.Text>
                 <Form.Control

@@ -2,9 +2,13 @@
   background-color: red;
 }
 
-.analyticsHeight{
-  height: 500px;
-  overflow: scroll;
+/* for hiding scroll bars */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .heatmapButton{
