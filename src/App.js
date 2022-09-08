@@ -12,7 +12,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Dashboard />}>
         <Route path="" element={<LiveData />} />
-        <Route path="/analytics" element={<Analytics />} />
+        <Route path="/analytics/*" element={<Analytics />} />
       </Route>
     </Routes>
   );

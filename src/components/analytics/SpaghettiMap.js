@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { API_URL } from "../../config";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import { Panzoom } from "../common/Panzoom";
 import styled from "styled-components";
 import Card from "react-bootstrap/Card";
 import { isEqual } from "lodash";
-import { ParamsDispatch } from ".";
+import { ParamsDispatch } from "./Analytics";
 import { SpaghettiParamsForm } from "./SpaghettiParamsForm";
 
 const MapWrapper = styled.img`
@@ -48,7 +47,7 @@ export function SpaghettiMap() {
 
     const urlParams = new URLSearchParams(appliedConfig.params);
     setLoading(true);
-    const url = `${API_URL}/api/spaghetti?${urlParams.toString()}`;
+    const url = `${process.env.REACT_APP_BACKEND_URL || "http://localhost:8000"}/api/spaghetti?${urlParams.toString()}`;
     dispatch({
       type: "SET_MAP_URL",
       payload: url,

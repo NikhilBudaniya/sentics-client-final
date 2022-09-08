@@ -6,7 +6,7 @@ import { AreaSelector } from "@bmunozg/react-image-area";
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import { BoxArrowUpRight, Trash } from "react-bootstrap-icons";
-import { ParamsDispatch } from ".";
+import { ParamsDispatch } from "./Analytics";
 import InputGroup from "react-bootstrap/InputGroup";
 
 const Wrapper = styled.div`

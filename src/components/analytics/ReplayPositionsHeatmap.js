@@ -1,14 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { API_URL } from "../../config";
 import PositionsHeatmap from "../live/PositionsHeatmap";
-import { Panzoom } from "../common/Panzoom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import { isEqual } from "lodash";
 import { PauseCircle, PlayCircle } from "react-bootstrap-icons";
-import { ParamsDispatch } from ".";
+import { ParamsDispatch } from "./Analytics";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import styled from "styled-components";
@@ -32,7 +30,7 @@ export default function ReplayPositionsHeatmap() {
     }
 
     const data = await fetch(
-      `${API_URL}/api/replay?from=${appliedConfig.from.toISOString()}&to=${appliedConfig.to.toISOString()}`
+      `${process.env.REACT_APP_BACKEND_URL || "http://localhost:8000"}/api/replay?from=${appliedConfig.from.toISOString()}&to=${appliedConfig.to.toISOString()}`
     ).then((r) => r.json());
 
     // create a map of render ticks to positions

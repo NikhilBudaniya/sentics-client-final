@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
-import { ParamsDispatch } from ".";
+import { ParamsDispatch } from "./Analytics";
 
 export function SpaghettiParamsForm({ className }) {
   const { params, dispatch } = useContext(ParamsDispatch);

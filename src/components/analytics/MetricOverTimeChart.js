@@ -1,13 +1,12 @@
 import React, { useContext, useMemo, useState } from "react";
 import Plot from "react-plotly.js";
-import { API_URL } from "../../config";
 import { cloneDeep, debounce } from "lodash";
 import Spinner from "react-bootstrap/Spinner";
 import { RangeButtons } from "./RangeButtons";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { ParamsDispatch } from ".";
+import { ParamsDispatch } from "./Analytics";
 import { useQuery } from "@tanstack/react-query";
 
 function getReducer(type) {
@@ -135,7 +134,7 @@ export function MetricOverTimeChart() {
           )
           .join(";")
       );
-      const url = `${API_URL}/api/statistics/${
+      const url = `${process.env.REACT_APP_BACKEND_URL || "http://localhost:8000"}/api/statistics/${
         params.metric.value
       }-over-time?${urlParams.toString()}`;
 

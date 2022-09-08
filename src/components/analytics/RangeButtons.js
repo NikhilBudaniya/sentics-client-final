@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import { ParamsDispatch } from ".";
+import { ParamsDispatch } from "./Analytics";
 
 export function RangeButtons({ className }) {
   const { params, dispatch } = useContext(ParamsDispatch);

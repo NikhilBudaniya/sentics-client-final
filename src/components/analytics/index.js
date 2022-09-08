@@ -5,15 +5,13 @@ import { MetricOverTimeChart } from "./MetricOverTimeChart";
 import { MetricKdeMap } from "./MetricKdeMap";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
-import { API_URL } from "../../config";
-import ReplayPositionsHeatmap from "./ReplayPositionsHeatmap";
+// import ReplayPositionsHeatmap from "./ReplayPositionsHeatmap";
 import { SpaghettiMap } from "./SpaghettiMap";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
+import ohlfUrl from "../assets/images/ohlf.png";
 
 export const ParamsDispatch = React.createContext(null);
-
-const ohlfUrl = `${API_URL}/image/ohlf.png`;
 
 export default function LiveView() {
   const init = () => {
@@ -128,9 +126,9 @@ export default function LiveView() {
             <MetricSelector />
           </Col>
 
-          <Col xs={12} className="mt-4">
+          {/* <Col xs={12} className="mt-4">
             <MetricOverTimeChart />
-          </Col>
+          </Col> */}
 
           <Col xs={12} className="mt-4">
             <Nav variant="tabs" defaultActiveKey={pathname}>
@@ -163,10 +161,11 @@ export default function LiveView() {
           <Col xs={12} className="mt-2">
             <Routes>
               <Route path="/" element={<MetricKdeMap />}></Route>
-              <Route
+              {/* FIXME: need to integrate new code of getting positions here */}
+              {/* <Route
                 path="/replay"
                 element={<ReplayPositionsHeatmap />}
-              ></Route>
+              ></Route> */}
               <Route path="/spaghetti" element={<SpaghettiMap />}></Route>
             </Routes>
           </Col>

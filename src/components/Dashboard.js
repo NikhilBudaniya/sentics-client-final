@@ -28,13 +28,6 @@ function Dashboard(props) {
 
 
     return (
-        // <div className="h-full w-full">
-        //     <div className="grid grid-flow-rowgrid-cols-12 gap-0">
-        //         <div className="row-span-1 col-span-12 h-full w-full"><Header /></div>
-        //         <div className="row-span-1 col-span-2 h-full w-full max-w-xs"><LeftNav /></div>
-        //         <div className="row-span-1 col-span-10 h-full w-full"><LiveData /></div>
-        //     </div>
-        // </div>
         <div className="h-full w-full">
             <div className="h-full w-full"><Header /></div>
             <div className="flex navHeight sm:relative overflow-hidden max-w-[100vw]">

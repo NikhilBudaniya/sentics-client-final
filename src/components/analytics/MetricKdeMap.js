@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { API_URL } from "../../config";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import { KdeParamsForm } from "./KdeParamsForm";
@@ -7,7 +6,7 @@ import { Panzoom } from "../common/Panzoom";
 import styled from "styled-components";
 import Card from "react-bootstrap/Card";
 import { isEqual } from "lodash";
-import { ParamsDispatch } from ".";
+import { ParamsDispatch } from "./Analytics";
 
 const MapWrapper = styled.img`
   width: 100%;
@@ -52,7 +51,7 @@ export function MetricKdeMap() {
 
     const urlParams = new URLSearchParams(appliedConfig.params);
     setLoading(true);
-    const url = `${API_URL}/api/graphs/${
+    const url = `${process.env.REACT_APP_BACKEND_URL || "http://localhost:8000"}/api/graphs/${
       appliedConfig.metric
     }-kde?${urlParams.toString()}`;
     dispatch({
