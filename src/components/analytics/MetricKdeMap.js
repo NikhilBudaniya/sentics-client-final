@@ -1,0 +1,123 @@
+import React, { useContext, useEffect, useState } from "react";
+import { API_URL } from "../../config";
+import Spinner from "react-bootstrap/Spinner";
+import Button from "react-bootstrap/Button";
+import { KdeParamsForm } from "./KdeParamsForm";
+import { Panzoom } from "../common/Panzoom";
+import styled from "styled-components";
+import Card from "react-bootstrap/Card";
+import { isEqual } from "lodash";
+import { ParamsDispatch } from ".";
+
+const MapWrapper = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+`;
+
+export function MetricKdeMap() {
+  const { params, dispatch } = useContext(ParamsDispatch);
+  const [loading, setLoading] = useState(false);
+
+  const config = {
+    metric: params.metric.value,
+    params: {
+      from: params.from.toISOString(),
+      to: params.to.toISOString(),
+      bw: params.kde.bandwidth,
+      transparency: params.kde.transparency,
+      colorScheme:
+        params.kde.colorScheme + (params.kde.colorSchemeReversed ? "_r" : ""),
+      excludeHumans: params.excludeHumans,
+      excludeVehicles: params.excludeVehicles,
+      areas: params.areas
+        .map(
+          (a) => `${a.x / 100},${a.y / 100},${a.width / 100},${a.height / 100}`
+        )
+        .join(";"),
+      threshold: params.threshold,
+    },
+  };
+
+  const [appliedConfig, setAppliedConfig] = useState();
+
+  useEffect(() => setAppliedConfig(), [params.metric.value]);
+
+  const [mapUrl, setMapUrl] = useState();
+  useEffect(() => {
+    if (appliedConfig == null) {
+      setMapUrl();
+      return;
+    }
+
+    const urlParams = new URLSearchParams(appliedConfig.params);
+    setLoading(true);
+    const url = `${API_URL}/api/graphs/${
+      appliedConfig.metric
+    }-kde?${urlParams.toString()}`;
+    dispatch({
+      type: "SET_MAP_URL",
+      payload: url,
+    });
+    setMapUrl(url);
+  }, [dispatch, appliedConfig]);
+
+  const intervalTooShort = (params.to - params.from) / 1000 < 30 * 60;
+
+  return (
+    <Card>
+      <Card.Body>
+        <Card.Title>{params.metric.label} Heatmap</Card.Title>
+        <Card.Subtitle>
+          Darstellung der {params.metric.label}-Verteilung mittels Kernel
+          Density Estimation
+        </Card.Subtitle>
+        <KdeParamsForm className="mt-3" />
+        <div className="mt-3 d-flex align-items-center gap-2">
+          <Button
+            variant="primary"
+            onClick={() => setAppliedConfig(config)}
+            active={!isEqual(appliedConfig, config)}
+            disabled={
+              isEqual(appliedConfig, config) ||
+              params.aggregation.value !== "none"
+            }
+          >
+            Laden
+          </Button>
+          {intervalTooShort && (
+            <span className="text-danger">
+              Zeitintervall sollte mindestens 30 Minuten sein
+            </span>
+          )}
+          {params.aggregation.value !== "none" && (
+            <span className="text-danger">
+              Nur für unaggregierte Daten verfügbar
+            </span>
+          )}
+          {loading && <Spinner animation="border" size="sm"></Spinner>}
+        </div>
+
+        <div
+          className="mt-3 border"
+          style={{
+            height: "400px",
+            filter:
+              loading || !isEqual(appliedConfig, config)
+                ? "grayscale(60%)"
+                : "",
+            opacity:
+              loading || !isEqual(appliedConfig, config) ? 0.6 : undefined,
+          }}
+        >
+          <Panzoom>
+            <MapWrapper
+              src={mapUrl ?? params.mapDefaultUrl}
+              onLoad={() => setLoading(false)}
+            />
+          </Panzoom>
+        </div>
+      </Card.Body>
+    </Card>
+  );
+}

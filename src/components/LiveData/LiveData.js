@@ -88,7 +88,7 @@ function LiveData(props) {
                             {/* <ThreeD /> */}
                         </>
                     )}
-                <div onClick={handleDropDown} className="absolute top-[155px] sm:top-[105px] right-[25px]">
+                {/* <div onClick={handleDropDown} className="absolute top-[155px] sm:top-[105px] right-[25px]">
 
                     <div className="relative inline-block text-left">
                         <div>
@@ -118,7 +118,7 @@ function LiveData(props) {
                         </div>
                     </div>
 
-                </div>
+                </div> */}
 
             </div>
             {/* <div className="h-[75%]"></div> */}
