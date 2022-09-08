@@ -16,8 +16,26 @@ const queryClient = new QueryClient({
     },
   },
 });
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { WindowWidth } from './state/reducers/WindowWidthReducer';
 
 function App() {
+
+  
+  const dispatch = useDispatch();
+  
+  window.addEventListener('resize',()=>{
+      let windowInnerWidth = window.innerWidth;
+      if (windowInnerWidth > 1280) {
+        dispatch(WindowWidth({ value: windowInnerWidth - 250 }))
+      } else if (windowInnerWidth > 640) {
+        dispatch(WindowWidth({ value: windowInnerWidth - 50 }))
+      } else {
+        dispatch(WindowWidth({ value: windowInnerWidth }))
+      }
+    })
+
   return (
     <QueryClientProvider client={queryClient}>
       <Routes>
