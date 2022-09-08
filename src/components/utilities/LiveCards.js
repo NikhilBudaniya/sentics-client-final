@@ -3,7 +3,7 @@ import "./LiveCards.css";
 
 function LiveCards() {
   return (
-    <div className="live-cards flex h-full justify-between p-3 w-full max-w-full overflow-x-scroll xl:overflow-hidden">
+    <div className="live-cards flex h-full justify-between p-3 w-full max-w-full overflow-x-scroll">
       <Card title="Safety Score" overall_score="90%" monthly_score="80%" weekly_score="70%" daily_score="99%" />
       <Card title="Productivity Score" overall_score="90%" monthly_score="80%" weekly_score="70%" daily_score="99%" />
       <Card title="Forklift Speed Violations" overall_score="90%" monthly_score="80%" weekly_score="70%" daily_score="99%" />
