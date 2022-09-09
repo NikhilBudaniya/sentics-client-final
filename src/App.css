@@ -2,6 +2,15 @@
   background-color: red;
 }
 
+/* for hiding scroll bars */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 .heatmapButton{
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
 }
