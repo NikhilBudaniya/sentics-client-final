@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { ParamsDispatch } from "./Summary";
 
-export function RangeButtons({ className }) {
+export function RangeButtons() {
   const { params, dispatch } = useContext(ParamsDispatch);
 
   const [ranges] = useState(() => {
@@ -51,20 +49,37 @@ export function RangeButtons({ className }) {
   }, [dispatch, ranges, params.from, params.range.value]);
 
   return (
-    <ButtonGroup className={className}>
+
+
+    <div class="inline-flex rounded-md shadow-sm" role="group">
       {ranges.map((r) => (
-        <Button className="text-black"
-          variant="secondary"
-          active={Math.abs(params.range.value - r.value) < 1000}
+        <button
+          type="button"
           onClick={() => {
             dispatch({ type: "SET_TIMESPAN_FROM", payload: r.value });
             dispatch({ type: "SET_RANGE", payload: r });
           }}
           key={r.value}
-        >
+          class="py-2 px-4 text-sm font-medium text-gray-900 bg-transparent border border-gray-900 hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
           {r.label}
-        </Button>
+        </button>
       ))}
-    </ButtonGroup>
+    </div>
+
+    // <ButtonGroup className={className}>
+    //   {ranges.map((r) => (
+    //     <Button className="text-black"
+    //       variant="secondary"
+    //       active={Math.abs(params.range.value - r.value) < 1000}
+    //       onClick={() => {
+    //         dispatch({ type: "SET_TIMESPAN_FROM", payload: r.value });
+    //         dispatch({ type: "SET_RANGE", payload: r });
+    //       }}
+    //       key={r.value}
+    //     >
+    //       {r.label}
+    //     </Button>
+    //   ))}
+    // </ButtonGroup>
   );
 }

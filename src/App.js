@@ -7,6 +7,9 @@ import Dashboard from './components/Dashboard';
 import Analytics from './components/analytics/Analytics';
 import LiveData from './components/LiveData/LiveData';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { WindowWidth } from './state/reducers/WindowWidthReducer';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,6 +21,19 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  const dispatch = useDispatch();
+  
+  window.addEventListener('resize',()=>{
+      let windowInnerWidth = window.innerWidth;
+      if (windowInnerWidth > 1280) {
+        dispatch(WindowWidth({ value: windowInnerWidth - 250 }))
+      } else if (windowInnerWidth > 640) {
+        dispatch(WindowWidth({ value: windowInnerWidth - 50 }))
+      } else {
+        dispatch(WindowWidth({ value: windowInnerWidth }))
+      }
+    })
+
   return (
     <QueryClientProvider client={queryClient}>
       <Routes>
