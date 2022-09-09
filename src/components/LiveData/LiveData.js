@@ -76,8 +76,8 @@ function LiveData(props) {
 
     return (
         <div className={`navHeight overflow-hidden`}>
-            <div className="h-[15%] max-w-[100%] min-h-[100px]"><LiveCards /></div>
-            <div className="h-[85%]">
+            <div className="h-[10%] min-h-[70px] mb-5 sm:mb-0 relative sm:h-[15%] max-w-[100%] sm:max-h-[150px] sm:min-h-[130px]"><LiveCards /></div>
+            <div className=" h-[90%] sm:h-[85%]">
                 {mapType === "2D" ?
                     <Heatmap fetchLiveData={fetchLiveData} liveData={liveData} setLiveData={setLiveData} />
                     : (
