@@ -21,7 +21,7 @@ function Analytics() {
       <div className="h-full pb-[30px] z-50">
         <div className="border-0 h-full border-red-500 shadow-md p-1 bg-white">
           {SumActive ?
-            <div id='summary' className="border p-3 h-full">
+            <div id='summary' className="border p-3 h-full overflow-auto scrollbar-hide">
               <Summary />
             </div>
             :

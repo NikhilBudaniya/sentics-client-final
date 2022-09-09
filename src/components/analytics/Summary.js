@@ -120,7 +120,7 @@ function Summary() {
 
   return (
     <ParamsDispatch.Provider value={{ params, dispatch }}>
-      <div className="w-full h-100 overflow-scroll scrollbar-hide">
+      <div className="w-full h-100">
 
         <div className="my-1">
           <MetricSelector />
