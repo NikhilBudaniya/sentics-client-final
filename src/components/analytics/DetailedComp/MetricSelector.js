@@ -3,7 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { AreaSelector } from "@bmunozg/react-image-area";
 import styled from "styled-components";
 import { BoxArrowUpRight, Trash } from "react-bootstrap-icons";
-import { ParamsDispatch } from "./Summary";
+import { ParamsDispatch } from "../Detailed";
 
 const Wrapper = styled.div`
   pointer-events: none;
@@ -230,7 +230,7 @@ export default function MetricSelector() {
               <div>
 
                 <button
-                  onClick={handleOpenRoiModal} type="button" className="flex w-full justify-center items-center text-white w-full transition ease-in duration-200 text-center text-base font-semibold  h-12 rounded-lg ">
+                  onClick={handleOpenRoiModal} type="button" className="flex w-full justify-center items-center text-white  transition ease-in duration-200 text-center text-base font-semibold  h-12 rounded-lg ">
                   <BoxArrowUpRight color="black" />
                   <Wrapper>
                     <img
