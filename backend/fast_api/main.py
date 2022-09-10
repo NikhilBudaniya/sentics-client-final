@@ -28,9 +28,9 @@ mongo_collection = mongo_client["positions"]["FilteredDataHuman"]
 ohlf_width = 82
 ohlf_height = 26
 
-influxclient = InfluxDBClient(url="http://localhost:8086",
-                              token="eg5DyhbQhtZ4Bo3-uC-vwxSjWGXnHb3eh3_rSarnSoB2g0f5Sk_8kg92hTQwJVgaeHdwCBlztcbfQswZVaewHg==", org="sentics")
-saver = InfluxDBSaver(influxclient, "sentics")
+# influxclient = InfluxDBClient(url="http://localhost:8086",
+#                               token="eg5DyhbQhtZ4Bo3-uC-vwxSjWGXnHb3eh3_rSarnSoB2g0f5Sk_8kg92hTQwJVgaeHdwCBlztcbfQswZVaewHg==", org="sentics")
+# saver = InfluxDBSaver(influxclient, "sentics")
 
 humans_position_tracker = CurrentPositionTracker(
     "human", ohlf_width, ohlf_height)
