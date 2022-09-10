@@ -139,21 +139,22 @@ function Detailed() {
             }} to="/analytics" className="block mt-3 lg:mt-0 mr-10 hover:text-indigo-600">
               Home
             </NavLink>
-            <NavLink style={({ isActive }) => {
+            {/* TODO: need to implement replay component using live api (python) */}
+            {/* <NavLink style={({ isActive }) => {
               return {
                 color: isActive ? "blue" : "black",
                 fontWeight: isActive ? 'bold' : '',
               };
             }} to="/analytics/replay" className="block mt-3 lg:mt-0 mr-10 hover:text-indigo-600">
               Team
-            </NavLink>
+            </NavLink> */}
             <NavLink style={({ isActive }) => {
               return {
                 color: isActive ? "blue" : "black",
                 fontWeight: isActive ? 'bold' : '',
               };
             }} to="/analytics/spaghetti" className="block mt-3 lg:mt-0 hover:text-indigo-600">
-              Galery
+              Gallery
             </NavLink>
           </nav>
         </div>

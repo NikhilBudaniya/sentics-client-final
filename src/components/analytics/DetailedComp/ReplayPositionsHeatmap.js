@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import { isEqual } from "lodash";
 import { PauseCircle, PlayCircle } from "react-bootstrap-icons";
-import { ParamsDispatch } from "./Analytics";
+import { ParamsDispatch } from "../Detailed";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import styled from "styled-components";

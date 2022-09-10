@@ -40,6 +40,7 @@ export function SpaghettiParamsForm({ className }) {
                 payload: e.target.value,
               })
             }
+            className="mx-1"
           />
         </div>
       </div>

@@ -20,7 +20,7 @@ export function KdeParamsForm() {
 
   return (
     <form className="border-y py-2">
-      <div className="flex flex-wrap items-center justify-start">
+      <div className="flex flex-wrap justify-start flex-col">
         <div className="mx-2">
           <label>
             <span className="mr-2">Colour scheme</span>
@@ -41,25 +41,27 @@ export function KdeParamsForm() {
               ))}
             </select>
           </label>
+
+          <span className="mx-2">
+            <label className="inline-flex items-center">
+              <input
+                className="form-checkbox"
+                type="checkbox"
+                checked={params.kde.colorSchemeReversed}
+                onChange={(e) =>
+                  e.target.checkValidity() &&
+                  dispatch({
+                    type: "SET_KDE_COLORSCHEME_REVERSED",
+                    payload: e.target.checked,
+                  })
+                }
+              />
+              <span className="ml-2">Reverse</span>
+            </label>
+          </span>
+
         </div>
 
-        <div className="mx-2">
-          <label className="inline-flex items-center">
-            <input
-              className="form-checkbox"
-              type="checkbox"
-              checked={params.kde.colorSchemeReversed}
-              onChange={(e) =>
-                e.target.checkValidity() &&
-                dispatch({
-                  type: "SET_KDE_COLORSCHEME_REVERSED",
-                  payload: e.target.checked,
-                })
-              }
-            />
-            <span className="ml-2">Reverse</span>
-          </label>
-        </div>
 
         <div className="mx-2">
           <label className="">
@@ -93,6 +95,7 @@ export function KdeParamsForm() {
                 payload: e.target.value,
               })
             }
+            className="mx-1"
           />
         </div>
 
@@ -128,6 +131,7 @@ export function KdeParamsForm() {
                 payload: e.target.value,
               })
             }
+            className="mx-1"
           />
         </div>
       </div>

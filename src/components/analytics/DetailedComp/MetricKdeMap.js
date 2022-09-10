@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { isEqual } from "lodash";
 import { ParamsDispatch } from "../Detailed";
 import CustomSpinner from "../../utilities/utilComponents/spinner";
-import Panzoom from "@panzoom/panzoom";
+import {Panzoom} from "../../common/Panzoom";
 
 const MapWrapper = styled.img`
   width: 100%;
