@@ -154,7 +154,7 @@ function Summary() {
                 fontWeight: isActive ? 'bold' : '',
               };
             }} to="/analytics/spaghetti" className="block mt-3 lg:mt-0 hover:text-indigo-600">
-              Galery
+              Gallery
             </NavLink>
           </nav>
         </div>
