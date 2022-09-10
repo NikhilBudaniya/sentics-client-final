@@ -25,7 +25,7 @@ function Analytics() {
               <Summary />
             </div>
             :
-            <div id='detailed' className="border p-3 h-full">
+            <div id='detailed' className="border p-3 h-full overflow-auto scrollbar-hide">
               <Detailed />
             </div>}
         </div>

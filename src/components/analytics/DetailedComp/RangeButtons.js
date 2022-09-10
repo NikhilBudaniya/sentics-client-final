@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ParamsDispatch } from "./Summary";
+import { ParamsDispatch } from "../Detailed";
 
 export function RangeButtons() {
   const { params, dispatch } = useContext(ParamsDispatch);
