@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react';
+
 
 function Summary() {
+
   return (
-    <div>
-      this is summary
-    </div>
+    <>
+      <div>
+        This is Summary
+      </div>
+    </>
   )
 }
 

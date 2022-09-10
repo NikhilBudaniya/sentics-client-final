@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { setHeatmapResource } from '../../state/reducers/heatmapResourceReducer';
 import ToggleSwith from '../utilities/utilComponents/ToggleSwith'
 
 function ResourceBtns() {
     let dispatch = useDispatch();
+    let location = useLocation();
     const [checkHuman, setCheckHuman] = useState(true);
     const [checkVehicle, setCheckVehicle] = useState(true);
 
@@ -13,11 +15,6 @@ function ResourceBtns() {
         human: true,
         vehicle: true,
     });
-    const currentResource = useRef("both");
-
-    const handleResourseType = () => {
-
-    }
 
     const handleClick = (type) => {
         if (type === "human")
@@ -47,11 +44,11 @@ function ResourceBtns() {
                     Show Humans : &ensp;
                 </div>
                 <div className="relative inline-block w-10 mr-2 align-middle select-none">
-                    <input type="checkbox" checked={checkHuman} onChange={() => {
+                    <input disabled={location.pathname.includes("/analytics")} type="checkbox" checked={checkHuman} onChange={() => {
                         handleClick("human");
                         setCheckHuman((prevState) => !prevState);
-                        }} name="toggle" id="Blue" className="checked:bg-blue-500 outline-none focus:outline-none right-4 checked:right-0 duration-200 ease-in-out border-2 absolute block w-6 h-6 rounded-full bg-white appearance-none cursor-pointer" />
-                    <label htmlFor="Blue" className="block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer">
+                        }} name="toggle" id="Blue" className={`${location.pathname.includes("/analytics") ? "opacity-50" : ""} checked:bg-blue-500 outline-none focus:outline-none right-4 checked:right-0 duration-200 ease-in-out border-2 absolute block w-6 h-6 rounded-full bg-white appearance-none cursor-pointer`} />
+                    <label style={{pointerEvents: 'none'}} htmlFor="Blue" className="block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer">
                     </label>
                 </div>
             </li>
@@ -60,11 +57,11 @@ function ResourceBtns() {
                     Show Vehicles : &ensp;
                 </div>
                 <div className="relative inline-block w-10 mr-2 align-middle select-none">
-                    <input type="checkbox" checked={checkVehicle} onChange={() => {
+                    <input disabled={location.pathname.includes("/analytics")} type="checkbox" checked={checkVehicle} onChange={() => {
                         handleClick("vehicle");
                         setCheckVehicle((prevState) => !prevState);
-                        }} name="toggle" id="Blue" className="checked:bg-blue-500 outline-none focus:outline-none right-4 checked:right-0 duration-200 ease-in-out border-2 absolute block w-6 h-6 rounded-full bg-white appearance-none cursor-pointer" />
-                    <label htmlFor="Blue" className="block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer">
+                        }} name="toggle" id="Blue" className={`${location.pathname.includes("/analytics") ? "opacity-50" : ""} checked:bg-blue-500 outline-none focus:outline-none right-4 checked:right-0 duration-200 ease-in-out border-2 absolute block w-6 h-6 rounded-full bg-white appearance-none cursor-pointer`} />
+                    <label style={{pointerEvents: 'none'}} htmlFor="Blue" className="block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer">
                     </label>
                 </div>
             </li>
