@@ -5,7 +5,7 @@ import "./LiveCards.css";
 
 function LiveCards() {
 
-  const [Collapse, setCollapse] = useState(false)
+  const [Collapse, setCollapse] = useState(true)
 
   const windowWidthRedux = useSelector((store) => store.WindowWidth.value);
   useEffect(() => {
@@ -15,15 +15,17 @@ function LiveCards() {
   }, [windowWidthRedux])
 
   return (
-    <div className={`bg-white z-10 borde-0 shadow-lg border-t-2 sm:border-t-0 sm:shadow-none absolute sm:relative live-cards flex flex-col sm:flex-row ${Collapse ? 'h-full ' : 'h-fit'} overflow-hidden sm:overflow-auto sm:h-full justify-between p-3 sm:py-5 sm:px-3 w-full max-w-full sm:overflow-x-scroll ease-in-out duration-300`}>
-      <div className="flex sm:hidden h-full min-h-[50px] items-center justify-between px-3">
+    <div className={`absolute border-t-2 shadow-md w-full bg-white ease-in-out duration-300 ${Collapse ? 'h-[50px]' : 'h-fit'}`}>
+      <div className="flex h-[50px] items-center justify-between px-5">
         <h1 className="text-xl font-semibold">Analytics Cards</h1>
-        <span onClick={() => { setCollapse(!Collapse) }} className='text-xl p-1'><BsCaretDownFill /></span>
+        <span onClick={() => { setCollapse(!Collapse) }} className={`text-xl p-1 ease-out duration-100 ${!Collapse ? 'rotate-180' : 'rotate-0'} `}><BsCaretDownFill /></span>
       </div>
-      <Card collapsed={Collapse} title="Safety Score" overall_score="90%" monthly_score="80%" weekly_score="70%" daily_score="99%" />
-      <Card collapsed={Collapse} title="Productivity Score" overall_score="90%" monthly_score="80%" weekly_score="70%" daily_score="99%" />
-      <Card collapsed={Collapse} title="Forklift Speed Violations" overall_score="90%" monthly_score="80%" weekly_score="70%" daily_score="99%" />
-      <Card collapsed={Collapse} title="Walking Area Violations" overall_score="90%" monthly_score="80%" weekly_score="70%" daily_score="99%" />
+      <div className={`live-cards flex justify-between p-3 w-full max-w-full overflow-x-scroll ${Collapse ? 'opacity-0' : 'opacity-100'}`}>
+        <Card collapsed={Collapse} title="Safety Score" overall_score="90%" monthly_score="80%" weekly_score="70%" daily_score="99%" />
+        <Card collapsed={Collapse} title="Productivity Score" overall_score="90%" monthly_score="80%" weekly_score="70%" daily_score="99%" />
+        <Card collapsed={Collapse} title="Forklift Speed Violations" overall_score="90%" monthly_score="80%" weekly_score="70%" daily_score="99%" />
+        <Card collapsed={Collapse} title="Walking Area Violations" overall_score="90%" monthly_score="80%" weekly_score="70%" daily_score="99%" />
+      </div>
     </div>
   )
 }
@@ -49,7 +51,7 @@ function Card({ title, overall_score, monthly_score, weekly_score, daily_score, 
   }, []);
 
   return (
-    <div className={`flex justify-between sm:min-w-[290px] w-[100%] mx-0 px-5 py-3 my-3 sm:my-0 shadow-lg bg-blue-100 rounded-xl sm:mx-2 ${collapsed ? 'opacity-0 sm:opacity-100' : 'opacity-100'}`}>
+    <div className={`flex justify-between min-w-[290px] w-[100%] px-5 py-3 m-3 shadow-lg bg-blue-100 rounded-xl `}>
       <div className='font-semibold text-lg mb-3 mr-5'>{title}</div>
       <div ref={mount} className="min-w-[90px] overflow-hidden">
         <div className="scroll-up min-w-max">
