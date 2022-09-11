@@ -1,12 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import Spinner from "react-bootstrap/Spinner";
-import Button from "react-bootstrap/Button";
-import { Panzoom } from "../common/Panzoom";
+import { Panzoom } from "../../common/Panzoom";
 import styled from "styled-components";
-import Card from "react-bootstrap/Card";
 import { isEqual } from "lodash";
-import { ParamsDispatch } from "./Summary";
+import { ParamsDispatch } from "../Detailed";
 import { SpaghettiParamsForm } from "./SpaghettiParamsForm";
+import CustomSpinner from "../../utilities/utilComponents/spinner";
 
 const MapWrapper = styled.img`
   width: 100%;
@@ -58,26 +56,27 @@ export function SpaghettiMap() {
   const intervalTooLong = (params.to - params.from) / 1000 > 30 * 60;
 
   return (
-    <Card>
-      <Card.Body>
-        <Card.Title>Spaghetti-Diagramm</Card.Title>
-        <Card.Subtitle>Visualization of the walkways</Card.Subtitle>
+    <div className=" broder border-red-500">
+      <div className="mt-3">
+        <h1 className="font-semibold text-xl">Spaghetti-Diagramm</h1>
+        <div className="text-sm mb-5">Visualization of the walkways</div>
         <SpaghettiParamsForm className="mt-3" />
         <div className="mt-3 d-flex align-items-center gap-2">
-          <Button
+          <button
+            className='border px-[20px] cursor-pointer py-[3px] bg-blue-500 text-white font-semibold rounded hover:bg-blue-600'
             variant="primary"
             onClick={() => setAppliedConfig(config)}
             active={!isEqual(appliedConfig, config)}
             disabled={isEqual(appliedConfig, config)}
           >
             Show
-          </Button>
+          </button>
           {intervalTooLong && (
-            <span className="text-danger">
+            <span className="text-red-600 font-medium text-sm ml-3">
               Time interval should be a maximum of 30 minutes
             </span>
           )}
-          {loading && <Spinner animation="border" size="sm"></Spinner>}
+          {loading && <CustomSpinner/>}
         </div>
 
         <div
@@ -99,7 +98,7 @@ export function SpaghettiMap() {
             />
           </Panzoom>
         </div>
-      </Card.Body>
-    </Card>
+      </div>
+    </div>
   );
 }
