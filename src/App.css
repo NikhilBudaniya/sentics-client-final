@@ -2,6 +2,15 @@
   background-color: red;
 }
 
+/* for hiding scroll bars */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 .heatmapButton{
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
 }
@@ -25,16 +34,17 @@
     background-position: center;
   /* background-color: red; */
     width: 90vw;
-    height: 62vh;
+    height: 75vh;
   }
 }
 
 @media only screen and (min-width: 1280px) {
   .heatmapcss { background: url('./components/assets/images/bg_rotated.png') no-repeat right top;
     background-size: contain;
+    background-position: center;
     /* background-color: red; */
     width: 80vw;
-    height: 62vh;
+    height: 75vh;
   }
 }
 
@@ -68,4 +78,9 @@
 }
 .flipYupsideDown{
   transform: rotate(180deg) rotateX(-180deg);
+}
+
+.react-transform-wrapper {
+  width: 100% !important;
+  height: 100% !important;
 }
