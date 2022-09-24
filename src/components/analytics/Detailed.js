@@ -7,6 +7,7 @@ import MetricSelector from './DetailedComp/MetricSelector';
 import { MetricOverTimeChart } from './DetailedComp/MetricOverTimeChart';
 import { MetricKdeMap } from './DetailedComp/MetricKdeMap';
 import { SpaghettiMap } from './DetailedComp/SpaghettiMap';
+import ReplayPositionsHeatmap from './DetailedComp/ReplayPositionsHeatmap';
 
 export const ParamsDispatch = React.createContext(null);
 
@@ -140,14 +141,14 @@ function Detailed() {
               Home
             </NavLink>
             {/* TODO: need to implement replay component using live api (python) */}
-            {/* <NavLink style={({ isActive }) => {
+            <NavLink style={({ isActive }) => {
               return {
                 color: isActive ? "blue" : "black",
                 fontWeight: isActive ? 'bold' : '',
               };
             }} to="/analytics/replay" className="block mt-3 lg:mt-0 mr-10 hover:text-indigo-600">
               Team
-            </NavLink> */}
+            </NavLink>
             <NavLink style={({ isActive }) => {
               return {
                 color: isActive ? "blue" : "black",
@@ -163,6 +164,7 @@ function Detailed() {
           <Routes>
             <Route path="/" element={<MetricKdeMap />}></Route>
             <Route path="/spaghetti" element={<SpaghettiMap />}></Route>
+            <Route path="/replay" element={<ReplayPositionsHeatmap/>}></Route>
           </Routes>
         </div>
 
