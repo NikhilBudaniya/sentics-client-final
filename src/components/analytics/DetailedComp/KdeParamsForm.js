@@ -20,7 +20,7 @@ export function KdeParamsForm() {
 
   return (
     <form className="border-y py-2">
-      <div className="flex flex-wrap justify-start flex-col">
+      <div className="flex flex-wrap justify-start flex-row">
         <div className="mx-2">
           <label>
             <span className="mr-2">Colour scheme</span>
