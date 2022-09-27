@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 import Analytics from './components/analytics/Analytics';
 import LiveData from './components/LiveData/LiveData';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { WindowWidth } from './state/reducers/WindowWidthReducer';
 
@@ -40,6 +41,7 @@ function App() {
           <Route path="" element={<LiveData />} />
           <Route path="/analytics/*" element={<Analytics />} />
         </Route>
+        <Route path="*" element={<>Page not </>} />
       </Routes>
     </QueryClientProvider>
   );

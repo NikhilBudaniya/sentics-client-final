@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import h337 from "heatmap.js";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { TransformWrapper, TransformComponent } from "@kokarn/react-zoom-pan-pinch";
 import { BiRotateRight, BiRotateLeft, BiMinus } from 'react-icons/bi';
 import { BsPlusLg } from 'react-icons/bs';
 import { TbFlipHorizontal } from 'react-icons/tb';

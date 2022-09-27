@@ -46,7 +46,7 @@ def mqtt_receive(client, userdata, msg):
         humans_position_tracker.on_receive(timestamp, payload)
     if "vehicle" in topic:
         vehicles_position_tracker.on_receive(timestamp, payload)
-    saver.save([humans_position_tracker, vehicles_position_tracker])
+    # saver.save([humans_position_tracker, vehicles_position_tracker])
 
 
 MqttListener(mqtt_broker, mqtt_port, "position/vehicle", mqtt_receive)

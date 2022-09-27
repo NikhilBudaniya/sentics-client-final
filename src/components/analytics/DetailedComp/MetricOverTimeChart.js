@@ -245,8 +245,8 @@ export function MetricOverTimeChart() {
   }, [params.from, params.to, params.aggregation.value, traces, revision]);
 
   return (
-    <div>
-      <div>
+    <div className="sm:flex">
+      <div className="basis-1/2">
         <p className="text-xl font-semibold">{params.metric.label} after Time</p>
         {params.aggregation.value !== "none" && (
           <p>
@@ -256,7 +256,7 @@ export function MetricOverTimeChart() {
         )}
         <div className="mt-2 flex items-center">
           <RangeButtons />
-          {loading &&  <CustomSpinner/>}
+          {loading && <CustomSpinner />}
         </div>
         <Plot
           data={traces}
@@ -273,9 +273,10 @@ export function MetricOverTimeChart() {
         />
       </div>
 
-      {gaugeTraces != null && (
-        <div>
+      <div className="basis-1/2">
+        {gaugeTraces !== null && (
           <div>
+            <div>
               <p className="text-xl font-semibold">
                 {params.metric.label}{" "}
                 {params.aggregation.value === "none"
@@ -293,10 +294,12 @@ export function MetricOverTimeChart() {
                 useResizeHandler={true}
                 className="mt-3"
               />
+            </div>
           </div>
-        </div>
-      )}
-      <hr className="my-2"/>
+        )}
+      </div>
+
+      <hr className="my-2" />
     </div>
   );
 }

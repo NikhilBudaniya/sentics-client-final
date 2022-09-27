@@ -1,15 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useMemo, useState } from "react";
-import PositionsHeatmap from "../live/PositionsHeatmap";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import Spinner from "react-bootstrap/Spinner";
+import PositionsHeatmap from "../../LiveData/PositionsHeatmap";
 import { isEqual } from "lodash";
 import { PauseCircle, PlayCircle } from "react-bootstrap-icons";
 import { ParamsDispatch } from "../Detailed";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import styled from "styled-components";
+import CustomSpinner from "../../utilities/utilComponents/spinner";
 
 const REFRESH_MS = 1000 / 10;
 
@@ -103,156 +99,152 @@ export default function ReplayPositionsHeatmap() {
   const intervalTooLong = (params.to - params.from) / 1000 > 30 * 60;
 
   return (
-    <Card>
-      <Card.Body>
-        <Card.Title>Replay</Card.Title>
-        <Card.Subtitle>Wiederholung der Live-Ansicht</Card.Subtitle>
-        <div className="mt-3 d-flex align-items-center gap-2">
-          <Button
-            variant="primary"
-            onClick={start}
-            active={!isEqual(appliedConfig, config)}
-            disabled={isEqual(appliedConfig, config)}
-          >
-            Laden
-          </Button>
-          {intervalTooLong && (
-            <span className="text-danger">
-              Zeitintervall sollte maximal 30 Minuten sein
-            </span>
-          )}
-          {isLoading && <Spinner animation="border" size="sm"></Spinner>}
-        </div>
-        {appliedConfig !== undefined ? (
-          <div className="mt-3 d-flex gap-3 align-items-center">
-            <div className="flex-shrink-0">
-              <InputGroup>
-                <Form.Control
-                  size="sm"
-                  type="number"
-                  min={0.25}
-                  max={10.0}
-                  step={0.25}
-                  value={playerState.speedFactor}
-                  onChange={(e) =>
-                    e.target.checkValidity() &&
-                    setPlayerState({
-                      ...playerState,
-                      speedFactor: e.target.value,
-                    })
-                  }
-                  className="text-end"
-                ></Form.Control>
-                <InputGroup.Text>fach</InputGroup.Text>
-              </InputGroup>
-            </div>
-            <Button
-              variant="light"
-              className="d-flex align-items-center px-2"
-              onClick={() =>
-                setPlayerState((playerState) => ({
-                  ...playerState,
-                  playing: !playerState.playing,
-                }))
-              }
-            >
-              {playerState.playing ? (
-                <PauseCircle></PauseCircle>
-              ) : (
-                <PlayCircle></PlayCircle>
-              )}
-            </Button>
-            <TimeContainer className="flex-shrink-0">
-              {playerState.timestamp.toLocaleTimeString()}
-            </TimeContainer>
-            <Form.Control
-              type="range"
-              min={0}
-              max={(params.to - params.from) / 1000}
-              value={(playerState.timestamp - params.from) / 1000}
-              onChange={(e) =>
-                e.target.checkValidity() &&
-                setPlayerState((playerState) => ({
-                  ...playerState,
-                  timestamp: new Date(
-                    params.from.getTime() + e.target.value * 1000
-                  ),
-                }))
-              }
-              className="w-100"
-            />
-          </div>
-        ) : (
-          <div className="mt-3" style={{ height: "38px" }} />
-        )}
-        <div
-          className="mt-3 border"
-          style={{
-            height: "400px",
-            filter:
-              isLoading || !isEqual(appliedConfig, config)
-                ? "grayscale(60%)"
-                : "",
-            opacity:
-              isLoading || !isEqual(appliedConfig, config) ? 0.6 : undefined,
-          }}
+    <div>
+      <p className="font-semibold text-xl">Replay</p>
+      <p className="text-sm">View Repetition of the live view</p>
+      <div className="mt-3 flex items-center">
+        <button
+          className='mr-1 border px-[20px] cursor-pointer py-[3px] bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600'
+          onClick={start}
+          active={!isEqual(appliedConfig, config)}
+          disabled={isEqual(appliedConfig, config)}
         >
-          <PositionsHeatmap
-            from={params.from}
-            interval={REFRESH_MS}
-            getData={() => {
-              if (isLoading || appliedConfig === undefined) {
-                return {
-                  data: {
-                    positions: [],
-                  },
-                  now: new Date(),
-                };
-              }
-
-              let timestamp = playerState.timestamp;
-
-              if (playerState.playing) {
-                timestamp = new Date(
-                  playerState.timestamp.valueOf() +
-                    REFRESH_MS * playerState.speedFactor
-                );
-                setPlayerState((playerState) => ({
-                  ...playerState,
-                  timestamp:
-                    timestamp > appliedConfig.to
-                      ? appliedConfig.from
-                      : timestamp,
-                }));
-              }
-
-              // find closest timestamp that is earlier than timestamp (up to 1s in the past)
-              const getPositions = (data) => {
-                for (let n = 0; n * REFRESH_MS < 1000; n++) {
-                  const key =
-                    Math.floor(timestamp.valueOf() / REFRESH_MS) - n;
-                  if (data.has(key)) {
-                    return data.get(key);
-                  }
+          Show
+        </button>
+        {intervalTooLong && (
+          <span className="text-red-500">
+            Time interval should be a maximum of 30 minutes
+          </span>
+        )}
+        {isLoading && <CustomSpinner />}
+      </div>
+      {appliedConfig !== undefined ? (
+        <div className="mt-3 flex items-center">
+          <div className="mr-5">
+            <from className="flex flex-col bg-gray-200">
+              <input
+                type="number"
+                min={0.25}
+                max={10.0}
+                step={0.25}
+                value={playerState.speedFactor}
+                onChange={(e) =>
+                  e.target.checkValidity() &&
+                  setPlayerState({
+                    ...playerState,
+                    speedFactor: e.target.value,
+                  })
                 }
-                return [];
-              };
-
-              const positions = [
-                ...getPositions(data.human),
-                ...getPositions(data.vehicle),
-              ];
-
-              return {
-                data: {
-                  positions,
-                },
-                now: timestamp,
-              };
-            }}
+                className=""
+              />
+              <label className="mx-1">compartment</label>
+            </from>
+          </div>
+          <button
+            className="px-2"
+            onClick={() =>
+              setPlayerState((playerState) => ({
+                ...playerState,
+                playing: !playerState.playing,
+              }))
+            }
+          >
+            {playerState.playing ? (
+              <PauseCircle></PauseCircle>
+            ) : (
+              <PlayCircle></PlayCircle>
+            )}
+          </button>
+          <TimeContainer className="">
+            {playerState.timestamp.toLocaleTimeString()}
+          </TimeContainer>
+          <input
+            type="range"
+            min={0}
+            max={(params.to - params.from) / 1000}
+            value={(playerState.timestamp - params.from) / 1000}
+            onChange={(e) =>
+              e.target.checkValidity() &&
+              setPlayerState((playerState) => ({
+                ...playerState,
+                timestamp: new Date(
+                  params.from.getTime() + e.target.value * 1000
+                ),
+              }))
+            }
+            className="w-100"
           />
         </div>
-      </Card.Body>
-    </Card>
+      ) : (
+        <div className="" style={{ height: "38px" }} />
+      )}
+      <div
+        className="border-2"
+        style={{
+          height: "500px",
+          filter:
+            isLoading || !isEqual(appliedConfig, config)
+              ? "grayscale(60%)"
+              : "",
+          opacity:
+            isLoading || !isEqual(appliedConfig, config) ? 0.6 : undefined,
+        }}
+      >
+        <PositionsHeatmap
+          from={params.from}
+          interval={REFRESH_MS}
+          getData={() => {
+            if (isLoading || appliedConfig === undefined) {
+              return {
+                data: {
+                  positions: [],
+                },
+                now: new Date(),
+              };
+            }
+
+            let timestamp = playerState.timestamp;
+
+            if (playerState.playing) {
+              timestamp = new Date(
+                playerState.timestamp.valueOf() +
+                REFRESH_MS * playerState.speedFactor
+              );
+              setPlayerState((playerState) => ({
+                ...playerState,
+                timestamp:
+                  timestamp > appliedConfig.to
+                    ? appliedConfig.from
+                    : timestamp,
+              }));
+            }
+
+            // find closest timestamp that is earlier than timestamp (up to 1s in the past)
+            const getPositions = (data) => {
+              for (let n = 0; n * REFRESH_MS < 1000; n++) {
+                const key =
+                  Math.floor(timestamp.valueOf() / REFRESH_MS) - n;
+                if (data.has(key)) {
+                  return data.get(key);
+                }
+              }
+              return [];
+            };
+
+            const positions = [
+              ...getPositions(data.human),
+              ...getPositions(data.vehicle),
+            ];
+
+            return {
+              data: {
+                positions,
+              },
+              now: timestamp,
+            };
+          }}
+        />
+      </div>
+    </div>
   );
 }
