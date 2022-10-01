@@ -97,21 +97,6 @@ function Heatmap(props) {
             value: 0,
             radius: 90
         }];
-        // storing previous data points to make a trail effect
-        // let historyData = [];
-        // history.map((dataPoint) => {
-        //     let temp = {
-        //         x: dataPoint.x,
-        //         y: dataPoint.y,
-        //         value: 100,
-        //         radius: (dataPoint.radius - 20) >= 0 ? (dataPoint.radius - 20) : 0,
-        //     }
-        //     historyData.push(temp);
-        // });
-        // console.log(typeof history)
-        // limiting the historyData points to 3
-        // if (historyData.length > 3)
-        //     historyData.shift();
 
         if (liveData[0]) {
             let val = JSON.parse(liveData[0].value);
@@ -127,19 +112,12 @@ function Heatmap(props) {
                 currentData.push(d);
             }
         }
-        // heatmapData.current = {
-        //     ...heatmapData.current,
-        //     history: [...historyData, ...currentData],
-        // }
         // removing old data points and adding new ones
         heatmap.setData({
             max: 100,
             min: 1,
             data: currentData
         });
-        // adding new data points
-        // heatmap.addData(currentData);
-        // handleAddData(datapoints.current);
     }
 
     const btn1 = () => {
@@ -171,7 +149,7 @@ function Heatmap(props) {
     }
 
     return (
-        <div className=" flex flex-col w-[100%] px-5 py-5 border-0 h-full">
+        <div className="flex flex-col w-[100%] px-5 py-5 border-0 h-full">
             {/* <button className="bg-red-200 my-1" onClick={btn1}>Btn 1</button>
             <button className="bg-red-200 my-1" onClick={btn2}>Btn 2</button> */}
 
