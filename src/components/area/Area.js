@@ -26,7 +26,7 @@ function addHeatMap(ctn) {
   });
 }
 
-function App() {
+function Area() {
   const mount = useRef(null);
   const [imgSrc, setImgSrc] = useState("");
   let centerViewFunction = undefined;
@@ -38,7 +38,7 @@ function App() {
     mount.current.style.rotate = "0deg";
     removeOldCanvas();
     setImgSrc(mapImage);
-    axios.get("http://localhost:5000/selected_area").then(res => {
+    axios.get("/selected_area").then(res => {
       setSelectAreas([...res.data]);
     });
   }, []);
@@ -101,7 +101,7 @@ function App() {
   }
 
   function saveArea() {
-    axios.post("http://localhost:5000/selected_area", selectAreas);
+    axios.post("/selected_area", selectAreas);
   }
 
   return (
@@ -335,44 +335,5 @@ function SelectArea({ selectArea, onChange, bgColor }) {
     </div>
   )
 };
-/*
-function SelectArea({ selectArea, onChange }) {
-  const dragRef = useRef(null);
 
-  return (
-    <div>
-      <Draggable onStart={e => e.stopPropagation()} nodeRef={dragRef} onStop={(e, data) => {
-        selectArea.x = data.x;
-        selectArea.y = data.y;
-        onChange();
-      }}
-        defaultPosition={{ x: selectArea.x, y: selectArea.y }}
-      >
-        <Resizable
-          onResizeStart={e => e.stopPropagation()}
-          onResizeStop={(e, direction, ref, d) => {
-            selectArea.width += d.width;
-            selectArea.height += d.height;
-            onChange();
-          }}
-          defaultSize={{
-            width: selectArea.width,
-            height: selectArea.height,
-          }}
-          style={{
-            position: "absolute",
-            top: 0, left: 0,
-            zIndex: 1,
-            border: "1px solid black",
-            cursor: "move",
-            opacity: 0.4
-          }}
-        >
-          <div ref={dragRef} style={{ width: "100%", height: "100%" }}></div>
-        </Resizable>
-      </Draggable>
-    </div>
-  )
-}*/
-
-export default App;
+export default Area;

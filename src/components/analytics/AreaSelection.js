@@ -1,14 +1,9 @@
-import React, { useEffect } from 'react';
-
+import Area from "../area/Area";
 
 function AreaSelection() {
 
   return (
-    <>
-      <div>
-        This is AreaSelection
-      </div>
-    </>
+    <Area />
   )
 }
 
