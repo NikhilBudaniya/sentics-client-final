@@ -87,7 +87,7 @@ function LiveData(props) {
                                 </p>
                             </button>
                         </div>
-                        <div ref={mapRef} style={{ display: 'block' }} className="origin-top-right bottom-11 absolute right-0 mt-2 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
+                        <div ref={mapRef} style={{ display: 'none' }} className="origin-top-right bottom-11 absolute right-0 mt-2 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
                             <div className="py-1 " role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                 <p className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600" role="menuitem">
                                     <span onClick={() => handleMapChange("2D")} className="cursor-pointer flex flex-col">
