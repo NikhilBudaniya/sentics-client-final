@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+motor
+pydentic
+paho-mqtt
+numpy
+fastapi-utils
+seaborn
+influxdb_client 
+pymongo
