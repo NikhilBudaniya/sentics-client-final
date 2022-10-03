@@ -19,6 +19,7 @@ import { useInterval } from 'usehooks-ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateThreedDataVehicle, updateThreedDataHuman } from '../../../../state/reducers/threedReducer';
 import { cameraReset } from '../../../common/functions';
+import axios from 'axios';
 
 function ThreeD(props) {
     let { fetchLiveData, liveData } = props;
@@ -56,7 +57,8 @@ function ThreeD(props) {
 
         // changing scene bg
         const globalLoader = new THREE.TextureLoader();
-        scene.background = globalLoader.load(scene_bg);
+        // scene.background = globalLoader.load(scene_bg);
+        scene.background = new THREE.Color("0xffffff")
 
         // CAMERA POSITIONS/CONFIG
         controls = new OrbitControls(camera, renderer.domElement);
@@ -71,23 +73,10 @@ function ThreeD(props) {
         }
         img.src = path_image;
         function loadImages() {
-            // display grid
-            if (size_m_x > size_m_y) {
-                const gridHelper = new THREE.GridHelper(size_m_x, size_m_x)
-                gridHelper.name = "gridHelper";
-                gridHelper.visible = false;
-                scene.add(gridHelper);
-            } else {
-                const gridHelper = new THREE.GridHelper(size_m_y, size_m_y)
-                gridHelper.name = "gridHelper";
-                gridHelper.visible = false;
-                scene.add(gridHelper);
-            }
-
             const geometry = new THREE.PlaneGeometry(size_m_x, size_m_y);
             const texture = new THREE.TextureLoader().load(path_image);
             texture.repeat.set(1, 1);
-            const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+            const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide, transparent: true, opacity: 0 });
             const plane = new THREE.Mesh(geometry, material);
             plane.rotation.x -= Math.PI / 2;
             plane.rotation.z += rotate_image * (Math.PI / 2);
@@ -130,14 +119,6 @@ function ThreeD(props) {
         var cube = new THREE.Mesh(geometry2, material2);
 
 
-        // FLYING CONTROLS TO FLY AROUND THE SPACE FREELY
-        // var controls = new FlyControls(camera, renderer.domElement);
-        // controls.movementSpeed = 5000;
-        // controls.rollSpeed = Math.PI / 24;
-        // controls.autoForward = false;
-        // controls.dragToLook = true;
-
-
         // LIGHT SOURCES
         // const light = new THREE.AmbientLight(0x404040); // soft white light
         const pointLight = new THREE.PointLight(0x01baef);
@@ -149,7 +130,7 @@ function ThreeD(props) {
         // MODEL LOADER
         const loader = new GLTFLoader();
 
-        // loadi building model
+        // load building model
         loader.load(model, function (gltf) {
             var element = gltf.scene;
             element.name = "OHLF_map";
@@ -161,8 +142,8 @@ function ThreeD(props) {
             element.rotation.y -= Math.PI / 2;
 
             // BOX AROUND THE 3D MODEL FOR HELPING IN DEVELOPMENT
-            const box = new THREE.BoxHelper(element, 0xffff00);
-            scene.add(box);
+            // const box = new THREE.BoxHelper(element, 0xffff00);
+            // scene.add(box);
             // scene.add(cube);
             scene.add(element);
         }, undefined, function (error) {
@@ -216,7 +197,7 @@ function ThreeD(props) {
         var vehicle_timeout = [];
         var vehicles_active = 0;
         var temp_vehicle_cubes = [...vehicle_cubes];
-        const tempHandle = (liveData) => {
+        const tempHandle = async (liveData) => {
             // TODO: fetch live data from API
             const data = liveData;
 
@@ -292,8 +273,10 @@ function ThreeD(props) {
         }
 
 
-        let myInterval = setInterval(() => {
-            tempHandle(liveData);
+        let myInterval = setInterval(async () => {
+            // get data from backend
+            let res = await fetchLiveData("both");
+            tempHandle(res.data);
         }, 500);
 
         var animate = function () {

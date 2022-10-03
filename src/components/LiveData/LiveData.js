@@ -36,6 +36,7 @@ function LiveData(props) {
                     resource,
                 }
             }).then((res) => {
+                console.log("data: ", res.data);
                 resolve(res.data);
             }).catch((err) => {
                 console.log("promise error: ", err);
@@ -64,7 +65,7 @@ function LiveData(props) {
     return (
         <div className={`navHeight overflow-hidden`}>
             <div className="h-[50px] min-h-[50px] mb-5 sm:mb-0 relative z-10 max-w-[100%] sm:max-h-[50px]"><LiveCards /></div>
-            <div className="h-[90%] bg-red-200">
+            <div className="h-[90%]">
                 {mapType === "2D" ?
                     <Heatmap fetchLiveData={fetchLiveData} liveData={liveData} setLiveData={setLiveData} />
                     : (
