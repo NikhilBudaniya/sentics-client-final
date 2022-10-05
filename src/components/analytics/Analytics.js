@@ -13,7 +13,7 @@ function Analytics() {
 
     <div className='navHeight w-full pt-1 bg-[#d9dee9]'>
       <div className="px-5 h-[35px] flex ">
-        <div onClick={() => { setActive('summary') }} className={`flex items-center justify-center h-full w-[150px] rounded-t-[15px] cursor-pointer  ${Active === 'summary'  ? "bg-white " : "hover:bg-[#00000023]"}`}>
+        <div onClick={() => { setActive('summary') }} className={`flex items-center justify-center h-full w-[150px] rounded-t-[15px] cursor-pointer  ${Active === 'summary' ? "bg-white " : "hover:bg-[#00000023]"}`}>
           <p className='font-semibold'>Summary</p>
         </div>
         <div onClick={() => { setActive('detailed') }} className={`flex items-center justify-center h-full w-[150px] rounded-t-[15px] cursor-pointer  ${Active === 'detailed' ? "bg-white" : "hover:bg-[#00000023]"}`}>
@@ -33,7 +33,7 @@ function Analytics() {
             <>{Active === 'detailed' ? <div id='detailed' className="border p-3 h-full overflow-auto scrollbar-hide">
               <Detailed />
             </div> :
-              <>{Active === 'area' ? <div id='area' className="border p-3 h-full overflow-auto scrollbar-hide">
+              <>{Active === 'area' ? <div id='area' className="border h-full overflow-auto scrollbar-hide">
                 <AreaSelection />
               </div> : <></>}</>
             }</>}

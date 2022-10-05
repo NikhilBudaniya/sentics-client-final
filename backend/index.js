@@ -8,6 +8,8 @@ require("dotenv").config();
 const mqtt = require('mqtt');
 const mqtt_port = process.env.MQTT_PORT || 1883;
 const mqtt_ip = process.env.MQTT_IP || '192.168.1.10';
+const path = require("path");
+const { writeFile } = require("fs/promises");
 
 app.use(express.json());
 app.use(cors({
@@ -132,6 +134,21 @@ app.post('/api/live', (req, res) => {
     res.status(400).json({ error: "invalid request parameters" });
 })
 
+app.get("/selected_area", async (req, res) => {
+    res.header("Content-Type", 'application/json');
+    res.sendFile(path.join(__dirname, "/selected-area.json"));
+});
+
+app.post("/selected_area", async (req, res) => {
+    writeFile(path.resolve(__dirname, "./selected-area.json"), JSON.stringify(req.body))
+        .then(function () {
+            return res.status(200).send({ message: "Updated Succesfully" });
+        })
+        .catch(function (err) {
+            console.log(err);
+            return res.status(500).send({ message: "Internal server error" });
+        });
+});
 
 app.listen(port,'134.169.114.202', () => {
     console.log(`Nodejs backend listening on Port: ${port}`);
