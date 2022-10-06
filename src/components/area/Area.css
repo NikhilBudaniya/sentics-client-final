@@ -1,5 +1,5 @@
 .heatmap {
-  height: calc(100vh - 150px);
+  height: calc(100vh - 100px);
 }
 
 .heatmap {
@@ -68,7 +68,6 @@
 }
 
 .area-list ul {
-  width: calc(100% + 4px);
   padding-left: 8px;
 }
 
@@ -134,6 +133,7 @@ input[type="color"]::-webkit-color-swatch {
 
   .heatmap {
     margin: 0;
+    height: 400px;
   }
 
   .area-color {
