@@ -9,6 +9,7 @@ import { TbFlipHorizontal } from 'react-icons/tb';
 import axios from "axios";
 import Moveable from 'react-moveable';
 import randomColor from 'randomcolor';
+import { uniqueId } from 'lodash';
 
 let heatmap;
 let pointdata = [{ x: 1000, y: 0, value: 50 }, { x: 1500, y: 400, value: 5 }, { x: 1400, y: 700, value: 5 }];
@@ -57,8 +58,8 @@ function Area() {
     scaleX = 1 / scaleX;
     let scaleY = imgHeight / parentHeight;
     scaleY = 1 / scaleY;
-    centerViewFunction(Math.min(scaleX, scaleY));
     addHeatMap(mount.current);
+    centerViewFunction(Math.min(scaleX, scaleY));
   }
 
   function rotate(deg) {
@@ -80,7 +81,7 @@ function Area() {
     const height = 200 / scale;
     const x = e.nativeEvent.offsetX - (width / 2);
     const y = e.nativeEvent.offsetY - (height / 2);
-    areas.push({ x: x, y: y, width: width, height: height, rotate: 0 });
+    areas.push({ id: uniqueId(), x: x, y: y, width: width, height: height, rotate: 0 });
     setSelectAreas([...selectAreas]);
   }
 
@@ -97,6 +98,11 @@ function Area() {
 
   function saveArea() {
     axios.post("http://localhost:5000/selected_area", selectAreas);
+  }
+
+  function deleteFromAreaList(selectArea, pos) {
+    selectArea.areas.splice(pos, 1);
+    setSelectAreas([...selectAreas]);
   }
 
   return (
@@ -152,7 +158,7 @@ function Area() {
                             name: name,
                             display: true,
                             areas: [],
-                            bgColor: randomColor()
+                            bgColor: randomColor({ luminosity: "light" })
                           });
                           setSelectAreas([...selectAreas]);
                           document.querySelector(".area-name").style.display = "none";
@@ -167,8 +173,10 @@ function Area() {
                     <img src={imgSrc} alt="" onLoad={imageLoaded} />
                     {selectAreas.map((selectArea) =>
                       selectArea.areas.map((area, index) =>
-                        <div key={index}>
-                          <SelectArea selectArea={area} onChange={onSelectAreaChange} bgColor={selectArea.bgColor} display={selectArea.display} />
+                        <div key={area.id}>
+                          <SelectArea selectArea={area} onChange={onSelectAreaChange} bgColor={selectArea.bgColor} display={selectArea.display} deleteArea={() => {
+                            deleteFromAreaList(selectArea, index);
+                          }} />
                         </div>
                       )
                     )}
@@ -245,7 +253,7 @@ function Area() {
   );
 }
 
-function SelectArea({ selectArea, onChange, bgColor, display }) {
+function SelectArea({ selectArea, onChange, bgColor, display, deleteArea }) {
   const targetRef = useRef(null);
 
   useEffect(() => {
@@ -254,7 +262,7 @@ function SelectArea({ selectArea, onChange, bgColor, display }) {
       targetRef.current.parentNode.style.display = display ? "block" : "none";
     }, 10);
   }, [display]);
-  
+
   return (
     <div style={{ position: "absolute", top: 0, left: 0 }}>
       <div ref={targetRef} style={{
@@ -263,6 +271,9 @@ function SelectArea({ selectArea, onChange, bgColor, display }) {
         transform: `translate(${selectArea.x}px, ${selectArea.y}px) rotate(${selectArea.rotate}deg)`,
         cursor: "move", backgroundColor: bgColor, opacity: 0.4
       }}>
+        <div style={{ position: "absolute", top: -30, right: 10, cursor: "pointer", fontSize: "24px", color: "black" }}>
+          <BiTrash onClick={deleteArea} />
+        </div>
       </div>
       <Moveable
         target={targetRef}
@@ -284,8 +295,8 @@ function SelectArea({ selectArea, onChange, bgColor, display }) {
 
         onDragEnd={({ target }) => {
           const res = target.style.transform.match(/translate\((-?\d+(?:\.\d*)?)px, (-?\d+(?:\.\d*)?)px\)/);
-          selectArea.x = res[1];
-          selectArea.y = res[2];
+          selectArea.x = parseFloat(res[1]);
+          selectArea.y = parseFloat(res[2]);
           onChange();
         }}
 
@@ -303,8 +314,8 @@ function SelectArea({ selectArea, onChange, bgColor, display }) {
 
         onResizeEnd={({ target }) => {
           const { width, height } = target.style;
-          selectArea.width = width;
-          selectArea.height = height;
+          selectArea.width = parseFloat(width);
+          selectArea.height = parseFloat(height);
           onChange();
         }}
 
