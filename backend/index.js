@@ -150,7 +150,7 @@ app.post("/selected_area", async (req, res) => {
         });
 });
 
-app.listen(port,'134.169.114.202', () => {
+app.listen(port,'10.42.0.1', () => {
     console.log(`Nodejs backend listening on Port: ${port}`);
 }).on("error", (err) => {
     app.listen(port, () => {
