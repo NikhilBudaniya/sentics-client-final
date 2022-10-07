@@ -1,11 +1,10 @@
-import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { set } from '../../state/reducers/authReducer';
 import Heatmap from '../utilities/Heatmap';
 import ThreeD from './3-d/viewer/ThreeD';
 import LiveCards from '../utilities/LiveCards';
 import { setMapType } from '../../state/reducers/mapTypeReducer';
+import {useSubscription} from 'mqtt-react-hooks';
 
 // Home component for the live view
 function LiveData(props) {
@@ -13,37 +12,29 @@ function LiveData(props) {
     const [liveData, setLiveData] = useState([
         {
             type: 'human',
-            value: '{"0":{"x": 15.106, "y": 10.702, "heading": 0.0},"2":{"x": 21.848, "y": 25.879, "heading": 0.184}}'
+            value: '{"0":{"x": 20.106, "y": 10.702, "heading": 0.0},"2":{"x": 11.848, "y": 25.879, "heading": 0.184}}'
         },
         {
             type: 'vehicle',
             value: '{"0":{"x": 7.131, "y": 9.075, "heading": -0.443}}'
         },
     ]);
+    const { message } = useSubscription('position/#');
 
+    useEffect(() => {
+        if (!message) return;
+        if (message.topic === 'position/human') {
+            liveData[0] = { type: 'human', value: message.message };
 
-    const fetchLiveData = (resource = "") => {
-        // pass resource = "vehicle" or "human" for specific data
-        let host = process.env.REACT_APP_NODE_BACKEND_URL || 'http://134.169.114.202:5000';
-        return new Promise((resolve, reject) => {
-            // refer to backend/index.js for details about the endpoint
-            axios({
-                url: `${host}/api/live`,
-                method: 'post',
-                data: {
-                    source: "mqtt",
-                    table: "",
-                    resource,
-                }
-            }).then((res) => {
-                console.log("data: ", res.data);
-                resolve(res.data);
-            }).catch((err) => {
-                console.log("promise error: ", err);
-                reject(err);
-            })
-        })
-    }
+            setLiveData(liveData)
+        }
+
+        if (message.topic === 'position/vehicle') {
+            liveData[1] = { type: 'vehicle', value: message.message };
+
+            setLiveData(liveData)
+        }
+    }, [message]);
 
     const mapRef = useRef(null);
     let mapType = useSelector((store) => store.mapType.value);
@@ -67,13 +58,10 @@ function LiveData(props) {
             <div className="h-[50px] min-h-[50px] mb-5 sm:mb-0 relative z-10 max-w-[100%] sm:max-h-[50px]"><LiveCards /></div>
             <div className="h-[90%]">
                 {mapType === "2D" ?
-                    <Heatmap fetchLiveData={fetchLiveData} liveData={liveData} setLiveData={setLiveData} />
+                    <Heatmap liveData={liveData} />
                     : (
                         <>
-                            {/* <div className="h-full flex justify-center items-center">
-                                <p className="font-bold text-2xl">Coming Soon</p>
-                            </div> */}
-                            <ThreeD fetchLiveData={fetchLiveData} liveData={liveData} setLiveData={setLiveData}/>
+                            <ThreeD liveData={liveData}/>
                         </>
                     )}
 

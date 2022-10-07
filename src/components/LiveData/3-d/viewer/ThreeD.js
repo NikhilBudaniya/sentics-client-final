@@ -1,38 +1,25 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { TbFlipHorizontal } from 'react-icons/tb';
-
-// import {GUI} from './jsm/libs/lil-gui.module.min.js';
-import { FlyControls } from 'three/examples/jsm/controls/FlyControls';
-import { BiRotateRight, BiRotateLeft, BiMinus } from 'react-icons/bi';
-import { BsPlusLg, BsSkype } from 'react-icons/bs';
 import model from './OHLF_V1.gltf';
 import forklift from '../data/models/forklift.glb';
 import human from '../data/models/human_v3.glb';
 import path_image from '../data/images/layout_16_02.jpg';
-import scene_bg from '../data/images/bgImg1.jpg';
-import { useInterval } from 'usehooks-ts';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateThreedDataVehicle, updateThreedDataHuman } from '../../../../state/reducers/threedReducer';
+import { useSelector } from 'react-redux';
 import { cameraReset } from '../../../common/functions';
-import axios from 'axios';
 
 function ThreeD(props) {
-    let { fetchLiveData, liveData } = props;
+    let { liveData } = props;
     // some redux states used for threed model data rendering
-    var person_cubes = useSelector((store) => store.threedVars.value.person_cubes);
-    var vehicle_cubes = useSelector((store) => store.threedVars.value.vehicle_cubes);
+    const person_cubes = useSelector((store) => store.threedVars.value.person_cubes);
+    const vehicle_cubes = useSelector((store) => store.threedVars.value.vehicle_cubes);
     let show_vehicles = useSelector((store) => store.threedVars.value.showVehicles);
     let show_humans = useSelector((store) => store.threedVars.value.showHumans);
 
-    var img_height = 0;
-    var img_width = 0;
+    let img_height = 0;
+    let img_width = 0;
 
-    let dispatch = useDispatch();
 
     const mountRef = useRef(null);
 
@@ -49,9 +36,9 @@ function ThreeD(props) {
         const rotate_image = 2;
 
         // creating scene & camera
-        var scene = new THREE.Scene();
+        const scene = new THREE.Scene();
         camera = new THREE.PerspectiveCamera(50, 2, 0.1, 1000);
-        var renderer = new THREE.WebGLRenderer({
+        const renderer = new THREE.WebGLRenderer({
             canvas: mountRef.current
         });
 
@@ -65,7 +52,7 @@ function ThreeD(props) {
         controls.maxPolarAngle = 1 * Math.PI / 3;
 
         // load image
-        var img = new Image();
+        const img = new Image();
         img.onload = function () {
             img_height = pixel_to_meter_ratio * img.height;
             img_width = pixel_to_meter_ratio * img.width;
@@ -114,9 +101,9 @@ function ThreeD(props) {
         camera.lookAt(0, 0, 0);
 
         // SAMPLE GEOMETRY
-        var geometry2 = new THREE.BoxGeometry(1, 1, 1);
-        var material2 = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        var cube = new THREE.Mesh(geometry2, material2);
+        const geometry2 = new THREE.BoxGeometry(1, 1, 1);
+        const material2 = new THREE.MeshBasicMaterial({color: 0x00ff00});
+        const cube = new THREE.Mesh(geometry2, material2);
 
 
         // LIGHT SOURCES
@@ -132,7 +119,7 @@ function ThreeD(props) {
 
         // load building model
         loader.load(model, function (gltf) {
-            var element = gltf.scene;
+            const element = gltf.scene;
             element.name = "OHLF_map";
             element.scale.set(1, 1, 1);
             element.position.x -= 13.4;//12
@@ -187,24 +174,17 @@ function ThreeD(props) {
 
         // LIVE DATA FUNCTION
         // vars for live data
-        var counter = 1000;
-        var person_ids = [];
-        var person_timeout = [];
-        var persons_active = 0;
-        var temp_person_cubes = [...person_cubes];
+        const person_ids = [];
+        const person_timeout = [];
+        const temp_person_cubes = [...person_cubes];
 
-        var vehicle_ids = [];
-        var vehicle_timeout = [];
-        var vehicles_active = 0;
-        var temp_vehicle_cubes = [...vehicle_cubes];
-        const tempHandle = async (liveData) => {
-            // TODO: fetch live data from API
-            const data = liveData;
-
+        const vehicle_ids = [];
+        const vehicle_timeout = [];
+        const temp_vehicle_cubes = [...vehicle_cubes];
+        const tempHandle = async (data) => {
             for (let i = 0; i < data.length; i++) {
-                var positions = JSON.parse(data[i].value);
+                const positions = JSON.parse(data[i].value);
                 if (data[i].type == "human" && show_humans) {
-                    persons_active = 0;
                     for (let c = 0; c < person_timeout.length; c++) {
                         if (person_timeout[c] > 0) {
                             person_timeout[c] -= 1;
@@ -213,7 +193,6 @@ function ThreeD(props) {
                         }
                     }
                     for (var pos_id in positions) {
-                        persons_active += 1;
                         var object = scene.getObjectByName("human").clone();
                         object.visible = true;
                         object.position.setX(parseFloat(positions[pos_id].x - 13.4));
@@ -239,9 +218,7 @@ function ThreeD(props) {
                 else if (data[i].type == "vehicle" && show_vehicles) {
                     var object = scene.getObjectByName("forklift").clone();
                     object.visible = true;
-                    vehicles_active = 0;
                     for (var pos_id in positions) {
-                        vehicles_active += 1;
                         for (let c = 0; c < vehicle_timeout.length; c++) {
                             if (vehicle_timeout[c] > 0) {
                                 vehicle_timeout[c] -= 1;
@@ -269,28 +246,23 @@ function ThreeD(props) {
                     }
                 }
             }
-            counter += 1;
         }
-
-
         let myInterval = setInterval(async () => {
-            // get data from backend
-            let res = await fetchLiveData("both");
-            tempHandle(res.data);
+            console.log("fetching live data");
+            tempHandle(liveData);
         }, 500);
 
-        var animate = function () {
+        const animate = function () {
             requestAnimationFrame(animate);
             cube.rotation.x += 0.01;
             cube.rotation.y += 0.01;
             renderer.render(scene, camera);
             controls.update(0.01)
-        }
+        };
 
 
         animate();
         return () => clearInterval(myInterval);
-
     }, [show_humans, show_vehicles]);
 
     // BUTTON FUNCTIONS

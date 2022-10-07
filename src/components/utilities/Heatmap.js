@@ -8,7 +8,6 @@ import mapImage from "../assets/images/bg_rotated.png";
 import { useInterval } from 'usehooks-ts';
 import { useSelector } from 'react-redux';
 
-
 let heatmap;
 let pointData = [{ x: 0, y: 0, value: 0 }];
 function addHeatMap(ctn) {
@@ -31,7 +30,7 @@ function addHeatMap(ctn) {
 let iw, ih;
 
 function Heatmap(props) {
-    let { fetchLiveData } = props;
+    let { liveData } = props;
     let heatmapResource = useSelector((store) => store.heatmapResource.value);
     const heatmapData = useRef({
         history: [],
@@ -80,10 +79,13 @@ function Heatmap(props) {
     }
 
     useInterval(async () => {
-        let dataResponse = await fetchLiveData(heatmapResource);
+
+
+        let dataResponse = liveData;
+        console.log(liveData);
         heatmapData.current = {
             ...heatmapData.current,
-            live: dataResponse.data,
+            live: dataResponse,
         }
         tempHandle(heatmapData.current.live, heatmapData.current.history);
         // time here is set to 0.5 seconds due to lagging of heatmap, although for realtime set it to 0.1 sec
