@@ -9,16 +9,7 @@ import {useSubscription} from 'mqtt-react-hooks';
 // Home component for the live view
 function LiveData(props) {
     // use this live data instances for testing
-    const [liveData, setLiveData] = useState([
-        {
-            type: 'human',
-            value: '{"0":{"x": 20.106, "y": 10.702, "heading": 0.0},"2":{"x": 11.848, "y": 25.879, "heading": 0.184}}'
-        },
-        {
-            type: 'vehicle',
-            value: '{"0":{"x": 7.131, "y": 9.075, "heading": -0.443}}'
-        },
-    ]);
+    const [liveData, setLiveData] = useState([]);
     const { message } = useSubscription('position/#');
 
     useEffect(() => {
