@@ -37,7 +37,7 @@ function App() {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <Connector brokerUrl="ws://broker.emqx.io" options={{ username: "emqx", password: "public", clientId: 'test21414', path: '/mqtt', port: 8083 }}>
+            <Connector brokerUrl="wss://broker.emqx.io" options={{ username: "emqx", password: "public", clientId: 'test21414', path: '/mqtt', port: 8084 }}>
                 <Routes>
                     <Route path="/" element={<Dashboard/>}>
                         <Route path="" element={<LiveData/>}/>
