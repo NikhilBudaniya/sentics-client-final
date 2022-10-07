@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, NavLink, Outlet, Route, Routes, useLocation } from 'react-router-dom';
+import React from 'react';
+import { NavLink, Route, Routes, useLocation } from 'react-router-dom';
 import ohlfUrl from "../assets/images/ohlf.png";
 import { useReducer } from 'react';
 import MetricSelector from './DetailedComp/MetricSelector';

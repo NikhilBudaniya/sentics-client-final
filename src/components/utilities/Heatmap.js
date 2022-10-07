@@ -6,7 +6,6 @@ import { BsPlusLg } from 'react-icons/bs';
 import { TbFlipHorizontal } from 'react-icons/tb';
 import mapImage from "../assets/images/bg_rotated.png";
 import { useInterval } from 'usehooks-ts';
-import { useSelector } from 'react-redux';
 
 let heatmap;
 let pointData = [{ x: 0, y: 0, value: 0 }];
@@ -31,15 +30,10 @@ let iw, ih;
 
 function Heatmap(props) {
     let { liveData } = props;
-    let heatmapResource = useSelector((store) => store.heatmapResource.value);
     const heatmapData = useRef({
         history: [],
         live: []
     });
-    // get the width and height of window to make heatmap responsive
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-
     const mount = useRef(null);
     const [imgSrc, setImgSrc] = useState("");
     let centerViewFunction = undefined;
@@ -120,34 +114,6 @@ function Heatmap(props) {
             min: 1,
             data: currentData
         });
-    }
-
-    const btn1 = () => {
-        // tempHandle([{
-        //     type: 'human',
-        //     value: '{"0":{"x": 8.714, "y": 12.637, "heading": 0.0},"2":{"x": 21.848, "y": 25.879, "heading": 0.184}}'
-        // },
-        // {
-        //     type: 'vehicle',
-        //     value: '{"0":{"x": 7.131, "y": 9.075, "heading": -0.443}}'
-        // },], heatmapData.current.history);
-
-        tempHandle([{
-            type: 'human',
-            value: `{"0":{"x": ${Math.random() * 26}, "y": ${Math.random() * 82}, "heading": 0.0}}`
-        }], heatmapData.current.history);
-    }
-
-    const btn2 = () => {
-        tempHandle([{
-            type: 'human',
-            value: '{"0":{"x": 10, "y": 20, "heading": 0.0},"2":{"x": 21.848, "y": 45, "heading": 0.184}}'
-        },
-        {
-            type: 'vehicle',
-            value: '{"0":{"x": 20, "y": 50, "heading": -0.443}}'
-        },
-        ], heatmapData.current.history);
     }
 
     return (

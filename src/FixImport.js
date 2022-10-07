@@ -1,7 +1,7 @@
 import process from 'process'
-import buffer from 'buffer'
+import {Buffer} from 'buffer'
 
-window.Buffer = buffer.Buffer;
+window.Buffer = Buffer;
 window.process = process;
 
 export {};

@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { set, remove } from '../state/reducers/authReducer';
-import Home from './LiveData/LiveData';
+import { set } from '../state/reducers/authReducer';
 import Header from './Header';
 import LeftNav from './LeftNav';
-import LiveData from './LiveData/LiveData';
 import { Outlet } from 'react-router-dom';
 
 // Home component for the live view

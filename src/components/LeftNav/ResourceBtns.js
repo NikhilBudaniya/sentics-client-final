@@ -3,19 +3,15 @@ import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { setHeatmapResource } from '../../state/reducers/heatmapResourceReducer';
-import { updateThreedDataVehicle, updateThreedShowHumans, updateThreedShowVehicles } from '../../state/reducers/threedReducer';
-import ToggleSwith from '../utilities/utilComponents/ToggleSwith'
+import { updateThreedShowHumans, updateThreedShowVehicles } from '../../state/reducers/threedReducer';
 
 function ResourceBtns() {
     let dispatch = useDispatch();
     let location = useLocation();
-    let mapType = useSelector((store) => store.mapType.value);
     const [checkHuman, setCheckHuman] = useState(true);
     const [checkVehicle, setCheckVehicle] = useState(true);
     let show_vehicles = useSelector((store) => store.threedVars.value.showVehicles);
     let show_humans = useSelector((store) => store.threedVars.value.showHumans);
-    var person_cubes = useSelector((store) => store.threedVars.value.person_cubes);
-    var vehicle_cubes = useSelector((store) => store.threedVars.value.vehicle_cubes);
 
 
     const checked = useRef({

@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { MdHomeFilled } from 'react-icons/md';
 import { HiMenuAlt2, HiMenuAlt3 } from 'react-icons/hi';
 import NotifiDrawer from './utilities/NotifiDrawer';
-import ToggleSwith from './utilities/utilComponents/ToggleSwith';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import ResourceBtns from './LeftNav/ResourceBtns';
 
 function LeftNav() {
