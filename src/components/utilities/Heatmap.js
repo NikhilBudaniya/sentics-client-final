@@ -95,14 +95,14 @@ function Heatmap(props) {
         }];
 
         if (liveData[0]) {
-            let val = JSON.parse(liveData[0].value);
+            let val = (liveData[0].value);
             for (let item in val) {
                 let d = { x: (val[item].y / (process.env.REACT_APP_BUILD_WIDTH || 82) * iw), y: ((val[item].x + 1.42) / (process.env.REACT_APP_BUILD_HEIGHT || 26) * ih), value: 100, radius: 90 };
                 currentData.push(d);
             }
         }
         if (liveData[1]) {
-            let val = JSON.parse(liveData[1].value);
+            let val = (liveData[1].value);
             for (let item in val) {
                 let d = { x: (val[item].y / ((process.env.REACT_APP_BUILD_WIDTH || 82)) * iw), y: ((val[item].x + 1.42) / (process.env.REACT_APP_BUILD_HEIGHT || 26) * ih), value: 100, radius: 90 };
                 currentData.push(d);

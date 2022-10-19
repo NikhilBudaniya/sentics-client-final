@@ -183,7 +183,7 @@ function ThreeD(props) {
         const temp_vehicle_cubes = [...vehicle_cubes];
         const tempHandle = async (data) => {
             for (let i = 0; i < data.length; i++) {
-                const positions = JSON.parse(data[i].value);
+                const positions = (data[i].value);
                 if (data[i].type == "human" && show_humans) {
                     for (let c = 0; c < person_timeout.length; c++) {
                         if (person_timeout[c] > 0) {

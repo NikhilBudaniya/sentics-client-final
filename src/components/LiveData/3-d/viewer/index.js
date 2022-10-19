@@ -285,7 +285,7 @@ async function postData() {
     // console.log(`milliseconds elapsed2 = ${millis2}`);
 
     for (let i = 0; i < json.result.length; i++) {
-        var positions = JSON.parse(json.result[i]["value"]);
+        var positions = (json.result[i]["value"]);
         if (json.result[i]["type"] == "human") {
             persons_active = 0;
             for (let c = 0; c < person_timeout.length; c++) {
